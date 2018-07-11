@@ -1,0 +1,9 @@
+{
+    "scripts": {
+        "test": "mocha --reporter spec"
+    },
+    "devDependencies": {
+        "firebase-functions-test": "^0.1.2",
+        "mocha": "^5.2.0"
+    }
+}

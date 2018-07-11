@@ -6,12 +6,17 @@
     "firebase": "^5.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "rescue-fire": "^0.2.5"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^0.1.2",
+    "mocha": "^5.2.0"
   }
 }
