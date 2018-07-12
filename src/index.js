@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase';
 
-import './index.css';
+import './css/index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
@@ -15,7 +15,6 @@ firebase.initializeApp({
     storageBucket: "omapp-2018.appspot.com",
     messagingSenderId: "208376306849"
 });
-
 
 
 ReactDOM.render(<App />, document.getElementById('root'));
