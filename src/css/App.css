@@ -18,7 +18,7 @@
   font-size: 1.5em;
 }
 
-.App-intro {
+.App-intro, .Screens {
   font-size: large;
 }
 
@@ -30,6 +30,13 @@ button{
 	font-size: 16px;
 	font-weight: bold;
   border-radius: 0.7em;
+  margin: 4px 2px;
+}
+
+button:hover {
+  background-color: white; /* Green */
+  color: #222;
+  border: 2px solid #222;
 }
 
 /*
