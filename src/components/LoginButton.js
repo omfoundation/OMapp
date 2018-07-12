@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
 import '../css/App.css';
+import OMAppComponent from './OMAppComponent.js'
 
-import OMApp from '../omapp/omapp.js';
-
-
-class LoginButton extends Component {
+class LoginButton extends OMAppComponent {
 
     constructor(props){
         super(props);
-
-        this.LogInClick = this.LogInClick.bind(this); 
-    }
-
-    LogInClick(){
-        alert(OMApp.sayClick());
+        //this.LogInClick = this.LogInClick.bind(this); 
+        
     }
 
     render(){
         return(
-            <button onClick={this.LogInClick}>Iniciar sesión con Google</button>
+            <button onClick={this.omapp}>Iniciar sesión con Google</button>
         );
     }
 }

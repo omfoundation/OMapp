@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './css/App.css';
 
 import LoginButton from './components/LoginButton.js';
-
+import omapp from './omapp/omapp.js';
 
 class App extends Component {
   render() {

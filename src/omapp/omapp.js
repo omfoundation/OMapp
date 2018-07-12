@@ -2,7 +2,7 @@
  * Libreria a utilizar para 
  */
 
-var OMApp = (function () {
+exports.omapp = (function () {
 	
 	//----   Private methods ------ //
 	var privateMethod = function() {return false;}
