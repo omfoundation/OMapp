@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import '../css/App.css';
 
+import OMApp from '../omapp/omapp.js';
+
+
 class LoginButton extends Component {
 
     constructor(props){
@@ -10,7 +13,7 @@ class LoginButton extends Component {
     }
 
     LogInClick(){
-        alert('Iniciando...');
+        alert(OMApp.sayClick());
     }
 
     render(){
