@@ -5,11 +5,17 @@ class LoginButton extends Component {
 
     constructor(props){
         super(props);
+
+        this.LogInClick = this.LogInClick.bind(this); 
+    }
+
+    LogInClick(){
+        alert('Iniciando...');
     }
 
     render(){
         return(
-            <button>Iniciar sesión con Google</button>
+            <button onClick={this.LogInClick}>Iniciar sesión con Google</button>
         );
     }
 }
