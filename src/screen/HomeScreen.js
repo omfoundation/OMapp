@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
-import firebase, {auth, provider} from '../firebase';
+import React from 'react';
+import OMAppComponent from '../components/OMAppComponent';
+
+//import firebase, {auth, provider} from '../firebase';
 //import '../css/App.css';
 
-class HomeScreen extends Component{
+class HomeScreen extends OMAppComponent{
     constructor(props){
         super(props);
         
@@ -20,22 +22,12 @@ class HomeScreen extends Component{
         //Iniciando sesion;
         //const provider = new firebase.auth.GoogleAuthProvider();
 
-        auth.signInWithPopup(provider)
-            .then((result) => {
-                //OK
-                //console.log(result);
-                const user = result.user;
-                this.setState({
-                    user: user
-                });
-            }).catch(function(error) {
-                //Error 
-                console.log(error);
-        });
+        this.omapp.signInWithPopup(this.state);
     };
 
     LogOutClick(){
         //Cerrando sesion
+        /** 
         auth.signOut()
             .then(() => {
                 //OK
@@ -47,16 +39,22 @@ class HomeScreen extends Component{
             //ERROR
             console.log(error);
         });
+        */
+
+        this.omapp.signOut();
     }
 
     componentDidMount() {
         //Ayuda a mantener sesion y captar cambios
+        /*
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 this.setState({ user: user });
             }
              
         });
+        */
+       this.omapp.onMount();
     }
     
     render(){
@@ -64,7 +62,7 @@ class HomeScreen extends Component{
             //Logeado
             return(
                 <div>
-                    <img src={this.state.user.photoURL} height="100"  />
+                    <img src={this.state.user.photoURL} height="100"  alt="user"/>
                     <p>
                         Hola {this.state.user.displayName}!
                         <br/>
