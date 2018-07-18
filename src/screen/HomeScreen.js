@@ -22,7 +22,7 @@ class HomeScreen extends OMAppComponent{
         //Iniciando sesion;
         //const provider = new firebase.auth.GoogleAuthProvider();
 
-        this.omapp.signInWithPopup(this.state);
+        this.omapp.signInWithPopup(this);
     };
 
     LogOutClick(){
@@ -41,7 +41,7 @@ class HomeScreen extends OMAppComponent{
         });
         */
 
-        this.omapp.signOut();
+        this.omapp.signOut(this);
     }
 
     componentDidMount() {

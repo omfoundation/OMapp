@@ -7,20 +7,34 @@ const auth = firebase.auth();
 
 var omapp = {
 
-	signInWithPopup : function(state){
+	signInWithPopup : function(component){
         auth.signInWithPopup(provider)
             .then((result) => {
                 //OK
                 //console.log(result);
                 const user = result.user;
-                state.setState({
+                component.setState({
                     user: user
                 });
             }).catch(function(error) {
                 //Error 
                 console.log(error);
         });
-	},
+    },
+    
+    signOut : function(component){
+        auth.signOut()
+            .then(() => {
+                //OK
+                const user = null;
+                component.setState({ 
+                    user: user
+                });
+        }).catch(function(error) {
+            //ERROR
+            console.log(error);
+        });
+    },
 	
 	onMount : function(state){
 		firebase.auth().onAuthStateChanged((user) => {
