@@ -41,7 +41,13 @@ class NavBar extends Component{
         return(
             <div className="nav">
                 <div className="topnav">
-                    <a onClick={this.openNav.bind(this)} className="menuBtn">&#9776;</a>
+                    <a onClick={this.openNav.bind(this)} className="menuBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" fill="white"/>
+                        </svg>
+                    </a>
+
                     <p className="title">OMapp: <span className='nameScreen'>{this.getNameScreen()}</span></p>
                 </div>
 
