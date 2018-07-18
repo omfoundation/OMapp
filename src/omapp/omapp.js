@@ -13,7 +13,7 @@ var omapp = {
                 //OK
                 //console.log(result);
                 const user = result.user;
-                this.setState({
+                state.setState({
                     user: user
                 });
             }).catch(function(error) {
