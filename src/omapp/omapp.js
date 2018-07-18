@@ -42,10 +42,13 @@ var omapp = {
 				component.setState({ user: user });
 			} 
 		});	
-	}
+	},
 
-
-};
+    getCurrentuser : function(){
+        return firebase.auth().currentUser;
+    }
+    
+}
 
 export default omapp;
 

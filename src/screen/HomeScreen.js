@@ -20,40 +20,16 @@ class HomeScreen extends OMAppComponent{
 
     LogInClick(){
         //Iniciando sesion;
-        //const provider = new firebase.auth.GoogleAuthProvider();
-
         this.omapp.signInWithPopup(this);
     };
 
     LogOutClick(){
         //Cerrando sesion
-        /** 
-        auth.signOut()
-            .then(() => {
-                //OK
-                const user = null;
-                this.setState({ 
-                    user: user
-                });
-        }).catch(function(error) {
-            //ERROR
-            console.log(error);
-        });
-        */
-
         this.omapp.signOut(this);
     }
 
     componentDidMount() {
         //Ayuda a mantener sesion y captar cambios
-        /*
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                this.setState({ user: user });
-            }
-             
-        });
-        */
        this.omapp.onMount(this);
     }
     
