@@ -11,7 +11,7 @@ class NotFoundScreen extends Component{
     render(){
         return(
             <div>
-                <img src={errorURL} alt='404' height="500"/>
+                <img src={errorURL} alt='404' height="300"/>
             </div>
         );
     }
