@@ -9,7 +9,7 @@
 
 .App-header {
   background-color: #222;
-  height: 150px;
+/*height: 150px;  */
   padding: 20px;
   color: white;
 }
@@ -18,11 +18,30 @@
   font-size: 1.5em;
 }
 
-.App-intro {
+.App-intro, .Screens {
   font-size: large;
 }
 
+button{
+  padding: 0.5em;
+	border: none;
+  background-color: #222;
+  color: white;
+	font-size: 16px;
+	font-weight: bold;
+  border-radius: 0.7em;
+  margin: 4px 2px;
+}
+
+button:hover {
+  background-color: white; /* Green */
+  color: #222;
+  border: 2px solid #222;
+}
+
+/*
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+*/
