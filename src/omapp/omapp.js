@@ -36,10 +36,10 @@ var omapp = {
         });
     },
 	
-	onMount : function(state){
+	onMount : function(component){
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
-				state.setState({ user: user });
+				component.setState({ user: user });
 			} 
 		});	
 	}

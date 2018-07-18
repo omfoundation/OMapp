@@ -54,7 +54,7 @@ class HomeScreen extends OMAppComponent{
              
         });
         */
-       this.omapp.onMount();
+       this.omapp.onMount(this);
     }
     
     render(){
