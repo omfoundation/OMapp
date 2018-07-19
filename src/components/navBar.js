@@ -24,6 +24,14 @@ class NavBar extends Component{
 
             switch(window.location.pathname){
                 case '/':
+                    nscr = 'Acceder'
+                break;
+
+                case '/signup':
+                    nscr = 'Sign Up'
+                break;
+
+                case '/home':
                     nscr = 'Home'
                 break;
 
@@ -34,6 +42,7 @@ class NavBar extends Component{
                 default:
                     nscr = '404 Error'
             }
+
             return nscr;
         }
     render(){
@@ -53,7 +62,7 @@ class NavBar extends Component{
 
                 <div id="mySidenav" ref="sidenav" className="sidenav">
                     <a href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</a>
-                    <Link to='/' onClick={this.closeNav.bind(this)}>Home</Link>
+                    <Link to='/home' onClick={this.closeNav.bind(this)}>Home</Link>
                     <Link to='/feed' onClick={this.closeNav.bind(this)}>Feed</Link>
                 </div>
             </div>

@@ -3,6 +3,8 @@ import {Router, Switch, Route } from "react-router-dom";
 
 import './css/App.css';
 
+import LoginScreen from './screen/LoginScreen.js';
+import SignUpScreen from './screen/SignUpScreen.js';
 import HomeScreen from './screen/HomeScreen.js';
 import FeedScreen from './screen/FeedScreen.js';
 import NotFoundScreen from './screen/NotFoundScreen.js';
@@ -17,7 +19,9 @@ class App extends Component {
           <NavBar/>
   
           <Switch>
-            <Route exact path='/' component={HomeScreen}/> 
+            <Route exact path='/' component={LoginScreen}/>
+            <Route path='/signup' component={SignUpScreen}/>  
+            <Route path='/home' component={HomeScreen}/> 
             <Route path='/feed' component={FeedScreen}/> 
             <Route path="*" component={NotFoundScreen} />
           </Switch>

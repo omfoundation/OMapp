@@ -1,4 +1,7 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom';
+
+import LoginScreen from './LoginScreen.js';
 import OMAppComponent from '../components/OMAppComponent';
 
 //import firebase, {auth, provider} from '../firebase';
@@ -8,9 +11,8 @@ class HomeScreen extends OMAppComponent{
     constructor(props){
         super(props);
         
-        this.state = {
-            user: null
-        };
+        this.state = this.omapp.getCurrentuser();
+        
 
         this.LogInClick = this.LogInClick.bind(this); 
         this.LogOutClick = this.LogOutClick.bind(this);
@@ -28,13 +30,16 @@ class HomeScreen extends OMAppComponent{
         this.omapp.signOut(this);
     }
 
-    componentDidMount() {
+    /*componentDidMount() {
         //Ayuda a mantener sesion y captar cambios
        this.omapp.onMount(this);
-    }
+    }*/
     
     render(){
-        if(this.state.user){
+        console.log('home', this.state);
+        //console.log('InDB: ',this.state.inDB);
+
+        if((this.state.user) && (this.state.inDB)){
             //Logeado
             return(
                 <div>
@@ -49,14 +54,8 @@ class HomeScreen extends OMAppComponent{
             );
         }else{
             //No hay datos de user/no logeado
-            return(
-                <div>
-                    <p className="App-intro">
-                        Para disfrutar de los servicios que ofrece la plataforma desde registrarte o iniciar sesion.
-                    </p>
-                    <button onClick={this.LogInClick}>Iniciar sesion con GOOGLE</button>
-                </div>
-            );
+            console.log('Home > login');
+            return <Redirect to='/'/>
         }
         
     }
