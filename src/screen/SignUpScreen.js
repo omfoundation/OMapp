@@ -9,7 +9,11 @@ class SignUpScreen extends Component{
     constructor(props){
         super(props);
 
-        this.state = omapp.getCurrentuser();
+        this.state = {
+            user: omapp.dataUser.user,
+            inDB: omapp.dataUser.inDB,
+            reRender: false
+        };
         //this.state = () => omapp.getCurrentuser().then(result => result);
 
         this.completarReg = this.completarReg.bind(this);
@@ -30,14 +34,19 @@ class SignUpScreen extends Component{
         }
     }
 
-    componentDidMount() {
-        omapp.onMount(this);
-    }
 
     render(){
         console.log('signup', this.state);
-        if(!(omapp.getCurrentuser().inDB)){
-            //No hay registro
+
+        if(!omapp.isLogIn()){
+            console.log("Sing > login")
+            return <Redirect to='/'/>
+        }
+        
+        
+        if(!(omapp.dataUser.inDB)){
+            //No hay registr
+            
             return(
                 <div> 
                     <form>
@@ -48,48 +57,47 @@ class SignUpScreen extends Component{
                         <br/>
                         <br/>
                         <div className='plans'>
-                            <div className="columns">
-                            <ul className="price">
-                                <li className="header">Basico</li>
-                                <li className="grey">Gratis</li>
-                                <li>Id plan: 1</li>
-                                <li>Nivel de acceso: 1</li>
-                                <li>10GB</li>
-                                <li className="grey"><a href="#" onClick={() =>{this.completarReg(1,1)}} className="button">Seleccionar</a></li>
-                            </ul>
+                                <div className="columns">
+                                <ul className="price">
+                                    <li className="header">Basico</li>
+                                    <li className="grey">Gratis</li>
+                                    <li>Id plan: 1</li>
+                                    <li>Nivel de acceso: 1</li>
+                                    <li>10GB</li>
+                                    <li className="grey"><a href="#" onClick={() =>{this.completarReg(1,1)}} className="button">Seleccionar</a></li>
+                                </ul>
+                                </div>
+        
+                                <div className="columns">
+                                <ul className="price">
+                                    <li className="header">Pro</li>
+                                    <li className="grey">Bs.F 2.99 / mes</li>
+                                    <li>Id plan: 2</li>
+                                    <li>Nivel de acceso: 3</li>
+                                    <li>100GB</li>
+                                    <li className="grey"><a href="#" onClick={() =>{this.completarReg(2,3)}} className="button">Seleccionar</a></li>
+                                </ul>
+                                </div>
+        
+                                <div className="columns">
+                                <ul className="price">
+                                    <li className="header">Premium</li>
+                                    <li className="grey">Bs.S 10 / año</li>
+                                    <li>Id plan: 3</li>
+                                    <li>Nivel de acceso: 5</li>
+                                    <li>10TB</li>
+                                    <li className="grey"><a href="#" onClick={() =>{this.completarReg(3,5)}} className="button">Seleccionar</a></li>
+                                </ul>
+                                </div>
                             </div>
-    
-                            <div className="columns">
-                            <ul className="price">
-                                <li className="header">Pro</li>
-                                <li className="grey">Bs.F 2.99 / mes</li>
-                                <li>Id plan: 2</li>
-                                <li>Nivel de acceso: 3</li>
-                                <li>100GB</li>
-                                <li className="grey"><a href="#" onClick={() =>{this.completarReg(2,3)}} className="button">Seleccionar</a></li>
-                            </ul>
-                            </div>
-    
-                            <div className="columns">
-                            <ul className="price">
-                                <li className="header">Premium</li>
-                                <li className="grey">Bs.S 10 / año</li>
-                                <li>Id plan: 3</li>
-                                <li>Nivel de acceso: 5</li>
-                                <li>10TB</li>
-                                <li className="grey"><a href="#" onClick={() =>{this.completarReg(3,5)}} className="button">Seleccionar</a></li>
-                            </ul>
-                            </div>
-                        </div>
-                        
-                    </form>
+                            
+                        </form>
                 </div>
-            )
+            ) 
         }else{
             console.log("Sing > home");
             return <Redirect to='/home'/>
         }
-        
     }
 }
 

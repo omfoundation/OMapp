@@ -12,7 +12,7 @@ class FeedScreen extends Component{
     }
 
     render(){
-        if(omapp.getCurrentuser().user && omapp.getCurrentuser().inDB){
+        if(omapp.isLogIn()){
             return(
                 <img src={catURL} height="300"  alt="gatito"/>
             );

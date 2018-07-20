@@ -1,5 +1,3 @@
-//import firebase from 'firebase';
-
 import firebase from '../firebase';
 
 const provider = new firebase.auth.GoogleAuthProvider();
@@ -13,10 +11,25 @@ db.settings(settings);
 
 
 var omapp = {
+    
+    dataUser: {
+        user: null,
+        inDB: null
+    },
 
-    checkReg : function(user){
+    isLogIn: function(){
 
-        let value = new Promise(resolve =>{
+        if((omapp.dataUser.user != null) && (omapp.dataUser.inDB != null)){
+            //Si esta logIN
+            return true;
+        }else{
+            return false;
+        }
+    },
+
+    checkReg : function(comp) {
+        let user = omapp.dataUser.user;
+
             //verificamos si el user esta registrado en la db
             if(user){
                 let email = user.email;
@@ -28,19 +41,25 @@ var omapp = {
              userRef.get().then(function(doc) {
                 if (doc.exists) {
                     //Usuario existe
-                    //console.log("Document data:", doc.data());
+                    console.log("Document data:", doc.data());
                     console.log('Usuario existe en db');
-                    //return true;
-                   resolve(true);
-                   //return Promise.resolve(true);
+                    omapp.dataUser.inDB = true;
 
+                    let sta = comp.state;
+                    sta.loader = false;
+
+                    comp.setState(sta);
+                
                 } else {
                     // doc.data() will be undefined in this case
                     //console.log("No such document!");
                     console.log('Usuario NO existe en db2');
-                    //return false;
-                    resolve(false);
-                    //return Promise.resolve(false);
+                    omapp.dataUser.inDB = false;
+
+                    let sta = comp.state;
+                    sta.loader = false;
+
+                    comp.setState(sta);
 
                 }
             }).catch(function(error) {
@@ -48,23 +67,13 @@ var omapp = {
                 console.log("Error getting document:", error);
                 console.log('Usuario NO existe en db ');
                 
-                //return false;
-                resolve(false);
-                //return Promise.resolve(false);
+                omapp.dataUser.inDB = false;
+
 
             });
-        
-                //console.log('UserReq');
-                //console.log(userReq);
-                //return value;
-                //resolve(true);
+                
             }
-        });
-            
-        
 
-        return value;
-        
     },
 
 	signInWithPopup : function(component){
@@ -72,13 +81,17 @@ var omapp = {
             .then((result) => {
                 //OK
                 //console.log(result);
-                const user = result.user;
+                //const user = result.user;
+                omapp.dataUser.user = result.user;
 
-                component.setState({
-                    user: user,
-                    inDB: omapp.checkReg(user)
-                });
-            
+                let sta = component.state;
+                sta.user = omapp.dataUser.user;
+
+                component.setState(sta);
+
+                //component.setState(omapp.dataUser);
+ 
+
             }).catch(function(error) {
                 //Error 
                 console.log(error);
@@ -89,11 +102,17 @@ var omapp = {
         auth.signOut()
             .then(() => {
                 //OK
-                const user = null;
-                component.setState({
-                    user: user,
-                    inDB: omapp.checkReg(user)
-                });
+
+                omapp.dataUser = {
+                    user: null,
+                    inDB: null
+                };
+
+                let sta = component.state;
+                sta.user = null;
+                sta.inDB = null;
+
+                component.setState(sta);
 
         }).catch(function(error) {
             //ERROR
@@ -112,33 +131,14 @@ var omapp = {
 		});	
 	},
 
-    solveValue : async function(u){
-        return await omapp.checkReg(u);
-    },
-
     getCurrentuser :  function(){
         //console.log(firebase.auth().currentUser);
-        let u = firebase.auth().currentUser;
-            //console.log('u');
-            //console.log(u)
-        let valuebool;
-        
-        omapp.solveValue(u).then(v=>{
-            valuebool = v;
-            console.log("valuebool",valuebool);
-        });
-
-        //valuebool = true;
-
-        return {
-            user: u,
-            inDB: valuebool
-        }
+        return firebase.auth().currentUser;
 
     },
 
     completeRegDB: function(nick, idPlan, authLevel, comp){
-        let email = omapp.getCurrentuser().user.email;
+        let email = omapp.dataUser.user.email;
         let fch = new Date();
 
         let docData = {
@@ -151,13 +151,17 @@ var omapp = {
         db.collection('users').doc(email).set(docData)
             .then(function() {
                 console.log("Document successfully written!");
+                //alert("Registrado!");
 
-            let us = omapp.getCurrentuser().user;
+                omapp.dataUser.inDB = true;
 
-            comp.setState({
-                user: us,
-                inDB: omapp.checkReg(us)
-            });
+                let sta = comp.state;
+
+                sta.user = omapp.dataUser.user;
+                sta.inDB = omapp.dataUser.inDB;
+                sta.reRender = !sta.reRender;
+
+                comp.setState(sta);
 
         }).catch(function(error) {
                 console.log("Registro incompleto");

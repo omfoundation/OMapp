@@ -27,6 +27,10 @@ class NavBar extends Component{
                     nscr = 'Acceder'
                 break;
 
+                case '/load':
+                    nscr = 'Cargando...'
+                break;
+
                 case '/signup':
                     nscr = 'Sign Up'
                 break;

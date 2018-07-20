@@ -7,7 +7,7 @@ class LoginScreen extends Component{
     constructor(props){
         super(props);
 
-        this.state = omapp.getCurrentuser();  
+        this.state = omapp.dataUser;  
         //this.state = () => omapp.getCurrentuser().then(result => result);
     }
     
@@ -32,8 +32,14 @@ class LoginScreen extends Component{
                 return <Redirect to='/home'/>
             }else{
                 //no existe en db
-                console.log('Login > signup');
-                return <Redirect to='/signup'/>
+                if(this.state.inDB == null){
+                    console.log('Login > loader');
+                    return <Redirect to='/load'/>
+                }else{
+                    console.log('Login > signup');
+                    return <Redirect to='/signup'/>
+                }
+                
             }
             
         }
