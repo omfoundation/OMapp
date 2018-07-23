@@ -50,7 +50,10 @@ var omapp = {
                     //Usuario existe
                     console.log("Document data:", doc.data());
                     console.log('Usuario existe en db');
+
                     omapp.dataUser.inDB = true;
+                    omapp.dataUser.nick = doc.data().nick;
+                    omapp.dataUser.email = email;
 
                     let sta = comp.state;
                     sta.loader = false;
@@ -106,6 +109,32 @@ var omapp = {
         });
     },
     
+    signInWitgEmail : function(em,pass,component){
+
+        auth.signInAndRetrieveDataWithEmailAndPassword(em,pass)
+        .then(function(u){
+
+            console.log("LogInEmail", u);
+            omapp.dataUser.user = u.user;
+
+            let sta = component.state;
+            omapp.dataUser.email = em;
+            omapp.dataUser.style = 'email';
+                
+            sta.user = omapp.dataUser.user;
+            sta.inDB = omapp.dataUser.inDB;
+            
+            component.setState(sta);
+
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+
+            console.log(errorCode, errorMessage);
+        });
+    },
+
     signOut : function(component){
         auth.signOut()
             .then(() => {

@@ -32,7 +32,7 @@ class HomeScreen extends OMAppComponent{
     }*/
     
     render(){
-        console.log('home', this.state);
+        console.log('home', omapp.dataUser);
         //console.log('InDB: ',this.state.inDB);
 
         if(omapp.isLogIn()){

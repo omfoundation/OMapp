@@ -11,6 +11,7 @@ class AccessScreen extends Component{
 
         this.state = omapp.dataUser;  
         //this.state = () => omapp.getCurrentuser().then(result => result);
+        this.processLogIn = this.processLogIn.bind(this);
     }
 
     openModalLogIn(){
@@ -29,6 +30,41 @@ class AccessScreen extends Component{
         this.refs.modRes.style.display= 'none';
     }
 
+    checkLogData(){
+        let txtEmail = this.refs.uemail.value;
+        let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        if((txtEmail.replace(/\s/g,'') != "") &&(txtEmail.match(mailformat))){
+            //Chequeamos que no sea solo blancos
+            //ok
+            //return true;
+
+            let txtPas = this.refs.upsw.value;
+
+            if(txtPas.replace(/\s/g,'') != ""){
+                //Nada de blancos 
+                //OK
+            }else{
+                alert("Introduce una clave valida");
+                return false;
+            }
+
+        }else{
+            alert("Introduce un email valido!");
+            return false;
+        }
+
+        return true;
+    }
+
+    processLogIn(){
+        //omapp.setLogStyle('email')
+        console.log('Intentando');
+        if(this.checkLogData()){
+            omapp.signInWitgEmail(this.refs.uemail.value, this.refs.upsw.value, this);
+        }
+    }
+
     render(){
         console.log('Access', this.state);
         if (!this.state.user){
@@ -45,21 +81,21 @@ class AccessScreen extends Component{
                         {/*****************Iniciar sesion modal *************/}
                         <div ref="modLogIn" className="modal"> 
                             {/* Modal Content */}
-                            <form className="modal-content animate">
-                            <span className="close" onClick={() => this.closeModalLogIn()}>&times;</span>
+                            <div className="modal-content animate">
+                            <span className="close red" onClick={() => this.closeModalLogIn()}>&times;</span>
 
                                 <div className="container">
-                                <label htmlFor="uname"><b>Email</b></label>
-                                <input type="text" placeholder="Enter email" name="uname" required />
+                                    <label htmlFor="uemail"><b>Email</b></label>
+                                    <input type="text" placeholder="Enter email" ref="uemail" required />
 
-                                <label htmlFor="psw"><b>Contraseña</b></label>
-                                <input type="password" placeholder="Enter contraseña" name="psw" required />
+                                    <label htmlFor="upsw"><b>Contraseña</b></label>
+                                    <input type="password" placeholder="Enter contraseña" ref="upsw" required />
 
-                                <button type="submit" className="btn" onClick={()=>{omapp.setLogStyle('email')}}>Iniciar sesion</button>
-                                <br/>
-                                <button  onClick={() => {omapp.signInWithGoogle(this)}}>Entra con Google</button>
+                                    <button type="submit" className="btn greenBG" onClick={this.processLogIn}>Iniciar sesion</button>
+                                    <br/>
+                                    <button  onClick={() => {omapp.signInWithGoogle(this)}}>Entra con Google</button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
 
 
