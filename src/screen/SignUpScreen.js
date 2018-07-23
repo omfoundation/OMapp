@@ -36,18 +36,6 @@ class SignUpScreen extends Component{
     }
 
     checkForm(){
-        //Verificamos nick
-        let txtName = this.refs.nickText.value;
-
-         if(txtName != ""){
-            //Listo
-            //return true;
-        }else{
-            //No ha sido introducido
-            alert("Introduce un nick!");
-            return false;
-        }
-
         if(!(omapp.dataUser.style == 'g')){
             //Registro por email
 
@@ -87,6 +75,18 @@ class SignUpScreen extends Component{
                 alert("Introduce una clave valida!");
                 return false;
             }
+        }
+        
+        //Verificamos nick
+        let txtName = this.refs.nickText.value;
+
+        if(txtName != ""){
+            //Listo
+            //return true;
+        }else{
+            //No ha sido introducido
+            alert("Introduce un nick!");
+            return false;
         }
 
         return true;
@@ -128,7 +128,7 @@ class SignUpScreen extends Component{
                         <br/>
                         <label><b>Apodo/Nick:</b></label>
                         <br/>
-                        <input className='iNick' maxLength="13" type='text' placeholder='Introduzca nick' ref='nickText'required autoFocus/>
+                        <input className='iNick' maxLength="13" type='text' placeholder='Introduzca nick' ref='nickText'required />
                         <br/>
                         <br/>
 
