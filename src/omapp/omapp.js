@@ -9,22 +9,29 @@ const settings = {timestampsInSnapshots: true};
 db.settings(settings);
 
 
-
 var omapp = {
+    defaulPhoto : 'http://sitelcity.com/wp-content/uploads/2015/04/default-user-image-300x300.png',
     
     dataUser: {
         user: null,
-        inDB: null
+        inDB: null,
+        style: null,
+        nick: null,
+        email: null
     },
 
     isLogIn: function(){
 
-        if((omapp.dataUser.user != null) && (omapp.dataUser.inDB != null)){
+        if((omapp.dataUser.inDB) && (omapp.dataUser.user != null) && (omapp.dataUser.inDB != null)){
             //Si esta logIN
             return true;
         }else{
             return false;
         }
+    },
+
+    setLogStyle : function(style){
+        this.dataUser.style = style;
     },
 
     checkReg : function(comp) {
@@ -76,7 +83,7 @@ var omapp = {
 
     },
 
-	signInWithPopup : function(component){
+	signInWithGoogle : function(component){
         auth.signInWithPopup(provider)
             .then((result) => {
                 //OK
@@ -87,6 +94,7 @@ var omapp = {
                 let sta = component.state;
                 sta.user = omapp.dataUser.user;
 
+                omapp.setLogStyle('g');
                 component.setState(sta);
 
                 //component.setState(omapp.dataUser);
@@ -137,18 +145,9 @@ var omapp = {
 
     },
 
-    completeRegDB: function(nick, idPlan, authLevel, comp){
-        let email = omapp.dataUser.user.email;
-        let fch = new Date();
-
-        let docData = {
-            FechaUnion: fch,
-            nick: nick,
-            plan: idPlan,
-            authLevel: authLevel
-        }
-
-        db.collection('users').doc(email).set(docData)
+    RegDB(email,doc,nick, comp){
+        //REGISTRAMOS EN NUESTRA BD
+        db.collection('users').doc(email).set(doc)
             .then(function() {
                 console.log("Document successfully written!");
                 //alert("Registrado!");
@@ -157,6 +156,9 @@ var omapp = {
 
                 let sta = comp.state;
 
+                omapp.dataUser.nick = nick;
+                omapp.dataUser.email = email;
+                
                 sta.user = omapp.dataUser.user;
                 sta.inDB = omapp.dataUser.inDB;
                 sta.reRender = !sta.reRender;
@@ -167,6 +169,46 @@ var omapp = {
                 console.log("Registro incompleto");
                 console.log(error);
         });
+    },
+
+    completeRegDB: function(email,pass,nick, idPlan, authLevel, comp){
+        
+        let fch = new Date();
+        
+        let docData = {
+            type: omapp.dataUser.style,
+            FechaUnion: fch,
+            nick: nick,
+            plan: idPlan,
+            authLevel: authLevel
+        }
+
+        if(omapp.dataUser.style == 'g'){
+            //Registro mediante google
+            email = omapp.dataUser.user.email;
+
+            omapp.RegDB(email,docData,nick,comp);
+        }else{
+            //Registro por email
+            //omapp.dataUser.user = email;
+
+            //REGISTRAMOS CON FIREBASE
+            auth.createUserAndRetrieveDataWithEmailAndPassword(email,pass).
+            then(function(u){
+                console.log('Logrado', u);
+                omapp.dataUser.user = u;
+
+                omapp.RegDB(email,docData,nick,comp);
+            })
+            .catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+              });
+        }
+
+        
     }
 
     

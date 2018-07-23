@@ -12,6 +12,7 @@ class SignUpScreen extends Component{
         this.state = {
             user: omapp.dataUser.user,
             inDB: omapp.dataUser.inDB,
+            style: omapp.dataUser.style,
             reRender: false
         };
         //this.state = () => omapp.getCurrentuser().then(result => result);
@@ -20,42 +21,117 @@ class SignUpScreen extends Component{
     }
 
     completarReg(idPlan, authLevel){
-        
-        let txtName = this.refs.nickText.value;
-        //chequeamos si nick fue introducido
-        if(txtName != ""){
+        //chequeamos form
+        if(this.checkForm()){
             //console.log('completando: '+ txtName+ ' IdPla: ' + idPlan + ' lvel: ' +authLevel);
 
-            omapp.completeRegDB(txtName,idPlan,authLevel, this);
+            if(omapp.dataUser.style =='g'){
+                omapp.completeRegDB('','',this.refs.nickText.value,idPlan,authLevel, this);
+            }else{
+                omapp.completeRegDB(this.refs.email.value,this.refs.psw.value,
+                    this.refs.nickText.value,idPlan,authLevel, this);
+            }
+            
+        }
+    }
 
+    checkForm(){
+        //Verificamos nick
+        let txtName = this.refs.nickText.value;
+
+         if(txtName != ""){
+            //Listo
+            //return true;
         }else{
             //No ha sido introducido
             alert("Introduce un nick!");
+            return false;
         }
+
+        if(!(omapp.dataUser.style == 'g')){
+            //Registro por email
+
+            let txtEmail = this.refs.email.value;
+            let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+            if((txtEmail.replace(/\s/g,'') != "") &&(txtEmail.match(mailformat))){
+                //Chequeamos que no sea solo blancos
+                //ok
+                //return true;
+            }else{
+                alert("Introduce un email valido!");
+                return false;
+            }
+
+            let txtPas = this.refs.psw.value;
+            let txtPasRe = this.refs.pswRepeat.value;
+
+            if(txtPas.replace(/\s/g,'') != ""){
+                //Chequeamos que no sea solo blancos
+                //ok
+                if(txtPas == txtPasRe){
+                    //Claves iguales?
+                    //ok
+                    if((txtPas.legth < 6)){
+                        //No es mayor a 6
+                        alert("La clave debe ser de mayor longitud (min. 6char)");
+                        return false;
+                    }
+                    //return true;
+                }else{
+                    alert("Ambas claves deben ser iguales!");
+                    return false;
+                }
+
+            }else{
+                alert("Introduce una clave valida!");
+                return false;
+            }
+        }
+
+        return true;
     }
 
 
     render(){
         console.log('signup', this.state);
 
+        /*
         if(!omapp.isLogIn()){
             console.log("Sing > login")
             return <Redirect to='/'/>
         }
-        
-        
-        if(!(omapp.dataUser.inDB)){
-            //No hay registr
-            
+        */
+        //!(omapp.dataUser.inDB)
+        if(!omapp.isLogIn()){
+            //No hay registro   
             return(
                 <div> 
-                    <form>
+                        { omapp.dataUser.style != 'g' &&
+                            //Si la forma de login es diferente a google para registrar
+                            //MOstrar esto
+                            <div>
+                                <form>
+                                    <label><b>Email</b></label>
+                                    <input type="text" placeholder="Enter Email" ref="email" required />
+                                
+                                    <label><b>Password</b> (6 caracteres min.)</label>
+                                    <input type="password" placeholder="Enter Password" ref="psw" required />
+                                
+                                    <label><b>Repeat Password</b></label>
+                                    <input type="password" placeholder="Repeat Password" ref="pswRepeat" required />
+                                </form>
+                            </div>
+                            
+                        }
+
                         <br/>
-                        <label className='lbForm'><b>Apodo/Nick:</b></label>
+                        <label><b>Apodo/Nick:</b></label>
                         <br/>
                         <input className='iNick' maxLength="13" type='text' placeholder='Introduzca nick' ref='nickText'required autoFocus/>
                         <br/>
                         <br/>
+
                         <div className='plans'>
                                 <div className="columns">
                                 <ul className="price">
@@ -89,9 +165,8 @@ class SignUpScreen extends Component{
                                     <li className="grey"><a href="#" onClick={() =>{this.completarReg(3,5)}} className="button">Seleccionar</a></li>
                                 </ul>
                                 </div>
-                            </div>
-                            
-                        </form>
+                        </div>
+                        
                 </div>
             ) 
         }else{

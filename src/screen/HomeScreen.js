@@ -1,7 +1,6 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 
-import LoginScreen from './LoginScreen.js';
 import OMAppComponent from '../components/OMAppComponent';
 import { isLong } from 'long';
 import omapp from '../omapp/omapp';
@@ -40,11 +39,11 @@ class HomeScreen extends OMAppComponent{
             //Logeado
             return(
                 <div>
-                    <img src={omapp.dataUser.user.photoURL} height="100"  alt="user"/>
+                    <img src={omapp.dataUser.user.photoURL || omapp.defaulPhoto} height="100"  alt="user"/>
                     <p>
-                        Hola {omapp.dataUser.user.displayName}!
+                        Hola {omapp.dataUser.nick}!
                         <br/>
-                        <strong>Correo: </strong> {omapp.dataUser.user.email}
+                        <strong>Correo: </strong> {omapp.dataUser.email}
                     </p>
                     <button onClick={this.LogOutClick}>Cerrar sesión</button>
                 </div>

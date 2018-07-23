@@ -3,7 +3,7 @@ import {Router, Switch, Route } from "react-router-dom";
 
 import './css/App.css';
 
-import LoginScreen from './screen/LoginScreen.js';
+import AccessScreen from './screen/AccessScreen.js';
 import LoadingScreen from './screen/LoadingScreen.js';
 import SignUpScreen from './screen/SignUpScreen.js';
 import HomeScreen from './screen/HomeScreen.js';
@@ -20,7 +20,7 @@ class App extends Component {
           <NavBar/>
   
           <Switch>
-            <Route exact path='/' component={LoginScreen}/>
+            <Route exact path='/' component={AccessScreen}/>
             <Route path='/load' component={LoadingScreen}/>  
             <Route path='/signup' component={SignUpScreen}/>  
             <Route path='/home' component={HomeScreen}/> 

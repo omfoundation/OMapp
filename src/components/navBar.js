@@ -24,7 +24,11 @@ class NavBar extends Component{
 
             switch(window.location.pathname){
                 case '/':
-                    nscr = 'Acceder'
+                    nscr = 'Acceder al sistema'
+                break;
+
+                case '/login':
+                    nscr = 'Iniciar sesion'
                 break;
 
                 case '/load':
