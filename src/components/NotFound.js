@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 const errorURL = 'https://image.freepik.com/vetores-gratis/erro-404-modelo-web-com-gato-engracado_23-2147763339.jpg';
 
-class NotFoundScreen extends Component{
+export class NotFound extends Component{
 
     constructor(props){
         super(props);
@@ -16,5 +16,3 @@ class NotFoundScreen extends Component{
         );
     }
 }
-
-export default NotFoundScreen;

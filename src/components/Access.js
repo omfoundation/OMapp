@@ -5,7 +5,7 @@ import '../css/access.css'
 
 import omapp from '../omapp/omapp.js';
 
-class AccessScreen extends Component{
+export class Access extends Component{
     constructor(props){
         super(props);
 
@@ -67,7 +67,7 @@ class AccessScreen extends Component{
 
     render(){
         console.log('Access', this.state);
-        if (!this.state.user){
+        //if (!this.state.user){
             //Si no esta login
                 return(
                     <div>
@@ -115,8 +115,11 @@ class AccessScreen extends Component{
 
 
                      </div>
-                )  
-        }else{
+                ) 
+        
+        //}
+        /*
+        else{
             //Si esta login en google auth pero no sabemos db
             
             if(this.state.inDB){
@@ -136,8 +139,7 @@ class AccessScreen extends Component{
             }
             
         }
+        */
         
     }
 }
-
-export default AccessScreen;

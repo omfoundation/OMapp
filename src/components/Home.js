@@ -1,14 +1,14 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 
-import OMAppComponent from '../components/OMAppComponent';
+import OMAppComponent from './OMAppComponent';
 import { isLong } from 'long';
 import omapp from '../omapp/omapp';
 
 //import firebase, {auth, provider} from '../firebase';
 //import '../css/App.css';
 
-class HomeScreen extends OMAppComponent{
+export class Home extends OMAppComponent{
     constructor(props){
         super(props);
         
@@ -56,5 +56,3 @@ class HomeScreen extends OMAppComponent{
         
     }
 }
-
-export default HomeScreen;

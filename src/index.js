@@ -1,15 +1,30 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router} from 'react-router-dom';
 
+import {render} from "react-dom";
+
+import {Root} from "./components/Root";
+
+import './css/App.css';
 import './css/index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(
-    <Router>
-        <App />
-    </Router>,
-    document.getElementById('root'));
+class App extends React.Component {
+    render() {
+        return (
+            /*
+            <Router>
+                <Route path={"/"} component={Root} >
+                    <Route path={"home"} component={Access} />
+                    <Route path={"404"} component={NotFound} />
+                    <Route path={"signup"} component={SignUp} />
+                </Route>
+            </Router>
+            */
+            <Router>
+               <Root/>
+            </Router>
+        );
+    }
+}
 
-registerServiceWorker();
+render(<App />, window.document.getElementById('app'));

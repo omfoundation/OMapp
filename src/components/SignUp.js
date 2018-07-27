@@ -5,7 +5,7 @@ import omapp from '../omapp/omapp.js';
 
 import '../css/signup.css';
 
-class SignUpScreen extends Component{
+export class SignUp extends Component{
     constructor(props){
         super(props);
 
@@ -175,5 +175,3 @@ class SignUpScreen extends Component{
         }
     }
 }
-
-export default SignUpScreen;

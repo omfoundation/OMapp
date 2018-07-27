@@ -5,7 +5,7 @@ import omapp from '../omapp/omapp.js';
 
 import '../css/loader.css';
 
-class LoadingScreen extends Component{
+class Loading extends Component{
     constructor(props){
         super(props);
 
@@ -31,4 +31,4 @@ class LoadingScreen extends Component{
     }
 }
 
-export default LoadingScreen;
+export default Loading;

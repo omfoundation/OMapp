@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import '../css/nav.css';
-import OMAppComponent from '../components/OMAppComponent';
+import OMAppComponent from './OMAppComponent';
 
-class NavBar extends Component{
+export class NavBar extends Component{
     
     constructor(props){
         super(props);
@@ -77,5 +77,3 @@ class NavBar extends Component{
         );
     }
 }
-
-export default NavBar;
