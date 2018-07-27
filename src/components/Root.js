@@ -3,6 +3,8 @@ import React from 'react';
 import { NavBar } from './NavBar';
 import { Main } from './Main';
 
+import '../css/root.css';
+
 export class Root extends React.Component {
     render() {
         return (
