@@ -1,14 +1,22 @@
 import React from 'react';
-import { BrowserRouter as Router} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { render } from "react-dom";
 
 import { Root } from "./components/Root";
+import { Home } from "./components/Home";
+import { SignUp } from "./components/SignUp";
 
 import './css/App.css';
 import './css/index.css';
 
 class App extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.props = props;
+    }
+
     render() {
         return (
             /*
@@ -21,7 +29,12 @@ class App extends React.Component {
             </Router>
             */
             <Router>
-               <Root/>
+                <Root>
+                    <div>
+                        <Route exact path="/" component={Root} location={this.props.location} />
+                        <Route path="/signup" component={SignUp} location={this.props.location} />
+                    </div>
+                </Root>
             </Router>
         );
     }

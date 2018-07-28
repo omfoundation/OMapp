@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import {Redirect, Link} from 'react-router-dom';
+import { Switch, Route, Link, Redirect } from 'react-router-dom';
+
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Home } from './Home';
 import { Loading } from './Loading';
@@ -14,7 +16,11 @@ export class Access extends Component{
     constructor(props){
         super(props);
 
-        this.state = omapp.dataUser;  
+        this.state = {
+            dataUser: omapp.dataUser,
+            referrer: null
+        }
+
         //this.state = () => omapp.getCurrentuser().then(result => result);
         this.processLogIn = this.processLogIn.bind(this);
     }
@@ -70,12 +76,26 @@ export class Access extends Component{
         }
     }
 
+    registerWithEmailPasswordClickHandler(){
+        omapp.setLogStyle('email');
+        this.setState({signupChoice: 'email'});
+        //this.setState({referrer: '/signup'});
+
+    }
+
     render(){
         console.log('Access', this.state);
+        if (this.state.referrer != null) return <Redirect to={this.state.referrer} />;
         if (!this.state.user){
             //Si no esta login
                 return(
                     <div>
+{/*
+                <Router >
+                    
+                    <Route path="/signup" component={SignUp} />
+            </Router>
+*/}
                         <p className="App-intro">
                             Para disfrutar de los servicios que ofrece la plataforma desde registrarte o iniciar sesion.
                         </p>
@@ -111,7 +131,7 @@ export class Access extends Component{
                                 <span className="close" onClick={() => this.closeModalRes()}>&times;</span>
                                 <h2>Registro</h2>
                                 <p>Selecciona tu metodo preferido:</p>
-                                <a className="btn"><Link to='/signup' onClick={()=>{omapp.setLogStyle('email')}}>Con email y contraseña</Link></a>
+                                <a className="btn"><Link to={ '/signup' } onClick={()=>{this.registerWithEmailPasswordClickHandler()}}>Con email y contraseña</Link></a>
                                 <br/>
                                 <button onClick={() => {omapp.signInWithGoogle(this)}}>Con cuenta Google</button>
                             </div>
@@ -120,6 +140,7 @@ export class Access extends Component{
 
 
                      </div>
+
                 ) 
         
         }
@@ -129,15 +150,15 @@ export class Access extends Component{
             if(this.state.inDB){
                 //existe en db
                 console.log('Access > home');
-                return <Home/>
+                return <h1>pupu1</h1>
             }else{
                 //no existe en db
                 if(this.state.inDB == null){
                     console.log('Access > loader');
-                    return <Loading/>
+                    return <h1>pupu2</h1>
                 }else{
                     console.log('Access > signup');
-                    return <SignUp/>
+                    return <h1>pupu3</h1>
                 }
                 
             }

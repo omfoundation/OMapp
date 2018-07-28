@@ -1,7 +1,9 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { NavBar } from './NavBar';
 import { Main } from './Main';
+import { SignUp } from "./SignUp";
 
 import '../css/root.css';
 
@@ -14,9 +16,9 @@ export class Root extends React.Component {
                 </div>
                 <hr/>
                 <div id="main-container">
-                    <Main />
+                    <Main/>
                 </div>
             </div>
-        );
+        )
     }
 }

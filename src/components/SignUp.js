@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 import { Home } from './Home';
 
 import omapp from '../omapp/omapp.js';
@@ -30,7 +31,7 @@ export class SignUp extends Component{
                 omapp.completeRegDB('','',this.refs.nickText.value,idPlan,authLevel, this);
             }else{
                 omapp.completeRegDB(this.refs.email.value,this.refs.psw.value,
-                    this.refs.nickText.value,idPlan,authLevel, this);
+                this.refs.nickText.value,idPlan,authLevel, this);
             }
             
         }
@@ -108,6 +109,7 @@ export class SignUp extends Component{
             //No hay registro   
             return(
                 <div> 
+
                         { omapp.dataUser.style != 'g' &&
                             //Si la forma de login es diferente a google para registrar
                             //MOstrar esto
@@ -172,7 +174,7 @@ export class SignUp extends Component{
             ) 
         }else{
             console.log("Sing > home");
-            return (<Home/>)
+            return (<h1>PUPU</h1>)
         }
     }
 }
