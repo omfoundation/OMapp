@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom';
+
+import { SignUp } from './SignUp';
 
 import omapp from '../omapp/omapp.js';
 
 import '../css/loader.css';
 
-class Loading extends Component{
+export class Loading extends Component{
     constructor(props){
         super(props);
 
@@ -24,11 +25,9 @@ class Loading extends Component{
                 <div className="loader"></div>
             )
         }else{
-            return <Redirect to='/signup'/>
+            return <SignUp/>
         }
 
         
     }
 }
-
-export default Loading;

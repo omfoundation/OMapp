@@ -92,8 +92,10 @@ var omapp = {
                 //OK
                 //console.log(result);
                 //const user = result.user;
+                console.log('result -> ' + result);
                 omapp.dataUser.user = result.user;
-
+                console.log(omapp.dataUser.user);
+                
                 let sta = component.state;
                 sta.user = omapp.dataUser.user;
 

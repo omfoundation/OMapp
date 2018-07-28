@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router} from 'react-router-dom';
 
-import {render} from "react-dom";
+import { render } from "react-dom";
 
-import {Root} from "./components/Root";
+import { Root } from "./components/Root";
 
 import './css/App.css';
 import './css/index.css';

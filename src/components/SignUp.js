@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom';
+
+import { Home } from './Home';
 
 import omapp from '../omapp/omapp.js';
 
@@ -74,7 +75,7 @@ export class SignUp extends Component{
             }else{
                 alert("Introduce una clave valida!");
                 return false;
-            }
+            }   
         }
         
         //Verificamos nick
@@ -171,7 +172,7 @@ export class SignUp extends Component{
             ) 
         }else{
             console.log("Sing > home");
-            return <Redirect to='/home'/>
+            return (<Home/>)
         }
     }
 }

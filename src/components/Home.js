@@ -1,6 +1,8 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 
+import { Access } from './Access';
+
 import OMAppComponent from './OMAppComponent';
 import { isLong } from 'long';
 import omapp from '../omapp/omapp';
@@ -47,11 +49,11 @@ export class Home extends OMAppComponent{
                     </p>
                     <button onClick={this.LogOutClick}>Cerrar sesión</button>
                 </div>
-            );
+            )
         }else{
             //No hay datos de user/no logeado
-            console.log('Home > login');
-            return <Redirect to='/'/>
+            console.log('No hay datos de userio. No logeado');
+            return (<Access/>)
         }
         
     }

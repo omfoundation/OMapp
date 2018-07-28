@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
 
+import { Home } from './Home';
+
 import omapp from '../omapp/omapp.js';
 
 const catURL = 'http://3.bp.blogspot.com/_tqK9UvJpH7I/TMc9tzPSFjI/AAAAAAAAEI0/dOwLJqp9M6U/s1600/lindo-gatito.jpg';
@@ -17,7 +19,7 @@ class FeedScreen extends Component{
                 <img src={catURL} height="300"  alt="gatito"/>
             );
         }else{
-            return <Redirect to='/'/>
+            return <Home/>
         }
     }
 }

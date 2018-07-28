@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import {Redirect, Link} from 'react-router-dom';
 
+import { Home } from './Home';
+import { Loading } from './Loading';
+import { SignUp } from './SignUp';
+
+
 import '../css/access.css'
 
 import omapp from '../omapp/omapp.js';
@@ -67,7 +72,7 @@ export class Access extends Component{
 
     render(){
         console.log('Access', this.state);
-        //if (!this.state.user){
+        if (!this.state.user){
             //Si no esta login
                 return(
                     <div>
@@ -117,29 +122,26 @@ export class Access extends Component{
                      </div>
                 ) 
         
-        //}
-        /*
+        }
         else{
             //Si esta login en google auth pero no sabemos db
             
             if(this.state.inDB){
                 //existe en db
                 console.log('Access > home');
-                return <Redirect to='/home'/>
+                return <Home/>
             }else{
                 //no existe en db
                 if(this.state.inDB == null){
                     console.log('Access > loader');
-                    return <Redirect to='/load'/>
+                    return <Loading/>
                 }else{
                     console.log('Access > signup');
-                    return <Redirect to='/signup'/>
+                    return <SignUp/>
                 }
                 
             }
             
-        }
-        */
-        
+        }   
     }
 }

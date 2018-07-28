@@ -17,10 +17,13 @@ export class Main extends React.Component {
     render() {
         console.log('Access', this.state);
         if (!this.state.user){
-            return (<Access/>);
+            return (<Access/>)
         }
         else if (this.state.inDB) {
-            return (<Home/>);
+            return (<Home/>)
+        }
+        else {
+            return (<Access />)
         }
     }
 }
