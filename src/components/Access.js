@@ -83,86 +83,97 @@ export class Access extends Component{
 
     }
 
+    signInWithGoogleClickHandler(){
+        this.setState({loading: true});
+        omapp.setLogStyle('email');
+        omapp.signInWithGoogle(this)
+        
+        //this.setState({referrer: '/signup'});
+
+    }
+
+
     render(){
         console.log('Access', this.state);
-        if (this.state.referrer != null) return <Redirect to={this.state.referrer} />;
-        if (!this.state.user){
+        if (omapp.getUser() === null){
             //Si no esta login
-                return(
-                    <div>
-{/*
-                <Router >
-                    
-                    <Route path="/signup" component={SignUp} />
-            </Router>
-*/}
-                        <p className="App-intro">
-                            Para disfrutar de los servicios que ofrece la plataforma desde registrarte o iniciar sesion.
-                        </p>
-                        <button  onClick={() => this.openModalLogIn()}>Iniciar sesion</button>
-                        <br/>
-                        <button onClick={()=>{this.openModalRes()}} >Registrarse</button>
+            return(
+                <div>
 
-                        {/*****************Iniciar sesion modal *************/}
-                        <div ref="modLogIn" className="modal"> 
-                            {/* Modal Content */}
-                            <div className="modal-content animate">
-                            <span className="close red" onClick={() => this.closeModalLogIn()}>&times;</span>
+                    <p className="App-intro">
+                        Para disfrutar de los servicios que ofrece la plataforma desde registrarte o iniciar sesion.
+                    </p>
+                    <button  onClick={() => this.openModalLogIn()}>Iniciar sesion</button>
+                    <br/>
+                    <button onClick={()=>{this.openModalRes()}} >Registrarse</button>
 
-                                <div className="container">
-                                    <label htmlFor="uemail"><b>Email</b></label>
-                                    <input type="text" placeholder="Enter email" ref="uemail" required />
+                    {/*****************Iniciar sesion modal *************/}
+                    <div ref="modLogIn" className="modal"> 
+                        {/* Modal Content */}
+                        <div className="modal-content animate">
+                        <span className="close red" onClick={() => this.closeModalLogIn()}>&times;</span>
 
-                                    <label htmlFor="upsw"><b>Contraseña</b></label>
-                                    <input type="password" placeholder="Enter contraseña" ref="upsw" required />
+                            <div className="container">
+                                <label htmlFor="uemail"><b>Email</b></label>
+                                <input type="text" placeholder="Enter email" ref="uemail" required />
 
-                                    <button type="submit" className="btn greenBG" onClick={this.processLogIn}>Iniciar sesion</button>
-                                    <br/>
-                                    <button  onClick={() => {omapp.signInWithGoogle(this)}}>Entra con Google</button>
-                                </div>
-                            </div>
-                        </div>
+                                <label htmlFor="upsw"><b>Contraseña</b></label>
+                                <input type="password" placeholder="Enter contraseña" ref="upsw" required />
 
-
-                        {/***********Registro modal***************/}
-
-                        <div ref="modRes" className="modal">
-                            <div className="modal-content">
-                                <span className="close" onClick={() => this.closeModalRes()}>&times;</span>
-                                <h2>Registro</h2>
-                                <p>Selecciona tu metodo preferido:</p>
-                                <a className="btn"><Link to={ '/signup' } onClick={()=>{this.registerWithEmailPasswordClickHandler()}}>Con email y contraseña</Link></a>
+                                <button type="submit" className="btn greenBG" onClick={this.processLogIn}>Iniciar sesion</button>
                                 <br/>
-                                <button onClick={() => {omapp.signInWithGoogle(this)}}>Con cuenta Google</button>
+                                <button  onClick={() => {omapp.signInWithGoogle(this)}}>Entra con Google</button>
+                                <Link to={ '/access'} onClick={()=>{this.signInWithGoogleClickHandler(this)}}>Entra con Google 2</Link>
                             </div>
+                        </div>
+                    </div>
 
+
+                    {/***********Registro modal***************/}
+
+                    <div ref="modRes" className="modal">
+                        <div className="modal-content">
+                            <span className="close" onClick={() => this.closeModalRes()}>&times;</span>
+                            <h2>Registro</h2>
+                            <p>Selecciona tu metodo preferido:</p>
+                            <a className="btn"><Link to={ '/signup' } onClick={()=>{this.registerWithEmailPasswordClickHandler()}}>Con email y contraseña</Link></a>
+                            <br/>
+                            <button onClick={() => {this.signInWithGoogleClickHandler(this)}}>Con cuenta Google</button>
                         </div>
 
+                    </div>
 
-                     </div>
+                </div>
 
-                ) 
-        
+            ) 
         }
         else{
+
             //Si esta login en google auth pero no sabemos db
-            
-            if(this.state.inDB){
+
+            console.log('probando contenido de user: ', omapp.getUser().user);
+
+            if (this.state.loading) {
+                return (
+                    <Loading referrer="/access"/>
+                )                
+            }
+
+            console.log('User is registered? ' + omapp.isUserRegistered(omapp.getUser()));
+            if(omapp.isUserRegistered(omapp.getUser())){
                 //existe en db
-                console.log('Access > home');
-                return <h1>pupu1</h1>
+                console.log('>>>>> home');
+                return (
+                        <Route path="/home" component={Loading} />
+                )
             }else{
                 //no existe en db
-                if(this.state.inDB == null){
-                    console.log('Access > loader');
-                    return <h1>pupu2</h1>
-                }else{
-                    console.log('Access > signup');
-                    return <h1>pupu3</h1>
-                }
-                
-            }
-            
+                console.log('>>>>> signup');
+                //return <SignUp/> 
+                return (
+                        <Route path="/signup" component={SignUp} />
+                )
+            }            
         }   
     }
 }

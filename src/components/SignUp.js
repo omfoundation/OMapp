@@ -105,76 +105,72 @@ export class SignUp extends Component{
         }
         */
         //!(omapp.dataUser.inDB)
-        if(!omapp.isLogIn()){
-            //No hay registro   
-            return(
-                <div> 
 
-                        { omapp.dataUser.style != 'g' &&
-                            //Si la forma de login es diferente a google para registrar
-                            //MOstrar esto
-                            <div>
-                                <form>
-                                    <label><b>Email</b></label>
-                                    <input type="text" placeholder="Enter Email" ref="email" required />
-                                
-                                    <label><b>Password</b> (6 caracteres min.)</label>
-                                    <input type="password" placeholder="Enter Password" ref="psw" required />
-                                
-                                    <label><b>Repeat Password</b></label>
-                                    <input type="password" placeholder="Repeat Password" ref="pswRepeat" required />
-                                </form>
-                            </div>
+        return(
+            <div> 
+
+                    { omapp.dataUser.style != 'g' &&
+                        //Si la forma de login es diferente a google para registrar
+                        //MOstrar esto
+                        <div>
+                            <form>
+                                <label><b>Email</b></label>
+                                <input type="text" placeholder="Enter Email" ref="email" required />
                             
-                        }
-
-                        <br/>
-                        <label><b>Apodo/Nick:</b></label>
-                        <br/>
-                        <input className='iNick' maxLength="13" type='text' placeholder='Introduzca nick' ref='nickText'required />
-                        <br/>
-                        <br/>
-
-                        <div className='plans'>
-                                <div className="columns">
-                                <ul className="price">
-                                    <li className="header">Basico</li>
-                                    <li className="grey">Gratis</li>
-                                    <li>Id plan: 1</li>
-                                    <li>Nivel de acceso: 1</li>
-                                    <li>10GB</li>
-                                    <li className="grey"><a href="#" onClick={() =>{this.completarReg(1,1)}} className="button">Seleccionar</a></li>
-                                </ul>
-                                </div>
-        
-                                <div className="columns">
-                                <ul className="price">
-                                    <li className="header">Pro</li>
-                                    <li className="grey">Bs.F 2.99 / mes</li>
-                                    <li>Id plan: 2</li>
-                                    <li>Nivel de acceso: 3</li>
-                                    <li>100GB</li>
-                                    <li className="grey"><a href="#" onClick={() =>{this.completarReg(2,3)}} className="button">Seleccionar</a></li>
-                                </ul>
-                                </div>
-        
-                                <div className="columns">
-                                <ul className="price">
-                                    <li className="header">Premium</li>
-                                    <li className="grey">Bs.S 10 / año</li>
-                                    <li>Id plan: 3</li>
-                                    <li>Nivel de acceso: 5</li>
-                                    <li>10TB</li>
-                                    <li className="grey"><a href="#" onClick={() =>{this.completarReg(3,5)}} className="button">Seleccionar</a></li>
-                                </ul>
-                                </div>
+                                <label><b>Password</b> (6 caracteres min.)</label>
+                                <input type="password" placeholder="Enter Password" ref="psw" required />
+                            
+                                <label><b>Repeat Password</b></label>
+                                <input type="password" placeholder="Repeat Password" ref="pswRepeat" required />
+                            </form>
                         </div>
                         
-                </div>
-            ) 
-        }else{
-            console.log("Sing > home");
-            return (<h1>PUPU</h1>)
-        }
+                    }
+
+                    <br/>
+                    <label><b>Apodo/Nick:</b></label>
+                    <br/>
+                    <input className='iNick' maxLength="13" type='text' placeholder='Introduzca nick' ref='nickText'required />
+                    <br/>
+                    <br/>
+
+                    <div className='plans'>
+                            <div className="columns">
+                            <ul className="price">
+                                <li className="header">Basico</li>
+                                <li className="grey">Gratis</li>
+                                <li>Id plan: 1</li>
+                                <li>Nivel de acceso: 1</li>
+                                <li>10GB</li>
+                                <li className="grey"><a href="#" onClick={() =>{this.completarReg(1,1)}} className="button">Seleccionar</a></li>
+                            </ul>
+                            </div>
+    
+                            <div className="columns">
+                            <ul className="price">
+                                <li className="header">Pro</li>
+                                <li className="grey">Bs.F 2.99 / mes</li>
+                                <li>Id plan: 2</li>
+                                <li>Nivel de acceso: 3</li>
+                                <li>100GB</li>
+                                <li className="grey"><a href="#" onClick={() =>{this.completarReg(2,3)}} className="button">Seleccionar</a></li>
+                            </ul>
+                            </div>
+    
+                            <div className="columns">
+                            <ul className="price">
+                                <li className="header">Premium</li>
+                                <li className="grey">Bs.S 10 / año</li>
+                                <li>Id plan: 3</li>
+                                <li>Nivel de acceso: 5</li>
+                                <li>10TB</li>
+                                <li className="grey"><a href="#" onClick={() =>{this.completarReg(3,5)}} className="button">Seleccionar</a></li>
+                            </ul>
+                            </div>
+                    </div>
+                    
+            </div>
+        ) 
+
     }
 }

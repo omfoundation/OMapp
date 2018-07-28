@@ -30,6 +30,10 @@ var omapp = {
         }
     },
 
+    isUserKnown : function() {
+        return this.dataUser.user !== null;
+    },
+
     setLogStyle : function(style){
         this.dataUser.style = style;
     },
@@ -49,7 +53,7 @@ var omapp = {
                 if (doc.exists) {
                     //Usuario existe
                     console.log("Document data:", doc.data());
-                    console.log('Usuario existe en db');
+                    console.log('omapp.checkReg - Usuario existe en db');
 
                     omapp.dataUser.inDB = true;
                     omapp.dataUser.nick = doc.data().nick;
@@ -86,24 +90,68 @@ var omapp = {
 
     },
 
+    isUserRegistered : function(user) {
+       
+        //verificamos si el user esta registrado en la db
+        console.log('****** omapp.isUserRegistered ******');
+        if(user){
+            let email = user.email;
+            console.log('email:' + email);
+    
+            let userDB = db.collection("users");
+            let userRef = userDB.doc(email);
+
+            userRef.get().then(function(doc) {
+            if (doc.exists) {
+                //Usuario existe
+                console.log("Document data:", doc.data());
+                console.log('isUserRegistered - Usuario existe en db');
+
+                //omapp.dataUser.inDB = true;
+                //omapp.dataUser.nick = doc.data().nick;
+                //omapp.dataUser.email = email;   
+
+                console.log('----- omapp.isUserRegistered ------');
+                return true;
+            
+            } else {
+                // doc.data() will be undefined in this case
+                //console.log("No such document!");
+                console.log('Usuario NO existe en db2');
+                omapp.dataUser.inDB = false;
+
+                console.log('----- omapp.isUserRegistered ------');
+                return false;
+            }
+        }).catch(function(error) {
+            //No existe user
+            console.log("Error getting document:", error);
+            console.log('Usuario NO existe en db ');
+            
+            omapp.dataUser.inDB = false;
+
+
+        });
+            
+        }
+
+    },
+
+    getUser() {
+        return omapp.dataUser.user;
+    },
+
 	signInWithGoogle : function(component){
         auth.signInWithPopup(provider)
             .then((result) => {
-                //OK
-                //console.log(result);
-                //const user = result.user;
-                console.log('result -> ' + result);
+
                 omapp.dataUser.user = result.user;
-                console.log(omapp.dataUser.user);
-                
-                let sta = component.state;
-                sta.user = omapp.dataUser.user;
+
+                component.setState({user: omapp.dataUser.user});
 
                 omapp.setLogStyle('g');
-                component.setState(sta);
-
-                //component.setState(omapp.dataUser);
- 
+                
+                console.log('function: signInWithGoogle - state: ', component.state);
 
             }).catch(function(error) {
                 //Error 
@@ -164,7 +212,7 @@ var omapp = {
 			if (user) {
 				component.setState({
                     user: user,
-                    inDB: omapp.checkReg(user)
+                    inDB: omapp.getUser(user)
                 });
 			} 
 		});	

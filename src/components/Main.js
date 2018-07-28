@@ -17,16 +17,20 @@ export class Main extends React.Component {
         this.location = props.location;
     }
 
+    isUserKnown(){
+        omapp.isUserKnown();
+    }
+
     render() {
         console.log('Access', this.state);
-        if (!this.state.user){
+        if (!this.isUserKnown()){
             return (<Route path="/" component={Access} />)
         }
-        else if (this.state.inDB) {
+        else if (!omapp.isUserRegistered(this)) {
             return (<Home/>)
         }
         else {
-            return (<Route path="/access" component={Access} />)
+            return (<Route path="/error" component={Error} />)
         }
     }
 }

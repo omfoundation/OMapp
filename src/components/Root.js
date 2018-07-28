@@ -7,7 +7,7 @@ import { SignUp } from "./SignUp";
 
 import '../css/root.css';
 
-export class Root extends React.Component {
+export default class Root extends React.Component {
     render() {
         return (
             <div id="root-container">
