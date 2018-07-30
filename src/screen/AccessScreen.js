@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {Redirect, Link} from 'react-router-dom';
 
-import '../css/access.css'
+//import '../css/access.css'
+
+import { Button, Modal, Icon, Form } from 'semantic-ui-react'
 
 import omapp from '../omapp/omapp.js';
 
@@ -12,22 +14,6 @@ class AccessScreen extends Component{
         this.state = omapp.dataUser;  
         //this.state = () => omapp.getCurrentuser().then(result => result);
         this.processLogIn = this.processLogIn.bind(this);
-    }
-
-    openModalLogIn(){
-        this.refs.modLogIn.style.display= "block";
-    }
-
-    closeModalLogIn(){
-        this.refs.modLogIn.style.display= 'none';
-    }
-    
-    openModalRes(){
-        this.refs.modRes.style.display= "block";
-    }
-
-    closeModalRes(){
-        this.refs.modRes.style.display= 'none';
     }
 
     checkLogData(){
@@ -70,48 +56,52 @@ class AccessScreen extends Component{
         if (!this.state.user){
             //Si no esta login
                 return(
-                    <div>
+                    <div className="AccssScreen">
                         <p className="App-intro">
                             Para disfrutar de los servicios que ofrece la plataforma desde registrarte o iniciar sesion.
                         </p>
-                        <button  onClick={() => this.openModalLogIn()}>Iniciar sesion</button>
-                        <br/>
-                        <button onClick={()=>{this.openModalRes()}} >Registrarse</button>
 
                         {/*****************Iniciar sesion modal *************/}
-                        <div ref="modLogIn" className="modal"> 
-                            {/* Modal Content */}
-                            <div className="modal-content animate">
-                            <span className="close red" onClick={() => this.closeModalLogIn()}>&times;</span>
+                        <Modal trigger={<Button color="black">Iniciar sesion</Button>} closeIcon> 
+                            <Modal.Header ><Icon name="sign in"/>Log In</Modal.Header>
+                                <Modal.Content>
+                                    <Form>
+                                        <Form.Field>
+                                            <label htmlFor="uemail">Email</label>
+                                            <input type="text" placeholder="Enter email" ref="uemail" required />
+                                        </Form.Field>
+                                    </Form>
 
-                                <div className="container">
-                                    <label htmlFor="uemail"><b>Email</b></label>
-                                    <input type="text" placeholder="Enter email" ref="uemail" required />
+                                    <Form>
+                                        <Form.Field>
+                                            <label htmlFor="upsw">Contraseña</label>
+                                            <input type="password" placeholder="Enter contraseña" ref="upsw" required />
+                                        </Form.Field>
+                                    </Form>                 
+                                </Modal.Content>
 
-                                    <label htmlFor="upsw"><b>Contraseña</b></label>
-                                    <input type="password" placeholder="Enter contraseña" ref="upsw" required />
+                                <Modal.Actions>
+                                    <Button type="submit" className="btn greenBG" onClick={this.processLogIn}>Iniciar sesion</Button>
+                                    <Button  onClick={() => {omapp.signInWithGoogle(this)}}> <Icon name="google"/>Entra con Google</Button>
+                                </Modal.Actions>         
+                        </Modal>
 
-                                    <button type="submit" className="btn greenBG" onClick={this.processLogIn}>Iniciar sesion</button>
-                                    <br/>
-                                    <button  onClick={() => {omapp.signInWithGoogle(this)}}>Entra con Google</button>
-                                </div>
-                            </div>
-                        </div>
+                        <br />
+                        <br />
 
+                        {/*****************Registro modal *************/}
+                        <Modal trigger={<Button color="black">Registrarse</Button>} closeIcon>
+                            <Modal.Header ><Icon name="signup"/>Sign Up</Modal.Header>
 
-                        {/***********Registro modal***************/}
-
-                        <div ref="modRes" className="modal">
-                            <div className="modal-content">
-                                <span className="close" onClick={() => this.closeModalRes()}>&times;</span>
-                                <h2>Registro</h2>
-                                <p>Selecciona tu metodo preferido:</p>
-                                <a className="btn"><Link to='/signup' onClick={()=>{omapp.setLogStyle('email')}}>Con email y contraseña</Link></a>
-                                <br/>
-                                <button onClick={() => {omapp.signInWithGoogle(this)}}>Con cuenta Google</button>
-                            </div>
-
-                        </div>
+                            <Modal.Content>
+                                <Button.Group size='large'>
+                                        <Link to='/signup' ><Button onClick={()=>{omapp.setLogStyle('email')}}>Con email y contraseña</Button></Link>
+                                        <Button.Or />
+                                        <Button onClick={() => {omapp.signInWithGoogle(this)}}><Icon name="google"/>Con cuenta Google</Button>
+                                </Button.Group>
+                            </Modal.Content>
+                        </Modal>
+                    
 
 
                      </div>

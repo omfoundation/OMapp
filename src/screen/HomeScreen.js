@@ -2,7 +2,9 @@ import React from 'react';
 import {Redirect} from 'react-router-dom';
 
 import OMAppComponent from '../components/OMAppComponent';
-import { isLong } from 'long';
+
+import {Button} from 'semantic-ui-react'
+
 import omapp from '../omapp/omapp';
 
 //import firebase, {auth, provider} from '../firebase';
@@ -45,7 +47,7 @@ class HomeScreen extends OMAppComponent{
                         <br/>
                         <strong>Correo: </strong> {omapp.dataUser.email}
                     </p>
-                    <button onClick={this.LogOutClick}>Cerrar sesión</button>
+                    <Button color='black' onClick={this.LogOutClick}>Cerrar sesión</Button>
                 </div>
             );
         }else{

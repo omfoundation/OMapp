@@ -5,6 +5,8 @@ import omapp from '../omapp/omapp.js';
 
 import '../css/signup.css';
 
+import { Button, Form } from 'semantic-ui-react'
+
 class SignUpScreen extends Component{
     constructor(props){
         super(props);
@@ -111,25 +113,35 @@ class SignUpScreen extends Component{
                             //Si la forma de login es diferente a google para registrar
                             //MOstrar esto
                             <div>
-                                <form>
-                                    <label><b>Email</b></label>
-                                    <input type="text" placeholder="Enter Email" ref="email" required />
-                                
-                                    <label><b>Password</b> (6 caracteres min.)</label>
-                                    <input type="password" placeholder="Enter Password" ref="psw" required />
-                                
-                                    <label><b>Repeat Password</b></label>
-                                    <input type="password" placeholder="Repeat Password" ref="pswRepeat" required />
-                                </form>
+                                <Form>
+                                    <Form.Field>
+                                        <label>Email</label>
+                                        <input type="text" placeholder="Enter Email" ref="email" required />
+                                    </Form.Field>
+
+                                    <Form.Field>
+                                        <label>Password (6 caracteres min.)</label>
+                                        <input type="password" placeholder="Enter Password" ref="psw" required />
+                                    </Form.Field>
+
+                                    <Form.Field>
+                                        <label>Repeat Password</label>
+                                        <input type="password" placeholder="Repeat Password" ref="pswRepeat" required />
+                                    </Form.Field>
+
+                                </Form>
                             </div>
                             
                         }
 
                         <br/>
-                        <label><b>Apodo/Nick:</b></label>
-                        <br/>
-                        <input className='iNick' maxLength="13" type='text' placeholder='Introduzca nick' ref='nickText'required />
-                        <br/>
+                        <Form>
+                            <Form.Field>
+                                <label>Apodo/Nick:</label>
+                                <input className='iNick' maxLength="13" type='text' placeholder='Introduzca nick' ref='nickText'required />
+                            </Form.Field>
+                            <br/>
+                        </Form>
                         <br/>
 
                         <div className='plans'>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Router, Switch, Route } from "react-router-dom";
+import {Router, Switch, Route, Link } from "react-router-dom";
+
 
 import './css/App.css';
 
@@ -12,13 +13,14 @@ import NotFoundScreen from './screen/NotFoundScreen.js';
 import NavBar from './components/navBar.js'
 
 
-
 class App extends Component {
+
+
   render() {
     return (
       <div className="App">
-          <NavBar/>
-  
+          <NavBar />
+
           <Switch>
             <Route exact path='/' component={AccessScreen}/>
             <Route path='/load' component={LoadingScreen}/>  
@@ -26,8 +28,7 @@ class App extends Component {
             <Route path='/home' component={HomeScreen}/> 
             <Route path='/feed' component={FeedScreen}/> 
             <Route path="*" component={NotFoundScreen} />
-          </Switch>
-
+          </Switch> 
       </div>
       );
   }
