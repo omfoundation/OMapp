@@ -144,17 +144,11 @@ var omapp = {
 	signInWithGoogle : function(component){
         auth.signInWithPopup(provider)
             .then((result) => {
-
                 omapp.dataUser.user = result.user;
-
-                component.setState({user: omapp.dataUser.user});
-
+                component.setState({loginStatus: "AUTHENTICATED", loading: false});
                 omapp.setLogStyle('g');
-                
                 console.log('function: signInWithGoogle - state: ', component.state);
-
             }).catch(function(error) {
-                //Error 
                 console.log(error);
         });
     },
@@ -173,15 +167,32 @@ var omapp = {
                 
             sta.user = omapp.dataUser.user;
             sta.inDB = omapp.dataUser.inDB;
+            sta.loading = false;
             
+            if(sta.inDB) {
+                sta.loginStatus = "REGISTERED";
+            }
+            else{
+                sta.loginStatus = "NOT_AUTHENTICATED";
+            }
+            
+            sta.loginStatus = "REGISTERED";
+
             component.setState(sta);
+
+            console.log(component.state);
 
         }).catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-
             console.log(errorCode, errorMessage);
+            component.setState({loading:false, loginStatus: "NOT_AUTHENTICATED", error:{code: 0, message: "Usuario no encontrado en la BD"}});
+            
+
+            console.log(component.state);
+
+
         });
     },
 
