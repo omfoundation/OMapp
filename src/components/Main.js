@@ -35,6 +35,10 @@ export class Main extends React.Component {
         omapp.signInWitgEmail(username, password, this);
     }
 
+    signUpHandler(){
+        this.setState({loginStatus: "SIGNUP"});
+    }
+
     render() {
 
         if (this.state.loading){
@@ -42,13 +46,15 @@ export class Main extends React.Component {
         }
 
         switch(this.state.loginStatus) {
+            case "SIGNUP":
+                return <SignUp/>
             case "NOT_AUTHENTICATED":
                 return (<div>
                         <Messages error={this.state.error}/>
                         <Access 
                             googleAuthenticationHandler={this.googleAuthenticationHandler.bind(this)}
-                            processLogIn={this.processLogIn.bind(this)}>
-                            
+                            processLogIn={this.processLogIn.bind(this)}
+                            signUpHandler={this.signUpHandler.bind(this)}>
                        </Access>
                        </div>)
             case "AUTHENTICATED":

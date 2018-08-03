@@ -40,8 +40,7 @@ export class Access extends Component{
     }
 
     openModalRes(){
-        this.state.showLogin = true;
-        
+        this.props.signUpHandler();   
     }
 
     closeModalRes(){
