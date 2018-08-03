@@ -89,58 +89,7 @@ var omapp = {
             }
 
     },
-
-    isUserRegistered : function(user) {
-       
-        //verificamos si el user esta registrado en la db
-        console.log('****** omapp.isUserRegistered ******');
-        if(user){
-            let email = user.email;
-            console.log('email:' + email);
     
-            let userDB = db.collection("users");
-            let userRef = userDB.doc(email);
-
-            userRef.get().then(function(doc) {
-            if (doc.exists) {
-                //Usuario existe
-                console.log("Document data:", doc.data());
-                console.log('isUserRegistered - Usuario existe en db');
-
-                //omapp.dataUser.inDB = true;
-                //omapp.dataUser.nick = doc.data().nick;
-                //omapp.dataUser.email = email;   
-
-                console.log('----- omapp.isUserRegistered ------');
-                return true;
-            
-            } else {
-                // doc.data() will be undefined in this case
-                //console.log("No such document!");
-                console.log('Usuario NO existe en db2');
-                omapp.dataUser.inDB = false;
-
-                console.log('----- omapp.isUserRegistered ------');
-                return false;
-            }
-        }).catch(function(error) {
-            //No existe user
-            console.log("Error getting document:", error);
-            console.log('Usuario NO existe en db ');
-            
-            omapp.dataUser.inDB = false;
-
-
-        });
-            
-        }
-
-    },
-
-    getUser() {
-        return omapp.dataUser.user;
-    },
-
 	signInWithGoogle : function(component){
         auth.signInWithPopup(provider)
             .then((result) => {

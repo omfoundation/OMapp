@@ -25,15 +25,6 @@ export class Access extends Component{
         this.setState({showLogin:true})
     }
 
-    showLogin(){
-        this.setState({showLogin:true})
-    }
-
-    hideLogin(){
-        this.setState({showLogin:false});
-    }
-
-
     closeModalLogIn(){
         //this.refs.modLogIn.style.display= 'none';
         this.setState({showLogin:false})
