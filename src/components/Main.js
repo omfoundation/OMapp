@@ -32,7 +32,7 @@ export class Main extends React.Component {
 
     processLogIn(username, password) {
         this.setState({loading: true});
-        omapp.signInWitgEmail(username, password, this);
+        omapp.signInWithEmail(username, password, this);
     }
 
     signUpHandler(){

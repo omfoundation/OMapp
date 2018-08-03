@@ -89,7 +89,7 @@ var omapp = {
             }
 
     },
-    
+
 	signInWithGoogle : function(component){
         auth.signInWithPopup(provider)
             .then((result) => {
@@ -102,7 +102,7 @@ var omapp = {
         });
     },
     
-    signInWitgEmail : function(em,pass,component){
+    signInWithEmail : function(em,pass,component){
 
         auth.signInAndRetrieveDataWithEmailAndPassword(em,pass)
         .then(function(u){
