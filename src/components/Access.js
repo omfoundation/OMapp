@@ -16,17 +16,14 @@ export class Access extends Component{
     constructor(props){
         super(props);
         this.state = {showLogin:false};
-        //this.state = () => omapp.getCurrentuser().then(result => result);
         this.processLogIn = this.processLogIn.bind(this);
     }
 
     openModalLogIn(){
-        //this.refs.modLogIn.style.display= "block";
         this.setState({showLogin:true})
     }
 
     closeModalLogIn(){
-        //this.refs.modLogIn.style.display= 'none';
         this.setState({showLogin:false})
     }
 

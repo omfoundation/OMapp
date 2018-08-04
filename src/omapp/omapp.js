@@ -30,10 +30,6 @@ var omapp = {
         }
     },
 
-    isUserKnown : function() {
-        return this.dataUser.user !== null;
-    },
-
     setLogStyle : function(style){
         this.dataUser.style = style;
     },
@@ -246,11 +242,7 @@ var omapp = {
                 console.log(errorCode, errorMessage);
               });
         }
-
-        
     }
-
-    
 }
 
 export default omapp;
