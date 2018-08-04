@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route, Link, Redirect } from 'react-router-dom';
-
-import { BrowserRouter as Router } from 'react-router-dom';
-
-import { Home } from './Home';
-import { Loading } from './Loading';
-import { SignUp } from './SignUp';
-
+import { Link } from 'react-router-dom';
 
 import '../css/access.css'
 
@@ -63,7 +56,6 @@ export class Access extends Component{
                     <button onClick={()=>{this.openModalRes()}} >Registrarse</button>
 
                     {/*****************Iniciar sesion modal *************/}
-                    {console.log(loginStyle)}
                     <Login
                         style={loginStyle}
                         onCloseHandler={this.closeModalRes.bind(this)} 

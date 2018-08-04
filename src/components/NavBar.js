@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import '../css/nav.css';
-import OMAppComponent from './OMAppComponent';
 
 export class NavBar extends Component{
     

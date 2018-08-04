@@ -1,51 +1,25 @@
-import React from 'react';
-import {Redirect} from 'react-router-dom';
+import React, {Component} from 'react';
 
-import { Access } from './Access';
-
-import OMAppComponent from './OMAppComponent';
-import { isLong } from 'long';
-import omapp from '../omapp/omapp';
-
-//import firebase, {auth, provider} from '../firebase';
-//import '../css/App.css';
-
-export class Home extends OMAppComponent{
+export class Home extends Component {
     constructor(props){
         super(props);
-        
-        this.state = {
-            reRender: true
-        };
-         
-        this.LogOutClick = this.LogOutClick.bind(this);
-        //this.componentDidMount = this.componentDidMount.bind(this);
-
     };
 
     LogOutClick(){
-        //Cerrando sesion
-        this.omapp.signOut(this);
+        this.props.logoutHandler();
     }
-
-    /*componentDidMount() {
-        //Ayuda a mantener sesion y captar cambios
-       this.omapp.onMount(this);
-    }*/
     
     render(){
-
-        (
+        return (
             <div>
-                <img src={omapp.dataUser.user.photoURL || omapp.defaulPhoto} height="100"  alt="user"/>
+                <img src={this.props.user.photoURL || this.props.user.defaulPhoto} height="100"  alt="user"/>
                 <p>
-                    Hola {omapp.dataUser.nick}!
+                    Hola {this.props.user.nick}!
                     <br/>
-                    <strong>Correo: </strong> {omapp.dataUser.email}
+                    <strong>Correo: </strong> {this.props.user.email}
                 </p>
-                <button onClick={this.LogOutClick}>Cerrar sesión</button>
+                <button onClick={this.LogOutClick.bind(this)}>Cerrar sesión</button>
             </div>
-        )
-        
+        )  
     }
 }

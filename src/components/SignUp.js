@@ -11,44 +11,26 @@ export class SignUp extends Component{
     constructor(props){
         super(props);
 
-        this.state = {
-            user: omapp.dataUser.user,
-            inDB: omapp.dataUser.inDB,
-            style: omapp.dataUser.style,
-            reRender: false
-        };
-        //this.state = () => omapp.getCurrentuser().then(result => result);
-
         this.completarReg = this.completarReg.bind(this);
     }
 
     completarReg(idPlan, authLevel){
-        //chequeamos form
         if(this.checkForm()){
-            //console.log('completando: '+ txtName+ ' IdPla: ' + idPlan + ' lvel: ' +authLevel);
-
-            if(omapp.dataUser.style =='g'){
-                omapp.completeRegDB('','',this.refs.nickText.value,idPlan,authLevel, this);
-            }else{
-                omapp.completeRegDB(this.refs.email.value,this.refs.psw.value,
-                this.refs.nickText.value,idPlan,authLevel, this);
-            }
-            
+            this.props.completarRegHandler(this.refs.email.value, this.refs.psw.value, this.refs.nickText.value, idPlan, authLevel);
+        }
+        else{
+            alert('ERROR - SignUp.js - completarReg');
         }
     }
 
     checkForm(){
-        if(!(omapp.dataUser.style == 'g')){
+        if(!(this.props.signUpMode == 'g')){
+            
             //Registro por email
-
             let txtEmail = this.refs.email.value;
             let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-            if((txtEmail.replace(/\s/g,'') != "") &&(txtEmail.match(mailformat))){
-                //Chequeamos que no sea solo blancos
-                //ok
-                //return true;
-            }else{
+            if(!(txtEmail.replace(/\s/g,'') != "") &&(txtEmail.match(mailformat))){
                 alert("Introduce un email valido!");
                 return false;
             }
@@ -57,22 +39,21 @@ export class SignUp extends Component{
             let txtPasRe = this.refs.pswRepeat.value;
 
             if(txtPas.replace(/\s/g,'') != ""){
+                
                 //Chequeamos que no sea solo blancos
-                //ok
                 if(txtPas == txtPasRe){
+                    
                     //Claves iguales?
-                    //ok
                     if((txtPas.legth < 6)){
+                        
                         //No es mayor a 6
                         alert("La clave debe ser de mayor longitud (min. 6char)");
                         return false;
                     }
-                    //return true;
                 }else{
                     alert("Ambas claves deben ser iguales!");
                     return false;
                 }
-
             }else{
                 alert("Introduce una clave valida!");
                 return false;
@@ -82,10 +63,7 @@ export class SignUp extends Component{
         //Verificamos nick
         let txtName = this.refs.nickText.value;
 
-        if(txtName != ""){
-            //Listo
-            //return true;
-        }else{
+        if(txtName === ""){
             //No ha sido introducido
             alert("Introduce un nick!");
             return false;
@@ -94,24 +72,13 @@ export class SignUp extends Component{
         return true;
     }
 
-
     render(){
-        console.log('signup', this.state);
-
-        /*
-        if(!omapp.isLogIn()){
-            console.log("Sing > login")
-            return <Redirect to='/'/>
-        }
-        */
-        //!(omapp.dataUser.inDB)
-
         return(
             <div> 
 
-                    { omapp.dataUser.style != 'g' &&
+                    { this.props.signUpMode != 'g' &&
                         //Si la forma de login es diferente a google para registrar
-                        //MOstrar esto
+                        //Mostrar esto
                         <div>
                             <form>
                                 <label><b>Email</b></label>
@@ -123,8 +90,7 @@ export class SignUp extends Component{
                                 <label><b>Repeat Password</b></label>
                                 <input type="password" placeholder="Repeat Password" ref="pswRepeat" required />
                             </form>
-                        </div>
-                        
+                        </div>  
                     }
 
                     <br/>

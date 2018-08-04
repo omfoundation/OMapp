@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 
-import { SignUp } from './SignUp';
-
-import omapp from '../omapp/omapp.js';
-
 import '../css/loader.css';
 
 export class Loading extends Component{
@@ -16,18 +12,8 @@ export class Loading extends Component{
     }
 
     render(){
-        if(omapp.dataUser.inDB == null){
-            omapp.checkReg(this);
-        }
-
-        if(this.state.loader){
-            return(
-                <div className="loader"></div>
-            )
-        }else{
-            return <SignUp/>
-        }
-
-        
+        return(
+            <div className="loader"></div>
+        ) 
     }
 }

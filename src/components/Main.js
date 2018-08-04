@@ -39,6 +39,33 @@ export class Main extends React.Component {
         this.setState({loginStatus: "SIGNUP"});
     }
 
+    getSignUpMode(){
+        return omapp.dataUser.style;
+    }
+
+    getUSer(){
+        return omapp.dataUser.user;
+    }
+
+    getDefaultPhoto(){
+        return omapp.defaulPhoto;
+    }
+    logoutHandler(){
+        return omapp.signOut(this);
+    }
+
+    completarReg(email,password,nickname,idPlan, authLevel){
+        if(omapp.dataUser.style =='g'){
+            omapp.completeRegDB('','',nickname,idPlan,authLevel, this.changeLoginStatusToRegistered.bind(this), (error) => alert(error));
+        }else{
+            omapp.completeRegDB(email,password,nickname,idPlan,authLevel, this.changeLoginStatusToRegistered.bind(this), (error) => alert(error));
+        } 
+    }
+
+    changeLoginStatusToRegistered(){
+        this.setState({loginStatus: "REGISTERED"});
+    }
+
     render() {
 
         if (this.state.loading){
@@ -47,7 +74,7 @@ export class Main extends React.Component {
 
         switch(this.state.loginStatus) {
             case "SIGNUP":
-                return <SignUp/>
+                return <SignUp signUpMode={this.getSignUpMode} completarRegHandler={this.completarReg.bind(this)}/>
             case "NOT_AUTHENTICATED":
                 return (<div>
                         <Messages error={this.state.error}/>
@@ -58,9 +85,9 @@ export class Main extends React.Component {
                        </Access>
                        </div>)
             case "AUTHENTICATED":
-                return <SignUp/>
+                return <SignUp  signUpMode={this.getSignUpMode} completarRegHandler={this.completarReg.bind(this)}/>
             case "REGISTERED":
-                return <Home/>
+                return <Home user={this.getUser} defaultPhoto={this.getDefaultPhoto} logoutHandler={this.logoutHandler}/>
             default:
                 return <h1>ERROR - Shouldn't happen</h1>
         }
