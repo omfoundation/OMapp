@@ -209,18 +209,18 @@ var omapp = {
             //Registro por email
             //REGISTRAMOS CON FIREBASE
             auth.createUserAndRetrieveDataWithEmailAndPassword(email, pass).
-            then(function(u){
-                console.log('Logrado', u);
-                omapp.dataUser.user = u;
-                omapp.RegDB(email, docData, nick, successCallback, errorCallback);
-            })
-            .catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log(errorCode, errorMessage);
-                errorCallback(error);
-            });
+                then(function(u){
+                    console.log('Logrado', u);
+                    omapp.dataUser.user = u;
+                    omapp.RegDB(email, docData, nick, successCallback, errorCallback);
+                })
+                .catch(function(error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    console.log(errorCode, errorMessage);
+                    errorCallback(error);
+                });
         }
     }
 }
