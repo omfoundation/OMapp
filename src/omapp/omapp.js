@@ -1,4 +1,5 @@
 import firebase from '../firebase';
+import { resolve } from '../../node_modules/url';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 const auth = firebase.auth();
@@ -10,14 +11,15 @@ db.settings(settings);
 
 
 var omapp = {
-    defaulPhoto : 'http://sitelcity.com/wp-content/uploads/2015/04/default-user-image-300x300.png',
+    defaultPhotoURL : 'http://sitelcity.com/wp-content/uploads/2015/04/default-user-image-300x300.png',
     
     dataUser: {
         user: null,
         inDB: null,
         style: null,
         nick: null,
-        email: null
+        email: null,
+        photoURL: null
     },
 
     setLogStyle : function(style){
@@ -151,6 +153,24 @@ var omapp = {
             console.log(error);
         });
     },
+
+    signOutPromise : function(){
+        return new Promise(function(resolve, reject){
+            auth.signOut()
+            .then(() => {
+                omapp.dataUser = {
+                    user: null,
+                    inDB: null
+                };
+                
+                resolve();
+
+            }).catch(function(error) {
+                console.log(error);
+                reject(error);
+            });
+        })
+    },
 	
 	onMount : function(component){
 		firebase.auth().onAuthStateChanged((user) => {
@@ -169,26 +189,99 @@ var omapp = {
 
     },
 
-    RegDB(email,doc,nick, successCallback, errorCallback){
+    RegDB(email,doc,nick){
         //REGISTRAMOS EN NUESTRA BD
+
+
+
         db.collection('users').doc(email).set(doc)
             .then(function() {
                 console.log("Document successfully written!");
-
                 omapp.dataUser.inDB = true;
                 omapp.dataUser.nick = nick;
                 omapp.dataUser.email = email;
-
-                successCallback();
-
         }).catch(function(error) {
                 console.log("Registro incompleto");
                 console.log(error);
-                errorCallback(error);
+                throw error;
         });
     },
 
-    completeRegDB: function(email, pass, nick, idPlan, authLevel, successCallback, errorCallback){
+    RegDBPromise(email,doc,nick){
+        
+        //REGISTRAMOS EN NUESTRA BD
+        return new Promise(function (resolve, reject) {
+            db.collection('users').doc(email).set(doc)
+                .then(function() {
+                    omapp.dataUser.inDB = true;
+                    omapp.dataUser.nick = nick;
+                    omapp.dataUser.email = email;
+                    resolve(omapp.dataUser);
+            }).catch(function(error) {
+                    console.log(error);
+                    reject(error);
+            });
+        })
+    },
+
+    completeRegDBPromise: function(email,password,nickname,idPlan, authLevel){
+        
+        //email, pass, nick, idPlan, authLevel
+
+        return new Promise(
+            function(resolve, reject){
+                let fch = new Date();
+    
+                let docData = {
+                    type: omapp.dataUser.style,
+                    FechaUnion: fch,
+                    nick: nickname,
+                    plan: idPlan,
+                    authLevel: authLevel
+                }
+        
+                if(omapp.dataUser.style == 'g'){
+                    //Registro mediante google
+                    email = omapp.dataUser.user.email;
+                    omapp.RegDBPromise(email, docData, nickname).
+                    then(function(){
+                        resolve(omapp.dataUser);
+                    }).
+                    catch(function(error){
+                        console.error(error)
+                        reject(error);
+                    });  
+                }else{
+                    //Registro por email
+                    //REGISTRAMOS CON FIREBASE
+                    auth.createUserAndRetrieveDataWithEmailAndPassword(email, password).
+                        then(function(u){
+                            omapp.dataUser.user = u;
+                        }).then(function(){
+                            omapp.RegDBPromise(email, docData, nickname)
+                            .then(
+                                function(dataUser){
+                                    console.log(dataUser);
+                                    resolve(dataUser);
+                                }
+                            )
+                            .catch(function(error){
+                                console.log(error);
+                                reject(error);
+                            });
+                        })
+                        .catch(function(error) {
+                            // Handle Errors here.
+                            reject(error);
+                            console.log(error);
+                        });
+                }
+            }
+        );
+
+    },
+
+    completeRegDB: function(email, pass, nick, idPlan, authLevel){
         
         let fch = new Date();
         
@@ -204,7 +297,7 @@ var omapp = {
             //Registro mediante google
             email = omapp.dataUser.user.email;
 
-            omapp.RegDB(email, docData, nick, successCallback, errorCallback);
+            omapp.RegDB(email, docData, nick);
         }else{
             //Registro por email
             //REGISTRAMOS CON FIREBASE
@@ -212,14 +305,13 @@ var omapp = {
                 then(function(u){
                     console.log('Logrado', u);
                     omapp.dataUser.user = u;
-                    omapp.RegDB(email, docData, nick, successCallback, errorCallback);
+                    omapp.RegDB(email, docData, nick);
                 })
                 .catch(function(error) {
                     // Handle Errors here.
                     var errorCode = error.code;
                     var errorMessage = error.message;
                     console.log(errorCode, errorMessage);
-                    errorCallback(error);
                 });
         }
     }

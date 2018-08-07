@@ -51,6 +51,7 @@ export class Access extends Component{
                     <p className="App-intro">
                         Para disfrutar de los servicios que ofrece la plataforma desde registrarte o iniciar sesion.
                     </p>
+                    {this.props.errors}
                     <button  onClick={() => this.openModalLogIn()}>Iniciar sesion</button>
                     <br/>
                     <button onClick={()=>{this.openModalRes()}} >Registrarse</button>

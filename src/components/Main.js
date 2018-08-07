@@ -20,7 +20,9 @@ export class Main extends React.Component {
         this.state = {};
         this.state.loginStatus = "NOT_AUTHENTICATED";
         this.state.loading = false;
-        this.state.error = {code:-1, message:''};
+        this.state.error = false;
+        this.error = {message: ''};
+        this.user = null;
     }
 
     googleAuthenticationHandler() {
@@ -43,27 +45,63 @@ export class Main extends React.Component {
         return omapp.dataUser.style;
     }
 
-    getUSer(){
-        console.log("Returning: " + omapp.dataUser.user);
-        return omapp.dataUser.user;
-    }
-
     getDefaultPhotoURL(){
-        return omapp.defaulPhoto;
+        return omapp.defaultPhotoURL;
     }
 
     logoutHandler(){
-        return omapp.signOut(this);
+
+        var thisComponent = this;
+
+        omapp.signOutPromise().then(
+            function(){
+                thisComponent.setAuthenticationToNotAuthenticated();
+            }    
+        );
+    }
+
+    enableLoadingView(){
+        this.setState({loading: true});
+    }
+
+    disableLoadingView(){
+        this.setState({loading: false});
+    }
+
+    setAuthenticationToRegistered(){
+        this.setState({loginStatus: "REGISTERED"});
+    }
+
+    setAuthenticationToNotAuthenticated(){
+        this.setState({loginStatus: "NOT_AUTHENTICATED"});
+    }
+
+    showErrorView(error){
+        this.error = error;
+        this.setState({error: true,loading: false});
     }
 
     completarReg(email,password,nickname,idPlan, authLevel){
-        this.setState({loading: true});
-        if(omapp.dataUser.style =='g'){
-            this.setState({loading: true});
-            omapp.completeRegDB('','',nickname,idPlan,authLevel, this.changeLoginStatusToRegistered.bind(this), (error) => {alert(error); this.setState({loading: false});});
-        }else{
-            omapp.completeRegDB(email,password,nickname,idPlan,authLevel, this.changeLoginStatusToRegistered.bind(this), (error) => {alert(error); this.setState({loading: false});});
-        } 
+        
+        var thisComponent = this;
+        
+        this.enableLoadingView();
+
+        omapp.completeRegDBPromise(email, password, nickname, idPlan, authLevel)
+        .then(function(dataUser){
+                console.log("dataUser");
+                console.log(dataUser);
+                thisComponent.user = dataUser;
+                thisComponent.setAuthenticationToRegistered();
+                thisComponent.disableLoadingView();
+            }
+        )
+        .catch(function(error){
+                console.log(error);
+                thisComponent.showErrorView(error);
+                thisComponent.setAuthenticationToNotAuthenticated();
+            }
+        );
     }
 
     changeLoginStatusToRegistered(){
@@ -71,6 +109,8 @@ export class Main extends React.Component {
     }
 
     render() {
+
+
 
         if (this.state.loading){
             return <Loading/>;
@@ -85,13 +125,13 @@ export class Main extends React.Component {
                         <Access 
                             googleAuthenticationHandler={this.googleAuthenticationHandler.bind(this)}
                             processLogIn={this.processLogIn.bind(this)}
-                            signUpHandler={this.signUpHandler.bind(this)}>
-                       </Access>
+                            signUpHandler={this.signUpHandler.bind(this)}
+                            errors={<ErrorView errorMessage={this.error.message}/>}/>
                        </div>)
             case "AUTHENTICATED":
                 return <SignUp  signUpMode={this.getSignUpMode} completarRegHandler={this.completarReg.bind(this)}/>
             case "REGISTERED":
-                return <Home user={this.getUser} defaultPhotoURL={this.getDefaultPhotoURL} logoutHandler={this.logoutHandler}/>
+                return <Home user={this.user} defaultPhotoURL={this.getDefaultPhotoURL()} logoutHandler={this.logoutHandler.bind(this)}/>
             default:
                 return <h1>ERROR - Shouldn't happen</h1>
         }
@@ -102,6 +142,19 @@ var Messages = class Messages extends React.Component {
     render() {
         return (
             <h1>{this.props.error.message}</h1>
+        )
+    }
+}
+
+var ErrorView = class ErrorView extends React.Component {
+    render() {
+
+        if(this.props.errorMessage == ''){
+            return null;
+        }
+
+        return (
+            <p style={{color: "red"}}>Error: {this.props.errorMessage}</p>
         )
     }
 }
