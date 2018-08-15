@@ -26,7 +26,7 @@ export class Main extends React.Component {
         this.defaultProfilePhotoURL = 'http://sitelcity.com/wp-content/uploads/2015/04/default-user-image-300x300.png';
         this.user = {
             registered: false,
-            registrationMethod: null,
+            signupMethod: null,
             username: null,
             email: null,
             profilePhotoURL: null,
@@ -38,16 +38,45 @@ export class Main extends React.Component {
         this.setState({loginStatus: "LOADING"});
         this.setState({loading: true});
         
-        omapp.signInWithGooglePromise()
-        .then(
+        var thisComponent = this;
 
+        omapp.signInWithGooglePromise()
+        .then((user) => {
+                user.registered = true;
+                thisComponent.setUser(user);
+                thisComponent.setAuthenticationToRegistered();
+                thisComponent.disableLoadingView();
+            }
         )
-        .catch();
+        .catch((error) => {
+            console.log(error);
+            thisComponent.disableLoadingView();
+        });
+    }
+
+    setUser(user){
+        this.user.email = user.email;
+        this.user.username = user.username;
+        this.user.idPlan = user.idPlan;
+        this.user.signupMethod = user.signupMethod;
+        this.user.registered = user.registered;
+        this.user.profilePhotoURL = user.profilePhotoURL;
     }
 
     processLogIn(username, password) {
-        this.setState({loading: true});
-        omapp.signInWithEmail(username, password, this);
+        var thisComponent = this;
+        this.enableLoadingView();
+        omapp.signInWithEmailPromise(username, password)
+        .then((user) => {
+            this.user.username = user.username;
+            this.user.email = user.email;
+            this.user.profilePhotoURL = user.profilePhotoURL;
+            this.user.registered = true;
+            //this.user.user.signupMethod = user.signupMethod;
+            thisComponent.setAuthenticationToRegistered();
+            thisComponent.disableLoadingView();
+        })
+        .catch((error) => console.log(error));
     }
 
     logoutHandler(){

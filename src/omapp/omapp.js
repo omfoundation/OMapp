@@ -11,27 +11,38 @@ var omapp = {
         return new Promise(function(resolve, reject){
             auth.signInWithPopup(provider)
             .then((result) => {
-                console.log(result);
-                var email = result.user.email;
-                var doc = firebase.firestore.collection('users').doc(email).get();
-                resolve(doc);
-            })
-            .catch((error) => {
-                console.log(error);
-                reject(error);
-            })
-            .catch(function(error) {
+                db.collection('users').doc(result.user.email).get()
+                .then((doc) => {
+                    resolve({
+                        email: result.user.email,
+                        nickname: doc.username,
+                        signupMethod: doc.signupMethod,
+                        registered: true,
+                        profilePhotoURL: doc.profilePhotoURL
+                    })
+                });
+            }).catch((error) => {
                 console.log(error);
                 reject(error);
             });
         });
     },
     signInWithEmailPromise : function(email,password){
-        return Promise(function(resolve, reject){
+        return new Promise(function(resolve, reject){
             auth.signInAndRetrieveDataWithEmailAndPassword(email,password)
             .then(function(result){
                 console.log(result);
-                resolve(result);
+                db.collection('users').doc(result.user.email).get()
+                .then((doc) => {
+                    resolve({
+                        email: email,
+                        nickname: doc.nickname,
+                        signupMethod: doc.signupMethod,
+                        registered: true,
+                        profilePhotoURL: doc.profilePhotoURL
+                    })
+                })
+                .catch((error) => console.log(error));
             })
             .catch(function(error) {
                 console.log(error);
