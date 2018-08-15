@@ -20,12 +20,20 @@ export class Access extends Component{
         this.setState({showLogin:false})
     }
 
-    openModalRes(){
+    openModalLogin(){
         this.props.signUpHandler();   
     }
 
-    closeModalRes(){
+    closeModalLogin(){
         this.setState({showLogin:false});
+    }
+
+    openModalSignup(){
+        this.setState({showSignup:true})
+    }
+
+    closeModalSignup(){
+        this.setState({showSignup:false})
     }
 
     processLogIn(){
@@ -38,12 +46,22 @@ export class Access extends Component{
         this.setState({signupChoice: 'email'});
     }
 
+    procesSignupEmailAndPassword(){
+
+    }
+
+
+
     render(){
 
             var loginStyle = {display: 'none'};
+            var signupStyle = {display: 'none'};
 
             if (this.state.showLogin) {
                 loginStyle = {display: 'block'};  
+            }
+            else if(this.state.showSignup){
+                signupStyle = {display: 'block'};
             }
 
             return(
@@ -54,30 +72,22 @@ export class Access extends Component{
                     {this.props.errors}
                     <button  onClick={() => this.openModalLogIn()}>Iniciar sesion</button>
                     <br/>
-                    <button onClick={()=>{this.openModalRes()}} >Registrarse</button>
+                    <button onClick={()=>{this.openModalSignup()}} >Registrarse</button>
 
                     {/*****************Iniciar sesion modal *************/}
-                    <Login
+                    <LoginMethodPopup
                         style={loginStyle}
-                        onCloseHandler={this.closeModalRes.bind(this)} 
+                        onCloseHandler={this.closeModalLogin.bind(this)} 
                         googleAuthenticationHandler={this.props.googleAuthenticationHandler.bind(this)}
                         processLogIn={this.props.processLogIn}
                     />
 
-                    {/***********Registro modal***************/}
-
-                    <div ref="modRes" className="modal">
-                        <div className="modal-content">
-                            <span className="close" onClick={() => this.closeModalRes()}>&times;</span>
-                            <h2>Registro</h2>
-                            <p>Selecciona tu metodo preferido:</p>
-                            <a className="btn"><Link to={ '/signup' } onClick={()=>{this.registerWithEmailPasswordClickHandler()}}>Con email y contraseña</Link></a>
-                            <br/>
-                            <button onClick={() => {this.signInWithGoogleClickHandler(this)}}>Con cuenta Google</button>
-                        </div>
-
-                    </div>
-
+                    <SignupMethodChoicePopup
+                        style={signupStyle}
+                        onCloseHandler={this.closeModalSignup.bind(this)} 
+                        onSignupWithEmailAndPasswordHandler={this.props.signupWithEmailAndPasswordHandler.bind(this)}
+                        onSignupWithGoogleHandler={this.props.signupWithGoogleHandler.bind(this)}
+                    />
                 </div>
 
             ) 
@@ -85,11 +95,41 @@ export class Access extends Component{
     
 }
 
-var Login = class Login extends Component {
+class SignupMethodChoicePopup extends Component {
 
-    constructor(props){
-        super(props);
+    onSignupWithEmailAndPasswordHandler(){
+        this.props.signupWithEmailPasswordHandler();
     }
+
+    closeClickHandler(){
+        this.props.onCloseHandler();    
+    }
+
+    signupWithEmailPasswordClickHandler(){
+        this.props.onSignupWithEmailAndPasswordHandler();
+    }
+
+    signupWithGoogleClickHandler(){
+        this.props.onSignupWithGoogleHandler();
+    }
+
+    render() {
+        return (
+            <div ref="modRes" className="modal" style={this.props.style}>
+                <div className="modal-content">
+                    <span className="close" onClick={this.closeClickHandler.bind(this)}>&times;</span>
+                    <h2>Registro</h2>
+                    <p>Selecciona tu metodo preferido:</p>
+                    <a className="btn"><button onClick={()=>{this.signupWithEmailPasswordClickHandler()}}>Con email y contraseña</button></a>
+                    <br/>
+                    <button onClick={() => {this.signupWithGoogleClickHandler()}}>Con cuenta Google</button>
+                </div>
+            </div>
+        )
+    }
+}
+
+class LoginMethodPopup extends Component {
 
     onLoginWithGoogle(){
         this.props.googleAuthenticationHandler();

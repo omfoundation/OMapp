@@ -22,6 +22,7 @@ export class Main extends React.Component {
         this.state.loading = false;
         this.state.error = false;
         this.error = {message: ''};
+        this.signupMethod = null;
         this.user = null;
     }
 
@@ -37,22 +38,8 @@ export class Main extends React.Component {
         omapp.signInWithEmail(username, password, this);
     }
 
-    signUpHandler(){
-        this.setState({loginStatus: "SIGNUP"});
-    }
-
-    getSignUpMode(){
-        return omapp.dataUser.style;
-    }
-
-    getDefaultPhotoURL(){
-        return omapp.defaultPhotoURL;
-    }
-
     logoutHandler(){
-
         var thisComponent = this;
-
         omapp.signOutPromise().then(
             function(){
                 thisComponent.setAuthenticationToNotAuthenticated();
@@ -108,6 +95,16 @@ export class Main extends React.Component {
         this.setState({loginStatus: "REGISTERED", loading: false});
     }
 
+    signupWithEmailAndPassword(){
+        this.signupMethod = "email";
+        this.setState({loginStatus: "SIGNUP"});        
+    }
+
+    signupWithGoogle(){
+        this.signupMethod = "google.com";
+        this.setState({loginStatus: "SIGNUP"});        
+    }
+
     render() {
 
 
@@ -118,18 +115,19 @@ export class Main extends React.Component {
 
         switch(this.state.loginStatus) {
             case "SIGNUP":
-                return <SignUp signUpMode={this.getSignUpMode} completarRegHandler={this.completarReg.bind(this)}/>
+                return <SignUp signUpMode={this.signupMethod} completarRegHandler={this.completarReg.bind(this)}/>
             case "NOT_AUTHENTICATED":
                 return (<div>
                         <Messages error={this.state.error}/>
                         <Access 
                             googleAuthenticationHandler={this.googleAuthenticationHandler.bind(this)}
                             processLogIn={this.processLogIn.bind(this)}
-                            signUpHandler={this.signUpHandler.bind(this)}
+                            signupWithEmailAndPasswordHandler={this.signupWithEmailAndPassword.bind(this)}
+                            signupWithGoogleHandler={this.signupWithGoogle.bind(this)}
                             errors={<ErrorView errorMessage={this.error.message}/>}/>
                        </div>)
             case "AUTHENTICATED":
-                return <SignUp  signUpMode={this.getSignUpMode} completarRegHandler={this.completarReg.bind(this)}/>
+                return <SignUp  signUpMode={this.signupMethod} completarRegHandler={this.completarReg.bind(this)}/>
             case "REGISTERED":
                 return <Home user={this.user} defaultPhotoURL={this.getDefaultPhotoURL()} logoutHandler={this.logoutHandler.bind(this)}/>
             default:

@@ -76,7 +76,7 @@ export class SignUp extends Component{
         return(
             <div> 
 
-                    { this.props.signUpMode != 'g' &&
+                    { this.props.signUpMode !== "google.com" &&
                         //Si la forma de login es diferente a google para registrar
                         //Mostrar esto
                         <div>
