@@ -12,7 +12,7 @@ export class Home extends Component {
     render(){
         return (
             <div>
-                <img src={ this.props.user.photoURL || this.props.user.defaultPhotoURL} height="100"  alt="user"/>
+                <img src={ this.props.user.profilePhotoURL || this.props.defaultProfilePhotoURL} height="100"  alt="user"/>
                 <p>
                     Hola {this.props.user.nick}!
                     <br/>

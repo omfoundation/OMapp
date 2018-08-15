@@ -1,86 +1,44 @@
 import firebase from '../firebase';
-import { resolve } from '../../node_modules/url';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 const auth = firebase.auth();
-
 const db = firebase.firestore();
 const settings = {timestampsInSnapshots: true};
-  
 db.settings(settings);
 
-
-var omapp = {
-
-    dataUser: {
-        user: null,
-        inDB: null,
-        style: null,
-        nick: null,
-        email: null,
-        photoURL: null,
-        defaultPhotoURL : 'http://sitelcity.com/wp-content/uploads/2015/04/default-user-image-300x300.png'
-    },
-
-    setLogStyle : function(style){
-        this.dataUser.style = style;
-    },
-
-	signInWithGoogle : function(component){
-        auth.signInWithPopup(provider)
+var omapp = { 
+	signInWithGooglePromise : function(){
+        return new Promise(function(resolve, reject){
+            auth.signInWithPopup(provider)
             .then((result) => {
-                omapp.dataUser.user = result.user;
-                component.setState({loginStatus: "AUTHENTICATED", loading: false});
-                omapp.setLogStyle('g');
-                console.log('function: signInWithGoogle - state: ', component.state);
-            }).catch(function(error) {
+                console.log(result);
+                var email = result.user.email;
+                var doc = firebase.firestore.collection('users').doc(email).get();
+                resolve(doc);
+            })
+            .catch((error) => {
                 console.log(error);
+                reject(error);
+            })
+            .catch(function(error) {
+                console.log(error);
+                reject(error);
+            });
         });
     },
-    
-    signInWithEmail : function(em,pass,component){
-
-        auth.signInAndRetrieveDataWithEmailAndPassword(em,pass)
-        .then(function(u){
-
-            console.log("LogInEmail", u);
-            omapp.dataUser.user = u.user;
-
-            let sta = component.state;
-            omapp.dataUser.email = em;
-            omapp.dataUser.style = 'email';
-                
-            sta.user = omapp.dataUser.user;
-            sta.inDB = omapp.dataUser.inDB;
-            sta.loading = false;
-            
-            if(sta.inDB) {
-                sta.loginStatus = "REGISTERED";
-            }
-            else{
-                sta.loginStatus = "NOT_AUTHENTICATED";
-            }
-            
-            sta.loginStatus = "REGISTERED";
-
-            component.setState(sta);
-
-            console.log(component.state);
-
-        }).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.log(errorCode, errorMessage);
-            component.setState({loading:false, loginStatus: "NOT_AUTHENTICATED", error:{code: 0, message: "Usuario no encontrado en la BD"}});
-            
-
-            console.log(component.state);
-
-
+    signInWithEmailPromise : function(email,password){
+        return Promise(function(resolve, reject){
+            auth.signInAndRetrieveDataWithEmailAndPassword(email,password)
+            .then(function(result){
+                console.log(result);
+                resolve(result);
+            })
+            .catch(function(error) {
+                console.log(error);
+                reject(error);
+            });
         });
     },
-
     signOutPromise : function(){
         return new Promise(function(resolve, reject){
             auth.signOut()
@@ -98,25 +56,20 @@ var omapp = {
             });
         })
     },
-	
-    RegDBPromise(email,doc,nick){
-        
-        //REGISTRAMOS EN NUESTRA BD
+    RegDBPromise(user){
         return new Promise(function (resolve, reject) {
-            db.collection('users').doc(email).set(doc)
-                .then(function() {
-                    omapp.dataUser.inDB = true;
-                    omapp.dataUser.nick = nick;
-                    omapp.dataUser.email = email;
-                    resolve(omapp.dataUser);
+            db.collection('users').doc(user.email).set(user)
+            .then(function(data) {
+                console.log('data -> ');
+                console.log(data);
+                resolve(user);
             }).catch(function(error) {
-                    console.log(error);
-                    reject(error);
+                console.log(error);
+                reject(error);
             });
         })
     },
-
-    completeRegDBPromise: function(email,password,nickname,idPlan, authLevel){
+    completeRegDBPromise: function(user,password){
         
         //email, pass, nick, idPlan, authLevel
 
@@ -124,37 +77,49 @@ var omapp = {
             function(resolve, reject){
                 let fch = new Date();
     
-                let docData = {
-                    type: omapp.dataUser.style,
-                    FechaUnion: fch,
-                    nick: nickname,
-                    plan: idPlan,
-                    authLevel: authLevel
-                }
+                //let docData = {
+                //    type: omapp.dataUser.style,
+                //    FechaUnion: fch,
+                //    nick: nickname,
+                //    plan: idPlan,
+                //    authLevel: authLevel
+                //}
         
-                if(omapp.dataUser.style == 'g'){
-                    //Registro mediante google
-                    email = omapp.dataUser.user.email;
-                    omapp.RegDBPromise(email, docData, nickname).
-                    then(function(){
-                        resolve(omapp.dataUser);
-                    }).
-                    catch(function(error){
-                        console.error(error)
+                if(user.signupMethod === 'google.com'){
+
+                    auth.signInWithPopup(provider)
+                    .then((result) => {
+                        console.log(result);
+                        var email = result.user.email;
+
+                            user.email = result.user.email;
+
+                            omapp.RegDBPromise(user).
+                            then(function(){
+                                resolve(user);
+                            }).
+                            catch(function(error){
+                                console.error(error)
+                                reject(error);
+                            });  
+                    })
+                    .catch(function(error) {
+                        console.log(error);
                         reject(error);
-                    });  
+                    });
                 }else{
                     //Registro por email
                     //REGISTRAMOS CON FIREBASE
-                    auth.createUserAndRetrieveDataWithEmailAndPassword(email, password).
-                        then(function(u){
-                            omapp.dataUser.user = u;
-                        }).then(function(){
-                            omapp.RegDBPromise(email, docData, nickname)
+                    auth.createUserAndRetrieveDataWithEmailAndPassword(user.email, password)
+                    .then(function(u){
+                        console.log("User registered in google");
+                        })
+                        .then(function(){
+                            omapp.RegDBPromise(user)
                             .then(
-                                function(dataUser){
-                                    console.log(dataUser);
-                                    resolve(dataUser);
+                                function(data){
+                                    console.log(data);
+                                    resolve(user);
                                 }
                             )
                             .catch(function(error){
@@ -172,13 +137,4 @@ var omapp = {
         );
     }
 }
-
 export default omapp;
-
-/**
- * Libreria a utilizar para desacoplar la aplicaci�n de servicios espec�ficos
- */
- 	
-
-
-//function privateMethod(){ console.log("private method")}

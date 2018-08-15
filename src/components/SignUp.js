@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
 
-
-import { Home } from './Home';
-
-import omapp from '../omapp/omapp.js';
-
 import '../css/signup.css';
 
 export class SignUp extends Component{
@@ -16,7 +11,16 @@ export class SignUp extends Component{
 
     completarReg(idPlan, authLevel){
         if(this.checkForm()){
-            this.props.completarRegHandler(this.refs.email.value, this.refs.psw.value, this.refs.nickText.value, idPlan, authLevel);
+            if (this.props.signUpMode === "google.com"){
+                this.props.completarRegHandler('', '', this.refs.nickText.value, idPlan, authLevel);
+            }
+            else if (this.props.signUpMode === "email") {
+                this.props.completarRegHandler(this.refs.email.value, this.refs.psw.value, this.refs.nickText.value, idPlan, authLevel);
+            }
+            else{
+                alert('SignUp.js - ERROR');
+            }
+            
         }
         else{
             alert('ERROR - SignUp.js - completarReg');
@@ -24,7 +28,7 @@ export class SignUp extends Component{
     }
 
     checkForm(){
-        if(!(this.props.signUpMode == 'g')){
+        if(!(this.props.signUpMode === 'google.com')){
             
             //Registro por email
             let txtEmail = this.refs.email.value;

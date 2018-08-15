@@ -23,14 +23,26 @@ export class Main extends React.Component {
         this.state.error = false;
         this.error = {message: ''};
         this.signupMethod = null;
-        this.user = null;
+        this.defaultProfilePhotoURL = 'http://sitelcity.com/wp-content/uploads/2015/04/default-user-image-300x300.png';
+        this.user = {
+            registered: false,
+            registrationMethod: null,
+            username: null,
+            email: null,
+            profilePhotoURL: null,
+        }
     }
 
     googleAuthenticationHandler() {
         console.log("Setting loginState to LOADING");
         this.setState({loginStatus: "LOADING"});
         this.setState({loading: true});
-        omapp.signInWithGoogle(this);
+        
+        omapp.signInWithGooglePromise()
+        .then(
+
+        )
+        .catch();
     }
 
     processLogIn(username, password) {
@@ -74,11 +86,19 @@ export class Main extends React.Component {
         
         this.enableLoadingView();
 
-        omapp.completeRegDBPromise(email, password, nickname, idPlan, authLevel)
-        .then(function(dataUser){
-                console.log("dataUser");
-                console.log(dataUser);
-                thisComponent.user = dataUser;
+        var userDataToRegister = {
+            email: email,
+            nickname: nickname,
+            idPlan: idPlan,
+            authLevel,
+            signupMethod: this.signupMethod,
+            profilePhotoURL: null
+        };
+
+        omapp.completeRegDBPromise(userDataToRegister, password)
+        .then(function(user){
+                thisComponent.user.email = user.email;
+                thisComponent.user.nickname = user.nickname;
                 thisComponent.setAuthenticationToRegistered();
                 thisComponent.disableLoadingView();
             }
@@ -107,7 +127,7 @@ export class Main extends React.Component {
 
     render() {
 
-
+        console.log(this.state);
 
         if (this.state.loading){
             return <Loading/>;
@@ -129,7 +149,7 @@ export class Main extends React.Component {
             case "AUTHENTICATED":
                 return <SignUp  signUpMode={this.signupMethod} completarRegHandler={this.completarReg.bind(this)}/>
             case "REGISTERED":
-                return <Home user={this.user} defaultPhotoURL={this.getDefaultPhotoURL()} logoutHandler={this.logoutHandler.bind(this)}/>
+                return <Home user={this.user} defaultProfilePhotoURL={this.defaultProfilePhotoURL} logoutHandler={this.logoutHandler.bind(this)}/>
             default:
                 return <h1>ERROR - Shouldn't happen</h1>
         }
