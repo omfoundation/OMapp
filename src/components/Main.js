@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import omapp from '../omapp/omapp.js';
+import * as omapp from '../omapp/omapp';
 
 import { Access } from "./Access.js";
 import { Home } from "./Home.js";
