@@ -6,8 +6,8 @@ const db = firebase.firestore();
 const settings = {
     timestampsInSnapshots: true
 };
-db.settings(settings);
 
+db.settings(settings);
 
 export function signInWithGooglePromise() {
     return new Promise(function(resolve, reject) {
