@@ -34,12 +34,8 @@ export class Main extends React.Component {
     }
 
     googleAuthenticationHandler() {
-        console.log("Setting loginState to LOADING");
-        this.setState({loginStatus: "LOADING"});
         this.setState({loading: true});
-        
         var thisComponent = this;
-
         omapp.signInWithGooglePromise()
         .then((user) => {
                 user.registered = true;
@@ -155,13 +151,9 @@ export class Main extends React.Component {
     }
 
     render() {
-
-        console.log(this.state);
-
         if (this.state.loading){
             return <Loading/>;
         }
-
         switch(this.state.loginStatus) {
             case "SIGNUP":
                 return <SignUp signUpMode={this.signupMethod} completarRegHandler={this.completarReg.bind(this)}/>

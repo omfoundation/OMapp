@@ -37,7 +37,6 @@ export class Access extends Component{
     }
 
     processLogIn(){
-        console.log('Intentando');
         this.props.processLogin();
     }
 

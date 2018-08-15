@@ -15,7 +15,7 @@ var omapp = {
                 .then((doc) => {
                     resolve({
                         email: result.user.email,
-                        nickname: doc.username,
+                        username: doc.username,
                         signupMethod: doc.signupMethod,
                         registered: true,
                         profilePhotoURL: doc.profilePhotoURL
@@ -71,8 +71,6 @@ var omapp = {
         return new Promise(function (resolve, reject) {
             db.collection('users').doc(user.email).set(user)
             .then(function(data) {
-                console.log('data -> ');
-                console.log(data);
                 resolve(user);
             }).catch(function(error) {
                 console.log(error);
@@ -123,7 +121,6 @@ var omapp = {
                     //REGISTRAMOS CON FIREBASE
                     auth.createUserAndRetrieveDataWithEmailAndPassword(user.email, password)
                     .then(function(u){
-                        console.log("User registered in google");
                         })
                         .then(function(){
                             omapp.RegDBPromise(user)
