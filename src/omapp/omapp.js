@@ -93,24 +93,24 @@ export function completeRegDBPromise(user, password) {
                     });
             } else {
                 auth.createUserAndRetrieveDataWithEmailAndPassword(user.email, password)
-                    .then(function() {
-                        regDBPromise(user)
-                            .then(
-                                function(data) {
-                                    console.log(data);
-                                    resolve(user);
-                                }
-                            )
-                            .catch(function(error) {
-                                console.log(error);
-                                reject(error);
-                            });
-                    })
-                    .catch(function(error) {
-                        // Handle Errors here.
-                        reject(error);
-                        console.log(error);
-                    });
+                .then(function() {
+                    regDBPromise(user)
+                        .then(
+                            function(data) {
+                                console.log(data);
+                                resolve(user);
+                            }
+                        )
+                        .catch(function(error) {
+                            console.log(error);
+                            reject(error);
+                        });
+                })
+                .catch(function(error) {
+                    // Handle Errors here.
+                    reject(error);
+                    console.log(error);
+                });
             }
         }
     );
