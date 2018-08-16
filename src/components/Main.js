@@ -1,14 +1,14 @@
 import * as omapp from '../omapp/omapp';
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Access } from "Access";
-import { Home } from "Home";
-import { SignUp } from "SignUp.js";
-import { Loading } from "Loading.js";
+
+import Access  from "./Access.js";
+import { Home } from "./Home.js";
+import { SignUp } from "./SignUp.js";
+import { Loading } from "./Loading.js";
 
 import '../css/access.css';
 
-export class Main extends React.Component {
+export default class Main extends React.Component {
 
     constructor(props){
         super(props);

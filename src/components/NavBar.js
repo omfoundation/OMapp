@@ -69,8 +69,8 @@ export class NavBar extends Component{
 
                 <div id="mySidenav" ref="sidenav" className="sidenav">
                     <a href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)}>&times;</a>
-                    <Link to='/home' onClick={this.closeNav.bind(this)}>Home</Link>
-                    <Link to='/feed' onClick={this.closeNav.bind(this)}>Feed</Link>
+                    <a to='/home' onClick={this.closeNav.bind(this)}>Home</a>
+                    <a to='/feed' onClick={this.closeNav.bind(this)}>Feed</a>
                 </div>
             </div>
         );
