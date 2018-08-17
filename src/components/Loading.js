@@ -13,7 +13,7 @@ export default class Loading extends Component{
 
     render(){
         return(
-            <div className="loader"></div>
+            <div className='loader'></div>
         ) 
     }
 }

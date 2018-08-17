@@ -60,7 +60,7 @@ export default class Access extends Component{
 
             return(
                 <div>
-                    <p className="App-intro">
+                    <p className='App-intro'>
                         Para disfrutar de los servicios que ofrece la plataforma desde registrarte o iniciar sesion.
                     </p>
                     {this.props.errors}
@@ -110,12 +110,12 @@ class SignupMethodChoicePopup extends Component {
 
     render() {
         return (
-            <div ref="modRes" className="modal" style={this.props.style}>
-                <div className="modal-content">
-                    <span className="close" onClick={this.closeClickHandler.bind(this)}>&times;</span>
+            <div ref='modRes' className='modal' style={this.props.style}>
+                <div className='modal-content'>
+                    <span className='close' onClick={this.closeClickHandler.bind(this)}>&times;</span>
                     <h2>Registro</h2>
                     <p>Selecciona tu metodo preferido:</p>
-                    <a className="btn"><button onClick={()=>{this.signupWithEmailPasswordClickHandler()}}>Con email y contraseña</button></a>
+                    <a className='btn'><button onClick={()=>{this.signupWithEmailPasswordClickHandler()}}>Con email y contraseña</button></a>
                     <br/>
                     <button onClick={() => {this.signupWithGoogleClickHandler()}}>Con cuenta Google</button>
                 </div>
@@ -134,23 +134,23 @@ class LoginMethodPopup extends Component {
         let txtEmail = this.refs.uemail.value;
         let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         
-        if((txtEmail.replace(/\s/g,'') != "") &&(txtEmail.match(mailformat))){
+        if((txtEmail.replace(/\s/g,'') != '') &&(txtEmail.match(mailformat))){
             //Chequeamos que no sea solo blancos
             //ok
             //return true;
 
             let txtPas = this.refs.upsw.value;
 
-            if(txtPas.replace(/\s/g,'') != ""){
+            if(txtPas.replace(/\s/g,'') != ''){
                 //Nada de blancos 
                 //OK
             }else{
-                alert("Introduce una clave valida");
+                alert('Introduce una clave valida');
                 return false;
             }
 
         }else{
-            alert("Introduce un email valido!");
+            alert('Introduce un email valido!');
             return false;
         }
 
@@ -169,16 +169,16 @@ class LoginMethodPopup extends Component {
 
     render() {
         return (
-            <div ref="modLogIn" className="modal" style={this.props.style}> 
+            <div ref='modLogIn' className='modal' style={this.props.style}> 
                 {/* Modal Content */}
-                <div className="modal-content animate">
-                    <span className="close red" onClick={this.onClose.bind(this)}>&times;</span>
-                    <div className="container">
-                        <label htmlFor="uemail"><b>Email</b></label>
-                        <input type="text" placeholder="Enter email" ref="uemail" required />
-                        <label htmlFor="upsw"><b>Contraseña</b></label>
-                        <input type="password" placeholder="Enter contraseña" ref="upsw" required />
-                        <button type="submit" className="btn greenBG" onClick={this.onProcessLogIn.bind(this)}>Iniciar sesion</button>
+                <div className='modal-content animate'>
+                    <span className='close red' onClick={this.onClose.bind(this)}>&times;</span>
+                    <div className='container'>
+                        <label htmlFor='uemail'><b>Email</b></label>
+                        <input type='text' placeholder='Enter email' ref='uemail' required />
+                        <label htmlFor='upsw'><b>Contraseña</b></label>
+                        <input type='password' placeholder='Enter contraseña' ref='upsw' required />
+                        <button type='submit' className='btn greenBG' onClick={this.onProcessLogIn.bind(this)}>Iniciar sesion</button>
                         <br/>
                         <button onClick={this.onLoginWithGoogle.bind(this)}>Entra con Google</button>
                     </div>

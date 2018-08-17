@@ -1,10 +1,10 @@
 import * as omapp from '../omapp/omapp';
-import React from "react";
+import React from 'react';
 
-import Access  from "./Access.js";
-import Home from "./Home.js";
-import SignUp from "./SignUp.js";
-import Loading from "./Loading.js";
+import Access from './Access.js';
+import Home from './Home.js';
+import SignUp from './SignUp.js';
+import Loading from './Loading.js';
 
 import '../css/access.css';
 
@@ -13,7 +13,7 @@ export default class Main extends React.Component {
     constructor(props){
         super(props);
         this.state = {};
-        this.state.loginStatus = "NOT_AUTHENTICATED";
+        this.state.loginStatus = 'NOT_AUTHENTICATED';
         this.state.loading = false;
         this.state.error = false;
         this.error = {message: ''};
@@ -88,11 +88,11 @@ export default class Main extends React.Component {
     }
 
     setAuthenticationToRegistered(){
-        this.setState({loginStatus: "REGISTERED"});
+        this.setState({loginStatus: 'REGISTERED'});
     }
 
     setAuthenticationToNotAuthenticated(){
-        this.setState({loginStatus: "NOT_AUTHENTICATED"});
+        this.setState({loginStatus: 'NOT_AUTHENTICATED'});
     }
 
     showErrorView(error){
@@ -132,17 +132,17 @@ export default class Main extends React.Component {
     }
 
     changeLoginStatusToRegistered(){
-        this.setState({loginStatus: "REGISTERED", loading: false});
+        this.setState({loginStatus: 'REGISTERED', loading: false});
     }
 
     signupWithEmailAndPassword(){
-        this.signupMethod = "email";
-        this.setState({loginStatus: "SIGNUP"});        
+        this.signupMethod = 'email';
+        this.setState({loginStatus: 'SIGNUP'});        
     }
 
     signupWithGoogle(){
-        this.signupMethod = "google.com";
-        this.setState({loginStatus: "SIGNUP"});        
+        this.signupMethod = 'google.com';
+        this.setState({loginStatus: 'SIGNUP'});        
     }
 
     render() {
@@ -150,9 +150,9 @@ export default class Main extends React.Component {
             return <Loading/>;
         }
         switch(this.state.loginStatus) {
-            case "SIGNUP":
+            case 'SIGNUP':
                 return <SignUp signUpMode={this.signupMethod} completarRegHandler={this.completarReg.bind(this)}/>
-            case "NOT_AUTHENTICATED":
+            case 'NOT_AUTHENTICATED':
                 return (<div>
                         <Messages error={this.state.error}/>
                         <Access 
@@ -162,9 +162,9 @@ export default class Main extends React.Component {
                             signupWithGoogleHandler={this.signupWithGoogle.bind(this)}
                             errors={<ErrorView errorMessage={this.error.message}/>}/>
                        </div>)
-            case "AUTHENTICATED":
+            case 'AUTHENTICATED':
                 return <SignUp  signUpMode={this.signupMethod} completarRegHandler={this.completarReg.bind(this)}/>
-            case "REGISTERED":
+            case 'REGISTERED':
                 return <Home user={this.user} defaultProfilePhotoURL={this.defaultProfilePhotoURL} logoutHandler={this.logoutHandler.bind(this)}/>
             default:
                 return <h1>ERROR - Shouldn't happen</h1>
@@ -188,7 +188,7 @@ var ErrorView = class ErrorView extends React.Component {
         }
 
         return (
-            <p style={{color: "red"}}>Error: {this.props.errorMessage}</p>
+            <p style={{color: 'red'}}>Error: {this.props.errorMessage}</p>
         )
     }
 }

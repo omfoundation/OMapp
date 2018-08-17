@@ -11,7 +11,7 @@ export default class NotFound extends Component{
     render(){
         return(
             <div>
-                <img src={errorURL} alt='404' height="300"/>
+                <img src={errorURL} alt='404' height='300'/>
             </div>
         );
     }
