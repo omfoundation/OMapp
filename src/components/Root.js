@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { NavBar } from './NavBar';
-import Main from './Main';
-import { SignUp } from "./SignUp";
+import NavBar from './NavBar.js';
+import Main from './Main.js';
 
 import '../css/root.css';
 
