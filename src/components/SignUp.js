@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import '../css/signup.css';
 
-export class SignUp extends Component{
+export default class SignUp extends Component{
     constructor(props){
         super(props);
 

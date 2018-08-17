@@ -2,9 +2,9 @@ import * as omapp from '../omapp/omapp';
 import React from "react";
 
 import Access  from "./Access.js";
-import { Home } from "./Home.js";
-import { SignUp } from "./SignUp.js";
-import { Loading } from "./Loading.js";
+import Home from "./Home.js";
+import SignUp from "./SignUp.js";
+import Loading from "./Loading.js";
 
 import '../css/access.css';
 

@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import '../css/access.css'
 
-import * as omapp from '../omapp/omapp';
-
 export default class Access extends Component{
     constructor(props){
         super(props);

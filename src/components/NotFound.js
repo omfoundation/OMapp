@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 const errorURL = 'https://image.freepik.com/vetores-gratis/erro-404-modelo-web-com-gato-engracado_23-2147763339.jpg';
 
-export class NotFound extends Component{
+export default class NotFound extends Component{
 
     constructor(props){
         super(props);
