@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 import '../css/access.css'
 
-import omapp from '../omapp/omapp.js';
+import * as omapp from '../omapp/omapp';
 
-export class Access extends Component{
+export default class Access extends Component{
     constructor(props){
         super(props);
         this.state = {showLogin:false};
@@ -41,7 +41,7 @@ export class Access extends Component{
     }
 
     registerWithEmailPasswordClickHandler(){
-        omapp.setLogStyle('email');
+        //omapp.setLogStyle('email');
         this.setState({signupChoice: 'email'});
     }
 
