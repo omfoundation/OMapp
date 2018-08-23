@@ -1,9 +1,7 @@
 import * as omapp from '../omapp/omapp';
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
-import NavBar from './NavBar.js';
-import Main from './Main.js';
+import NavBar from './NavBar.react';
+import Main from './Main.react';
 
 import '../css/root.css';
 
@@ -161,7 +159,6 @@ export default class Root extends React.Component {
                         signupWithEmailAndPasswordHandler={this.signupWithEmailAndPassword.bind(this)}
                         signupWithGoogleHandler={this.signupWithGoogle.bind(this)}
                         errors={this.error.message}
-                        signupMethod={this.signupMethod}
                         user={this.user}
                         defaultProfilePhotoURL={this.defaultProfilePhotoURL}
                         logoutHandler={this.logoutHandler.bind(this)}

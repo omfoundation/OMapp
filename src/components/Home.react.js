@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 
 export default class Home extends Component {
-    constructor(props){
-        super(props);
-    };
 
     LogOutClick(){
         this.props.logoutHandler();
@@ -22,4 +19,4 @@ export default class Home extends Component {
             </div>
         )  
     }
-}
+    }

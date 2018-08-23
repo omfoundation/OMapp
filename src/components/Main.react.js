@@ -1,8 +1,8 @@
-import React from 'react';
-import Access from './Access.js';
-import Home from './Home.js';
-import SignUp from './SignUp.js';
-import Loading from './Loading.js';
+import React from "react";
+import Access from "./Access.react";
+import Home from "./Home.react";
+import SignUp from "./SignUp.react";
+import Loading from "./Loading.react";
 
 import '../css/access.css';
 
@@ -61,7 +61,7 @@ var Messages = class Messages extends React.Component {
 var ErrorView = class ErrorView extends React.Component {
     render() {
 
-        if(this.props.errorMessage == ''){
+        if(this.props.errorMessage === ''){
             return null;
         }
 

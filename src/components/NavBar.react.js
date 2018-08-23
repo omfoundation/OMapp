@@ -1,57 +1,51 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
 import '../css/nav.css';
 
 export default class NavBar extends Component{
     
-    constructor(props){
-        super(props);
-
-        //this.getNameScreen = this.getNameScreen.bind(this);
+    openNav() {
+        this.refs.sidenav.style.width = '250px';
     }
 
-        openNav() {
-            this.refs.sidenav.style.width = '250px';
+    closeNav() {
+        this.refs.sidenav.style.width = '0';
+    }
+
+    getNameScreen(){
+        let nscr;
+
+        switch(window.location.pathname){
+            case '/':
+                nscr = 'Acceder al sistema'
+            break;
+
+            case '/login':
+                nscr = 'Iniciar sesion'
+            break;
+
+            case '/load':
+                nscr = 'Cargando...'
+            break;
+
+            case '/signup':
+                nscr = 'Sign Up'
+            break;
+
+            case '/home':
+                nscr = 'Home'
+            break;
+
+            case '/feed':
+                nscr = 'Feed'
+            break;
+
+            default:
+                nscr = '404 Error'
         }
 
-        closeNav() {
-            this.refs.sidenav.style.width = '0';
-        }
-
-        getNameScreen(){
-            let nscr;
-
-            switch(window.location.pathname){
-                case '/':
-                    nscr = 'Acceder al sistema'
-                break;
-
-                case '/login':
-                    nscr = 'Iniciar sesion'
-                break;
-
-                case '/load':
-                    nscr = 'Cargando...'
-                break;
-
-                case '/signup':
-                    nscr = 'Sign Up'
-                break;
-
-                case '/home':
-                    nscr = 'Home'
-                break;
-
-                case '/feed':
-                    nscr = 'Feed'
-                break;
-
-                default:
-                    nscr = '404 Error'
-            }
-
-            return nscr;
-        }
+        return nscr;
+    }
+    
     render(){
         
         return(
