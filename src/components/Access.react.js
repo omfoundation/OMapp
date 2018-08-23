@@ -64,7 +64,7 @@ export default class Access extends Component{
                     <p className="App-intro">
                         Para disfrutar de los servicios que ofrece la plataforma desde registrarte o iniciar sesion.
                     </p>
-                    {this.props.errors}
+                    {this.props.error}
                     <button  onClick={() => this.openModalLogIn()}>Iniciar sesion</button>
                     <br/>
                     <button onClick={()=>{this.openModalSignup()}} >Registrarse</button>
@@ -74,11 +74,12 @@ export default class Access extends Component{
                         style={loginStyle}
                         onCloseHandler={this.closeModalLogin.bind(this)} 
                         googleAuthenticationHandler={this.props.googleAuthenticationHandler.bind(this)}
-                        processLogIn={this.props.processLogIn}
+                        processLoginHandler={this.props.processLoginHandler}
                     />
 
                     <SignupMethodChoicePopup
                         style={signupStyle}
+                        signupMethod={this.props.signupMethod}
                         onCloseHandler={this.closeModalSignup.bind(this)} 
                         onSignupWithEmailAndPasswordHandler={this.props.signupWithEmailAndPasswordHandler.bind(this)}
                         onSignupWithGoogleHandler={this.props.signupWithGoogleHandler.bind(this)}
@@ -157,9 +158,9 @@ class LoginMethodPopup extends Component {
         return true;
     }
 
-    onProcessLogIn(){
+    onProcessLogin(){
         if(this.checkLogData()){
-            this.props.processLogIn(this.refs.uemail.value, this.refs.upsw.value);
+            this.props.processLoginHandler(this.refs.uemail.value, this.refs.upsw.value);
         }
     }
 
@@ -178,7 +179,7 @@ class LoginMethodPopup extends Component {
                         <input type="text" placeholder="Enter email" ref="uemail" required />
                         <label htmlFor="upsw"><b>Contraseña</b></label>
                         <input type="password" placeholder="Enter contraseña" ref="upsw" required />
-                        <button type="submit" className="btn greenBG" onClick={this.onProcessLogIn.bind(this)}>Iniciar sesion</button>
+                        <button type="submit" className="btn greenBG" onClick={this.onProcessLogin.bind(this)}>Iniciar sesion</button>
                         <br/>
                         <button onClick={this.onLoginWithGoogle.bind(this)}>Entra con Google</button>
                     </div>

@@ -11,11 +11,11 @@ export default class SignUp extends Component{
 
     completarReg(idPlan, authLevel){
         if(this.checkForm()){
-            if (this.props.signUpMode === "google.com"){
-                this.props.completarRegHandler('', '', this.refs.nickText.value, idPlan, authLevel);
+            if (this.props.signupMethod === "google.com"){
+                this.props.completeSignupHandler('', '', this.refs.nickText.value, idPlan, authLevel);
             }
-            else if (this.props.signUpMode === "email") {
-                this.props.completarRegHandler(this.refs.email.value, this.refs.psw.value, this.refs.nickText.value, idPlan, authLevel);
+            else if (this.props.signupMethod === "email") {
+                this.props.completeSignupHandler(this.refs.email.value, this.refs.psw.value, this.refs.nickText.value, idPlan, authLevel);
             }
             else{
                 alert('SignUp.js - ERROR');
@@ -28,7 +28,7 @@ export default class SignUp extends Component{
     }
 
     checkForm(){
-        if(!(this.props.signUpMode === 'google.com')){
+        if(!(this.props.signupMethod === 'google.com')){
             
             //Registro por email
             let txtEmail = this.refs.email.value;
@@ -80,7 +80,7 @@ export default class SignUp extends Component{
         return(
             <div> 
 
-                    { this.props.signUpMode !== "google.com" &&
+                    { this.props.signupMethod !== 'google.com' &&
                         //Si la forma de login es diferente a google para registrar
                         //Mostrar esto
                         <div>

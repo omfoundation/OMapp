@@ -45,7 +45,11 @@ export function signInWithEmailPromise(email, password) {
                     profilePhotoURL: doc.profilePhotoURL
                 })
             })
-            .catch((error) => console.log(error));
+            .catch((error) => { 
+                console.log(error);
+                reject(error);
+                }
+            );
         })
         .catch(function(error) {
             console.log(error);

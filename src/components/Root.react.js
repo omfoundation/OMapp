@@ -1,7 +1,7 @@
 import * as omapp from '../omapp/omapp';
 import React from 'react';
-import NavBar from './NavBar.react';
-import Main from './Main.react';
+import NavBar from './NavBar.react.js';
+import Main from './Main.react.js';
 
 import '../css/root.css';
 
@@ -13,7 +13,7 @@ export default class Root extends React.Component {
         this.state.loginStatus = 'NOT_AUTHENTICATED';
         this.state.loading = false;
         this.state.error = false;
-        this.error = {message: ''};
+        this.error = null;
         this.signupMethod = null;
         this.defaultProfilePhotoURL = 'http://sitelcity.com/wp-content/uploads/2015/04/default-user-image-300x300.png';
         this.user = {
@@ -51,7 +51,7 @@ export default class Root extends React.Component {
         this.user.profilePhotoURL = user.profilePhotoURL;
     }
 
-    processLogIn(username, password) {
+    processLogin(username, password) {
         var thisComponent = this;
         this.enableLoadingView();
         omapp.signInWithEmailPromise(username, password)
@@ -85,6 +85,7 @@ export default class Root extends React.Component {
     }
 
     setAuthenticationToRegistered(){
+        console.log("Root.react.js - State changed to 'REGISTERED'")
         this.setState({loginStatus: 'REGISTERED'});
     }
 
@@ -138,11 +139,14 @@ export default class Root extends React.Component {
     }
 
     signupWithGoogle(){
+        this.user.signupMethod = 'google.com';
         this.signupMethod = 'google.com';
         this.setState({loginStatus: 'SIGNUP'});        
     }
 
     render() {
+
+
         return (
             <div id='root-container'>
                 <div id='header'>
@@ -151,18 +155,18 @@ export default class Root extends React.Component {
                 <hr/>
                 <div id='main-container'>
                     <Main
-                        signupMethod={this.signupMethod}
-                        completarRegHandler={this.completarReg.bind(this)}
-                        error={this.state.error}
+                        signupMethodHandler={this.signupMethod}
+                        completeSignupHandler={this.completarReg.bind(this)}
                         googleAuthenticationHandler={this.googleAuthenticationHandler.bind(this)}
-                        processLogIn={this.processLogIn.bind(this)}
+                        processLoginHandler={this.processLogin.bind(this)}
                         signupWithEmailAndPasswordHandler={this.signupWithEmailAndPassword.bind(this)}
                         signupWithGoogleHandler={this.signupWithGoogle.bind(this)}
-                        errors={this.error.message}
-                        user={this.user}
-                        defaultProfilePhotoURL={this.defaultProfilePhotoURL}
                         logoutHandler={this.logoutHandler.bind(this)}
                         state={this.state}
+                        user={this.user}
+                        signupMethod={this.signupMethod}
+                        defaultProfilePhotoURL={this.defaultProfilePhotoURL}
+                        error={this.error}
                     />
                 </div>
             </div>
