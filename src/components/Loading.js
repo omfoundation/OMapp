@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import '../css/loader.css';
 
-export class Loading extends Component{
+export default class Loading extends Component{
     constructor(props){
         super(props);
 
