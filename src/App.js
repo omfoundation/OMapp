@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Router, Switch, Route } from "react-router-dom";
 
 import Root from './components/Root.react';
 
@@ -13,4 +12,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App

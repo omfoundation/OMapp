@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 
 export default class Home extends Component {
-    constructor(props){
-        super(props);
-    };
 
     LogOutClick(){
         this.props.logoutHandler();
@@ -12,7 +9,7 @@ export default class Home extends Component {
     render(){
         return (
             <div>
-                <img src={ this.props.user.profilePhotoURL || this.props.defaultProfilePhotoURL} height="100"  alt="user"/>
+                <img src={ this.props.user.profilePhotoURL || this.props.defaultProfilePhotoURL} height='100'  alt='user'/>
                 <p>
                     Hola {this.props.user.nick}!
                     <br/>

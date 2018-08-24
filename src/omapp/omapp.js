@@ -45,7 +45,11 @@ export function signInWithEmailPromise(email, password) {
                     profilePhotoURL: doc.profilePhotoURL
                 })
             })
-            .catch((error) => console.log(error));
+            .catch((error) => { 
+                console.log(error);
+                reject(error);
+                }
+            );
         })
         .catch(function(error) {
             console.log(error);
@@ -74,15 +78,14 @@ export function completeRegDBPromise(user, password) {
                 auth.signInWithPopup(provider)
                 .then((result) => {
                     console.log(result);
-                    var email = result.user.email;
-
+                
                     user.email = result.user.email;
 
-                    regDBPromise(user).
-                    then(function() {
+                    regDBPromise(user)
+                    .then(function() {
                         resolve(user);
-                    }).
-                    catch(function(error) {
+                    })
+                    .catch(function(error) {
                         console.error(error)
                         reject(error);
                     });

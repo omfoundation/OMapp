@@ -11,11 +11,11 @@ export default class SignUp extends Component{
 
     completarReg(idPlan, authLevel){
         if(this.checkForm()){
-            if (this.props.signUpMode === "google.com"){
-                this.props.completarRegHandler('', '', this.refs.nickText.value, idPlan, authLevel);
+            if (this.props.signupMethod === "google.com"){
+                this.props.completeSignupHandler('', '', this.refs.nickText.value, idPlan, authLevel);
             }
-            else if (this.props.signUpMode === "email") {
-                this.props.completarRegHandler(this.refs.email.value, this.refs.psw.value, this.refs.nickText.value, idPlan, authLevel);
+            else if (this.props.signupMethod === "email") {
+                this.props.completeSignupHandler(this.refs.email.value, this.refs.psw.value, this.refs.nickText.value, idPlan, authLevel);
             }
             else{
                 alert('SignUp.js - ERROR');
@@ -28,13 +28,13 @@ export default class SignUp extends Component{
     }
 
     checkForm(){
-        if(!(this.props.signUpMode === 'google.com')){
+        if(!(this.props.signupMethod === 'google.com')){
             
             //Registro por email
             let txtEmail = this.refs.email.value;
-            let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            let mailformat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
 
-            if(!(txtEmail.replace(/\s/g,'') != "") &&(txtEmail.match(mailformat))){
+            if(!(txtEmail.replace(/\s/g,'') !== "") &&(txtEmail.match(mailformat))){
                 alert("Introduce un email valido!");
                 return false;
             }
@@ -42,10 +42,10 @@ export default class SignUp extends Component{
             let txtPas = this.refs.psw.value;
             let txtPasRe = this.refs.pswRepeat.value;
 
-            if(txtPas.replace(/\s/g,'') != ""){
+            if(txtPas.replace(/\s/g,'') !== ""){
                 
                 //Chequeamos que no sea solo blancos
-                if(txtPas == txtPasRe){
+                if(txtPas === txtPasRe){
                     
                     //Claves iguales?
                     if((txtPas.legth < 6)){
@@ -80,7 +80,7 @@ export default class SignUp extends Component{
         return(
             <div> 
 
-                    { this.props.signUpMode !== "google.com" &&
+                    { this.props.signupMethod !== 'google.com' &&
                         //Si la forma de login es diferente a google para registrar
                         //Mostrar esto
                         <div>
