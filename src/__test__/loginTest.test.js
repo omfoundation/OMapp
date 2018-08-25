@@ -1,4 +1,4 @@
-import * as omapp from '../omapp'
+import * as omapp from '../omapp/omapp'
 
 describe('tests de login usando email y password', ()=>
     {
@@ -23,13 +23,3 @@ describe('tests de login usando email y password', ()=>
         )
     }
 )
-
-
-
-test('User',()=>{
-    //expect(homeJson).toMatchSnapshot();
-
-    var user;
-
-    //expect(user).not.toBeDefined();
-});
