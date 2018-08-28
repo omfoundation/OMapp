@@ -1,4 +1,6 @@
 import React from "react";
+import { Route } from 'react-router-dom'
+
 import Access from "./Access.react";
 import Home from "./Home.react";
 import SignUp from "./Signup.react";
@@ -36,10 +38,10 @@ export default class Main extends React.Component {
                             error={<ErrorView error={this.props.error}/>}/>
                        </div>)
             case 'AUTHENTICATED':
-                return <SignUp  
+                return  <Route path="/signup" component={SignUp} 
                             signupMethod={this.props.signupMethod}
                             completeSignupHandler={this.props.completeSignupHandler.bind(this)}
-                        />
+                        /> 
             case 'REGISTERED':
                 return <Home 
                             user={this.props.user} 

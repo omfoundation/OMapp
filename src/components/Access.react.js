@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom'
+
 import '../css/access.css'
 
 export default class Access extends Component{
@@ -181,7 +183,9 @@ class LoginMethodPopup extends Component {
                         <input type="password" placeholder="Enter contraseña" ref="upsw" required />
                         <button type="submit" className="btn greenBG" onClick={this.onProcessLogin.bind(this)}>Iniciar sesion</button>
                         <br/>
-                        <button onClick={this.onLoginWithGoogle.bind(this)}>Entra con Google</button>
+                        <Route render={({ history }) => (
+                            <button onClick={() => {history.push('/signup'); this.onLoginWithGoogle()}}>Entra con Google</button>
+                        )} />
                     </div>
                 </div>
             </div>
