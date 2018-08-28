@@ -3,6 +3,8 @@ import React from 'react'
 import NavBar from './NavBar.react'
 import Main from './Main.react'
 
+import { Container } from 'semantic-ui-react'
+
 import '../css/root.css';
 
 export default class Root extends React.Component {
@@ -147,13 +149,24 @@ export default class Root extends React.Component {
     render() {
 
 
+        let nav = () => { 
+                            if (this.state.loginStatus === "NOT_AUTHENTICATED"){
+                                return null
+                            }
+                            
+                            return (                
+                                <div id='header'>
+                                    <NavBar /> 
+                                </div>)
+                        };
+
+
         return (
+            
             <div id='root-container'>
-                <div id='header'>
-                    <NavBar /> 
-                </div>
-                <hr/>
+                {nav()}
                 <div id='main-container'>
+                <Container>
                     <Main
                         signupMethodHandler={this.signupMethod}
                         completeSignupHandler={this.completarReg.bind(this)}
@@ -168,8 +181,10 @@ export default class Root extends React.Component {
                         defaultProfilePhotoURL={this.defaultProfilePhotoURL}
                         error={this.error}
                     />
+                </Container>
                 </div>
             </div>
+            
         )
     }
 }

@@ -1,35 +1,6 @@
-import firebase from 'firebase'
-
-function firebaseInit() {
-
-    //inicializamos configuracion de firebase con datos de omapp-2018
-    firebase.initializeApp({
-        apiKey: "AIzaSyCjRFxUdAwEzztLBYZdl_fsm5xqAiOYesg",
-        authDomain: "omapp-2018.firebaseapp.com",
-        databaseURL: "https://omapp-2018.firebaseio.com",
-        projectId: "omapp-2018",
-        storageBucket: "omapp-2018.appspot.com",
-        messagingSenderId: "208376306849"
-    });
-
-    const provider = new firebase.auth.GoogleAuthProvider();
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    const settings = {
-        timestampsInSnapshots: true
-    };
-    db.settings(settings);
-
-    return {provider: provider, auth: auth, db: db};
-}
+import {auth, provider, db} from '../constants'
 
 export function signInWithGooglePromise() {
-
-    var firebaseInitResponse = firebaseInit();
-
-    var provider = firebaseInitResponse.provider;
-    var auth = firebaseInitResponse.auth;
-    var db = firebaseInitResponse.db;
 
     return new Promise(function(resolve, reject) {
         auth.signInWithPopup(provider)
@@ -52,12 +23,6 @@ export function signInWithGooglePromise() {
 }
 
 export function signInWithEmailPromise(email, password) {
-
-    var firebaseInitResponse = firebaseInit();
-
-    var provider = firebaseInitResponse.provider;
-    var auth = firebaseInitResponse.auth;
-    var db = firebaseInitResponse.db;
 
     return new Promise(function(resolve, reject) {
         auth.signInAndRetrieveDataWithEmailAndPassword(email, password)
@@ -113,10 +78,6 @@ export function signInWithEmailPromise(email, password) {
 
 export function signOutPromise() {
 
-    var firebaseInitResponse = firebaseInit();
-    
-    var auth = firebaseInitResponse.auth;
-   
     return new Promise(function(resolve, reject) {
         auth.signOut()
         .then(() => {
@@ -129,11 +90,6 @@ export function signOutPromise() {
 }
 
 export function completeRegDBPromise(user, password) {
-
-    var firebaseInitResponse = firebaseInit();
-
-    var provider = firebaseInitResponse.provider;
-    var auth = firebaseInitResponse.auth;
 
     return new Promise(
         function(resolve, reject) {
@@ -184,10 +140,6 @@ export function completeRegDBPromise(user, password) {
 }
 
 function regDBPromise(user) {
-
-    var firebaseInitResponse = firebaseInit();
-
-    var db = firebaseInitResponse.db;
 
     return new Promise(function(resolve, reject) {
         db.collection('users').doc(user.email).set(user)

@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
+
+import { Container, Grid, Button } from 'semantic-ui-react'
 
 import '../css/access.css'
 
@@ -67,9 +69,14 @@ export default class Access extends Component{
                         Para disfrutar de los servicios que ofrece la plataforma desde registrarte o iniciar sesion.
                     </p>
                     {this.props.error}
-                    <button  onClick={() => this.openModalLogIn()}>Iniciar sesion</button>
-                    <br/>
-                    <button onClick={()=>{this.openModalSignup()}} >Registrarse</button>
+                    <Grid container columns={1} relaxed stackable>
+                        <Grid.Column>
+                            <Button sytle={{"width":"100px"}} onClick={() => this.openModalLogIn()}>Iniciar sesion</Button>
+                        </Grid.Column>
+                        <Grid.Column>
+                            <Button sytle={{"width":"100px"}} onClick={()=>{this.openModalSignup()}} >Registrarse</Button>
+                        </Grid.Column>
+                    </Grid>
 
                     {/*****************Iniciar sesion modal *************/}
                     <LoginMethodPopup
