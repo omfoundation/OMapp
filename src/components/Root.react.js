@@ -1,7 +1,8 @@
-import * as omapp from '../omapp/omapp';
-import React from 'react';
-import NavBar from './NavBar.react.js';
-import Main from './Main.react.js';
+import * as omapp from '../omapp/omapp'
+import React from 'react'
+import { Route } from 'react-router-dom'
+import NavBar from './NavBar.react'
+import Main from './Main.react'
 
 import '../css/root.css';
 
@@ -151,6 +152,7 @@ export default class Root extends React.Component {
             <div id='root-container'>
                 <div id='header'>
                     <NavBar /> 
+                    <Route path="/nav" component={NavBar}/>
                 </div>
                 <hr/>
                 <div id='main-container'>
