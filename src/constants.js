@@ -1,6 +1,5 @@
-import firebase from 'firebase';
+import firebase from 'firebase'
 
-//inicializamos configuracion de firebase con datos de omapp-2018
 firebase.initializeApp({
     apiKey: "AIzaSyCjRFxUdAwEzztLBYZdl_fsm5xqAiOYesg",
     authDomain: "omapp-2018.firebaseapp.com",
@@ -10,4 +9,13 @@ firebase.initializeApp({
     messagingSenderId: "208376306849"
 });
 
-export default firebase;
+const provider = new firebase.auth.GoogleAuthProvider();
+const auth = firebase.auth();
+const db = firebase.firestore();
+const settings = {
+    timestampsInSnapshots: true
+};
+
+db.settings(settings);
+
+export {provider, auth, db};

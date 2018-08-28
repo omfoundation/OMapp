@@ -1,58 +1,157 @@
-//import firebase from 'firebase';
+import {auth, provider, db} from '../constants'
 
-import firebase from '../firebase';
+export function signInWithGooglePromise() {
 
-const provider = new firebase.auth.GoogleAuthProvider();
-const auth = firebase.auth();
-
-var omapp = {
-
-	signInWithPopup : function(component){
+    return new Promise(function(resolve, reject) {
         auth.signInWithPopup(provider)
-            .then((result) => {
-                //OK
-                //console.log(result);
-                const user = result.user;
-                component.setState({
-                    user: user
+        .then((result) => {
+            db.collection('users').doc(result.user.email).get()
+                .then((doc) => {
+                    resolve({
+                        email: result.user.email,
+                        username: doc.username,
+                        signupMethod: doc.signupMethod,
+                        registered: true,
+                        profilePhotoURL: doc.profilePhotoURL
+                    })
                 });
-            }).catch(function(error) {
-                //Error 
-                console.log(error);
-        });
-    },
-    
-    signOut : function(component){
-        auth.signOut()
-            .then(() => {
-                //OK
-                const user = null;
-                component.setState({ 
-                    user: user
-                });
-        }).catch(function(error) {
-            //ERROR
+        }).catch((error) => {
             console.log(error);
+            reject(error);
         });
-    },
-	
-	onMount : function(component){
-		firebase.auth().onAuthStateChanged((user) => {
-			if (user) {
-				component.setState({ user: user });
-			} 
-		});	
-	}
+    });
+}
 
+export function signInWithEmailPromise(email, password) {
 
-};
+    return new Promise(function(resolve, reject) {
+        auth.signInAndRetrieveDataWithEmailAndPassword(email, password)
+        .then(result => {
+            console.log(result);
+            db.collection('users').doc(result.user.email).get()
+            .then((doc) => {
+                if(doc.exists){
+                    resolve(
+                        {
+                            success: true,
+                            user: 
+                            {
+                                email: email,
+                                nickname: doc.nickname,
+                                signupMethod: doc.signupMethod,
+                                registered: true,
+                                profilePhotoURL: doc.profilePhotoURL
+                            }
+                        }
+                    )
+                }
+                else{
+                    resolve({success:false, user:null})
+                }
 
-export default omapp;
+            })
+            .catch(error => 
+                {
+                    reject(error);
+                    console.log(error);
+                }
+            );
+        })
+        .catch(error => 
+            {
+                if(
+                    error.code === 'auth/invalid-email'  ||
+                    error.code === 'auth/user-disabled'  ||
+                    error.code === 'auth/user-not-found' ||
+                    error.code === 'auth/wrong-password'
+                ){
+                    resolve({success:false, user:null})
+                }
+                else{
+                    reject(error)
+                }
+                console.log(error);
+            }
+        );
+    });
+}
 
-/**
- * Libreria a utilizar para desacoplar la aplicaci�n de servicios espec�ficos
- */
- 	
+export function signOutPromise() {
 
+    return new Promise(function(resolve, reject) {
+        auth.signOut()
+        .then(() => {
+            resolve();
+        }).catch(function(error) {
+            console.log(error);
+            reject(error);
+        });
+    });
+}
 
-//function privateMethod(){ console.log("private method")}
+export function completeRegDBPromise(user, password) {
+
+    return new Promise(
+        function(resolve, reject) {
+            user.signupDate = new Date();
+            if (user.signupMethod === 'google.com') {
+                auth.signInWithPopup(provider)
+                .then((result) => {
+                    console.log(result);
+                
+                    user.email = result.user.email;
+
+                    regDBPromise(user)
+                    .then(function() {
+                        resolve(user);
+                    })
+                    .catch(function(error) {
+                        console.error(error)
+                        reject(error);
+                    });
+                })
+                .catch(function(error) {
+                    console.log(error);
+                    reject(error);
+                });
+            } else {
+                auth.createUserAndRetrieveDataWithEmailAndPassword(user.email, password)
+                .then(function() {
+                    regDBPromise(user)
+                    .then(
+                        function(data) {
+                            console.log(data);
+                            resolve(user);
+                        }
+                    )
+                    .catch(function(error) {
+                        console.log(error);
+                        reject(error);
+                    });
+                })
+                .catch(function(error) {
+                    // Handle Errors here.
+                    reject(error);
+                    console.log(error);
+                });
+            }
+        }
+    );
+}
+
+function regDBPromise(user) {
+
+    return new Promise(function(resolve, reject) {
+        db.collection('users').doc(user.email).set(user)
+        .then(function(data) {
+            resolve(user);
+        }).catch(function(error) {
+            console.log(error);
+            reject(error);
+        });
+    });
+}
+
+export function log(){
+    return 'verdadera funcion';
+}
