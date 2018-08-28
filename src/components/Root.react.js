@@ -141,32 +141,24 @@ export default class Root extends React.Component {
     }
 
     signupWithGoogle(){
-        this.user.signupMethod = 'google.com';
-        this.signupMethod = 'google.com';
-        this.setState({loginStatus: 'SIGNUP'});        
+        this.user.signupMethod = 'google.com'
+        this.signupMethod = 'google.com'
+        this.setState({loginStatus: 'SIGNUP'})       
     }
 
     render() {
 
-
         let nav = () => { 
-                            if (this.state.loginStatus === "NOT_AUTHENTICATED"){
-                                return null
-                            }
-                            
-                            return (                
-                                <div id='header'>
-                                    <NavBar /> 
-                                </div>)
-                        };
-
+            if (this.state.loginStatus === "NOT_AUTHENTICATED"){
+                return null
+            }
+            return <NavBar />
+        }
 
         return (
-            
             <div id='root-container'>
                 {nav()}
-                <div id='main-container'>
-                <Container>
+                <Container textAlign='center'>
                     <Main
                         signupMethodHandler={this.signupMethod}
                         completeSignupHandler={this.completarReg.bind(this)}
@@ -182,7 +174,6 @@ export default class Root extends React.Component {
                         error={this.error}
                     />
                 </Container>
-                </div>
             </div>
             
         )
