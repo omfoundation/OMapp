@@ -6,8 +6,6 @@ import Home from "./Home.react";
 import SignUp from "./Signup.react";
 import Loading from "./Loading.react";
 
-import '../css/access.css';
-
 export default class Main extends React.Component {
 
     constructor(props){

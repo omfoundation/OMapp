@@ -1,8 +1,9 @@
 import {auth, provider, db} from '../constants-mock'
+import { User } from './model';
 
-export function isEmailAlreadyRegistered(email){
+export function isUsernameAlreadyRegistered(username){
     return new Promise((resolve) => {
-        db.collection('users').doc(email).get()
+        db.collection('users').doc(username).get()
         .then((doc) => { 
             if(doc.exists){
                 resolve(true)
@@ -20,7 +21,7 @@ export function signInWithGooglePromise() {
     return new Promise(function(resolve, reject) {
         auth.signInWithPopup(provider)
         .then((result) => {
-            db.collection('users').doc(result.user.email).get()
+            db.collection('users').doc(result.user.username).get()
                 .then((doc) => {
                     resolve({
                         email: result.user.email,
@@ -152,17 +153,37 @@ export function completeRegDBPromise(user, password) {
     );
 }
 
-function regDBPromise(user) {
-
+function saveUser(user) {
     return new Promise(function(resolve, reject) {
-        db.collection('users').doc(user.email).set(user)
-        .then(function(data) {
-            resolve(user);
-        }).catch(function(error) {
-            console.log(error);
-            reject(error);
-        });
-    });
+        db.collection('users').doc(user.username).set(user)
+        .then(() => resolve(user)
+        ).catch(function(error) {
+            reject(error)
+        })
+    })
+}
+
+export function signupWithGoogle(username){
+    return new Promise((resolve) => {
+        let user = null
+        auth.signInWithPopup(provider)
+        .then((result) => {
+            user = new User()
+            user.email = result.user.email
+            user.username = username
+            user.profilePhotoURL = result.user.profilePhotoURL
+            saveUser(user)
+            .then(resolve(user))
+            .catch((error) => {
+                console.log(error)
+                reject(error)
+            })
+        })
+        .catch((error) => {
+            console.log(error)
+            reject(error)
+        })
+    })
 }
 
 export function log(){

@@ -1,5 +1,4 @@
-
-export class User {
+class User {
     constructor(){
         this.name = null;
         this.email = null;
@@ -7,3 +6,5 @@ export class User {
         this.profilePhotoURL = null;
     }
 }
+
+export {User}

@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import App from './App';
 
 import './css/index.css';
+import '../css/loader.css';
 import 'semantic-ui-css/semantic.min.css';
 
 ReactDOM.render(

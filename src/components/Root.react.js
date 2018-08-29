@@ -5,8 +5,6 @@ import Main from './Main.react'
 
 import { Container } from 'semantic-ui-react'
 
-import '../css/root.css';
-
 export default class Root extends React.Component {
 
     constructor(props){

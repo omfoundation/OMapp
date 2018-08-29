@@ -3,8 +3,6 @@ import { Route } from 'react-router-dom'
 
 import { Container, Grid, Button } from 'semantic-ui-react'
 
-import '../css/access.css'
-
 export default class Access extends Component{
     constructor(props){
         super(props);
@@ -127,9 +125,10 @@ class SignupMethodChoicePopup extends Component {
                     <p>Selecciona tu metodo preferido:</p>
                     <a className="btn"><button onClick={()=>{this.signupWithEmailPasswordClickHandler()}}>Con email y contraseña</button></a>
                     <br/>
-                    <Route render={({ history }) => (
+
+                    
                         <button onClick={() => {history.push('/signup'); this.signupWithGoogleClickHandler()}}>Con cuenta Google</button>
-                    )} />                
+                          
                 </div>
             </div>
         )
