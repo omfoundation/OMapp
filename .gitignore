@@ -22,3 +22,4 @@ yarn-error.log*
 
 # contenido de directorios que no deben ser públicos
 /private/omapp-gcp-8681f4ce021d.json
+package-lock.json
