@@ -1,4 +1,19 @@
-import {auth, provider, db} from '../constants'
+import {auth, provider, db} from '../constants-mock'
+
+export function isEmailAlreadyRegistered(email){
+    return new Promise((resolve) => {
+        db.collection('users').doc(email).get()
+        .then((doc) => { 
+            if(doc.exists){
+                resolve(true)
+            }
+            else{
+                resolve(false)
+            }
+        })
+        .catch(error => console.log(error))
+    })
+}
 
 export function signInWithGooglePromise() {
 
@@ -38,8 +53,6 @@ export function signInWithEmailPromise(email, password) {
                             {
                                 email: email,
                                 nickname: doc.nickname,
-                                signupMethod: doc.signupMethod,
-                                registered: true,
                                 profilePhotoURL: doc.profilePhotoURL
                             }
                         }

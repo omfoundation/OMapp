@@ -1,16 +1,30 @@
-import firebase from 'firebase';
+import * as omapp from '../omapp'
 
-describe('Tests ligados al mock de firebase', ()=>
+describe('Tests ligados al registro de usuarios', () =>
     {
-        test('El objeto "firebase" debe estar definido', () =>
+        test('La función omapp.signInWithEmailPromise debe de estar definida', () =>
             {
-                expect(firebase).toBeDefined();
+                expect(omapp.isEmailAlreadyRegistered).toBeDefined();
             }
         )
 
-        test('La funcion "initializeApp()" debe estar definida', () =>
+        test('El email de un usuario no registrado no debe de estar en la base de datos', () =>
             {
-                expect(firebase.initializeApp()).toBeDefined();
+                let email = "non-registered@gmail.com"
+                return omapp.isEmailAlreadyRegistered(email)
+                .then( (response) => {
+                    return expect(response).toBe(false)
+                }) 
+            }
+        )
+
+        test('El email de un usuario registrado debe de estar en la base de datos', () =>
+            {
+                let email = "registered@gmail.com"
+                return omapp.isEmailAlreadyRegistered(email)
+                .then( (response) => {
+                    return expect(response).toBe(true)
+                }) 
             }
         )
 
