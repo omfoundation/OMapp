@@ -5,124 +5,43 @@ import { Container, Grid, Button } from 'semantic-ui-react'
 import { Header, Image, Modal } from 'semantic-ui-react'
 
 export default class Access extends Component{
-    constructor(props){
-        super(props);
-        this.state = {showLogin:false};
-        this.processLogIn = this.processLogIn.bind(this);
-    }
-
-    openModalLogIn(){
-        this.setState({showLogin:true})
-    }
-
-    closeModalLogIn(){
-        this.setState({showLogin:false})
-    }
-
-    openModalLogin(){
-        this.props.signUpHandler();   
-    }
-
-    closeModalLogin(){
-        this.setState({showLogin:false});
-    }
-
-    openModalSignup(){
-        this.setState({showSignup:true})
-    }
-
-    closeModalSignup(){
-        this.setState({showSignup:false})
-    }
-
-    processLogIn(){
-        this.props.processLogin();
-    }
-
-    registerWithEmailPasswordClickHandler(){
-        //omapp.setLogStyle('email');
-        this.setState({signupChoice: 'email'});
-    }
-
-    procesSignupEmailAndPassword(){
-
-    }
-
-
 
     render(){
-
-            var loginStyle = {display: 'none'};
-            var signupStyle = {display: 'none'};
-
-            if (this.state.showLogin) {
-                loginStyle = {display: 'block'};  
-            }
-            else if(this.state.showSignup){
-                signupStyle = {display: 'block'};
-            }
-
-            return(
-                <Grid>
-                <Grid.Row/>
+        return(
+            <Grid>
                 <Grid.Row centered>
-                <Header as='h3'>Para disfrutar de los servicios que ofrece la plataforma desde registrarte o iniciar sesion.</Header>        
+                    <Header as='h3'>Para disfrutar de los servicios que ofrece la plataforma desde registrarte o iniciar sesion.</Header>        
                 </Grid.Row>
-                <Grid.Row centered>
+                    <Grid.Row centered>
+                        {this.props.error}
+                    <Modal trigger={<Button>Iniciar Session</Button>}>
+                    <Modal.Header>Select a Photo</Modal.Header>
+                        <Modal.Content image>
+                            <Image wrapped size='medium' src='https://react.semantic-ui.com/images/avatar/large/rachel.png' />
+                            <Modal.Description>
+                                <Header>Default Profile Image</Header>
+                                <p>We've found the following gravatar image associated with your e-mail address.</p>
+                                <p>Is it okay to use this photo?</p>
+                            </Modal.Description>
+                            <Button onClick={() => this.props.onSignupWithGoogleHandler()}></Button>
+                        </Modal.Content>
+                    </Modal>
 
-                    {this.props.error}
-                    <Button.Group vertical={true}>
-                            <Button onClick={() => this.openModalLogIn()}>Iniciar sesion</Button>
-                            
-                            <Button onClick={()=>{this.openModalSignup()}} >Registrarse</Button>
-                           
-                    {/*****************Iniciar sesion modal *************/}
-                    <LoginMethodPopup
-                        style={loginStyle}
-                        onCloseHandler={this.closeModalLogin.bind(this)} 
-                        googleAuthenticationHandler={this.props.googleAuthenticationHandler.bind(this)}
-                        processLoginHandler={this.props.processLoginHandler}
-                    />
-
-                <SignupMethodChoicePopup
-                        style={signupStyle}
-                        signupMethod={this.props.signupMethod}
-                        onCloseHandler={this.closeModalSignup.bind(this)} 
-                        onSignupWithEmailAndPasswordHandler={this.props.signupWithEmailAndPasswordHandler.bind(this)}
-                        onSignupWithGoogleHandler={this.props.signupWithGoogleHandler.bind(this)}
-                    />
-
-
-                <Modal trigger={<Button>Iniciar Session</Button>}>
-                <Modal.Header>Select a Photo</Modal.Header>
-                <Modal.Content image>
-                <Image wrapped size='medium' src='https://react.semantic-ui.com/images/avatar/large/rachel.png' />
-                    <Modal.Description>
-                    <Header>Default Profile Image</Header>
-                    <p>We've found the following gravatar image associated with your e-mail address.</p>
-                    <p>Is it okay to use this photo?</p>
-                    </Modal.Description>
-                    <Button onClick={() => this.props.onSignupWithGoogleHandler()}></Button>
-                </Modal.Content>
-                </Modal>
-
-                <Modal trigger={<Button>Registrarse</Button>}>
-                    <Modal.Content>
-                        <Container textAlign={"center"}>
-                        <Button.Group vertical={true}>
-                            <Button onClick={() => this.props.onSignupWithGoogleHandler()}>Google</Button>
-                            <Button onClick={() => this.props.onSignupWithGoogleHandler()}>Email</Button>
-                            </Button.Group>
-                        </Container>
-                    </Modal.Content>
-                </Modal>
-                
-                </Button.Group>
+                    <Modal trigger={<Button>Registrarse</Button>}>
+                        <Modal.Content>
+                            <Container textAlign={"center"}>
+                                <Button.Group vertical={true}>
+                                    <Button onClick={() => this.props.signupWithGoogleHandler()}>Google</Button>
+                                    <Button onClick={() => alert('implementar')}>Email</Button>
+                                </Button.Group>
+                            </Container>
+                        </Modal.Content>
+                    </Modal>
                 </Grid.Row>
-                </Grid>
-            ) 
-        }
-    
+            </Grid>
+        ) 
+    }
+
 }
 
 class SignupMethodChoicePopup extends Component {
