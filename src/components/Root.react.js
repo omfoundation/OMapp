@@ -57,6 +57,10 @@ export default class Root extends React.Component {
         this.user.profilePhotoURL = user.profilePhotoURL;
     }
 
+    getUser(){
+        return this.user
+    }
+
     processLogin(username, password) {
         var thisComponent = this;
         this.enableLoadingView();
@@ -114,19 +118,25 @@ export default class Root extends React.Component {
     }
 
     signupWithGoogle(){
-        this.signupMethod = 'google.com'
-        this.setState({loading: true});
-        let thisComponent = this
-        omapp.getUserInfoFromGoogle()
-        .then(result => {
-            thisComponent.user = new User()
-            let user = thisComponent.user
-            user.email = result.email
-            user.profilePhotoURL = result.profilePhotoURL ? result.profilePhotoURL : null
-            thisComponent.signupMethod = 'google.com'
-            thisComponent.setState({loginStatus: 'SIGNUP', loading: false})
+        return new Promise((resolve, reject) => {
+            this.signupMethod = 'google.com'
+            this.setState({loading: true});
+            let thisComponent = this
+            omapp.getUserInfoFromGoogle()
+            .then(result => {
+                thisComponent.user = new User()
+                let user = thisComponent.user
+                user.email = result.email
+                user.profilePhotoURL = result.profilePhotoURL ? result.profilePhotoURL : null
+                thisComponent.signupMethod = 'google.com'
+                thisComponent.setState({loginStatus: 'SIGNUP', loading: false})
+                resolve(true)
+            })
+            .catch(error => {
+                console.log(error)
+                reject(error)
+            })
         })
-        .catch(error => console.log(error))
     }
 
     signupUser(user){
