@@ -1,11 +1,29 @@
 import {auth, provider, db} from '../constants'
+import { User } from './model';
+
+export function isUsernameAlreadyRegistered(username){
+    return new Promise((resolve) => {
+        db.collection('users').doc(username).get()
+        .then((doc) => { 
+            if(doc.exists){
+                console.log('dentro de isUsernameAlreadyRegistered: true')
+                resolve(true)
+            }
+            else{
+                console.log('dentro de isUsernameAlreadyRegistered: false')
+                resolve(false)
+            }
+        })
+        .catch(error => console.log(error))
+    })
+}
 
 export function signInWithGooglePromise() {
 
     return new Promise(function(resolve, reject) {
         auth.signInWithPopup(provider)
         .then((result) => {
-            db.collection('users').doc(result.user.email).get()
+            db.collection('users').doc(result.user.username).get()
                 .then((doc) => {
                     resolve({
                         email: result.user.email,
@@ -38,8 +56,6 @@ export function signInWithEmailPromise(email, password) {
                             {
                                 email: email,
                                 nickname: doc.nickname,
-                                signupMethod: doc.signupMethod,
-                                registered: true,
                                 profilePhotoURL: doc.profilePhotoURL
                             }
                         }
@@ -89,69 +105,29 @@ export function signOutPromise() {
     });
 }
 
-export function completeRegDBPromise(user, password) {
-
-    return new Promise(
-        function(resolve, reject) {
-            user.signupDate = new Date();
-            if (user.signupMethod === 'google.com') {
-                auth.signInWithPopup(provider)
-                .then((result) => {
-                    console.log(result);
-                
-                    user.email = result.user.email;
-
-                    regDBPromise(user)
-                    .then(function() {
-                        resolve(user);
-                    })
-                    .catch(function(error) {
-                        console.error(error)
-                        reject(error);
-                    });
-                })
-                .catch(function(error) {
-                    console.log(error);
-                    reject(error);
-                });
-            } else {
-                auth.createUserAndRetrieveDataWithEmailAndPassword(user.email, password)
-                .then(function() {
-                    regDBPromise(user)
-                    .then(
-                        function(data) {
-                            console.log(data);
-                            resolve(user);
-                        }
-                    )
-                    .catch(function(error) {
-                        console.log(error);
-                        reject(error);
-                    });
-                })
-                .catch(function(error) {
-                    // Handle Errors here.
-                    reject(error);
-                    console.log(error);
-                });
-            }
-        }
-    );
-}
-
-function regDBPromise(user) {
-
+export function signupUser(user) {
+    console.log('omapp.signup')
     return new Promise(function(resolve, reject) {
-        db.collection('users').doc(user.email).set(user)
-        .then(function(data) {
-            resolve(user);
-        }).catch(function(error) {
-            console.log(error);
-            reject(error);
-        });
-    });
+        console.log('omapp.signup')
+        db.collection('users').doc(user.username).set(user)
+        .then(result => resolve(result))
+        .catch(error => reject(error))
+    })
 }
 
-export function log(){
-    return 'verdadera funcion';
+export function getUserInfoFromGoogle(){
+    return new Promise((resolve, reject) => {
+        let user = null
+        auth.signInWithPopup(provider)
+        .then((result) => {
+            user = new User()
+            user.email = result.user.email
+            user.profilePhotoURL = result.user.profilePhotoURL
+            resolve(user)
+        })
+        .catch((error) => {
+            console.log(error)
+            reject(error)
+        })
+    })
 }
