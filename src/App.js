@@ -3,13 +3,13 @@ import { BrowserRouter } from 'react-router-dom'
 
 import Root from './components/Root.react';
 
-import './css/App.css';
+import { Container, Grid } from 'semantic-ui-react'
 
 class App extends Component {
   render() {
     return (
         <BrowserRouter>
-          <Root/>
+            <Root/>
         </BrowserRouter>
       );
   }

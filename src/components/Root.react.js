@@ -10,7 +10,6 @@ import { Container } from 'semantic-ui-react'
 
 import { User } from '../omapp/model'
 import * as omapp from '../omapp/omapp'
-import { rejects } from 'assert';
 
 export default class Root extends React.Component {
 
