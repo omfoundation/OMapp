@@ -1,4 +1,4 @@
-import {auth, provider, db} from '../constants-mock'
+import {auth, provider, db} from '../constants'
 import { User } from './model';
 
 export function isUsernameAlreadyRegistered(username){
@@ -6,9 +6,11 @@ export function isUsernameAlreadyRegistered(username){
         db.collection('users').doc(username).get()
         .then((doc) => { 
             if(doc.exists){
+                console.log('dentro de isUsernameAlreadyRegistered: true')
                 resolve(true)
             }
             else{
+                console.log('dentro de isUsernameAlreadyRegistered: false')
                 resolve(false)
             }
         })
@@ -103,89 +105,29 @@ export function signOutPromise() {
     });
 }
 
-export function completeRegDBPromise(user, password) {
-
-    return new Promise(
-        function(resolve, reject) {
-            user.signupDate = new Date();
-            if (user.signupMethod === 'google.com') {
-                auth.signInWithPopup(provider)
-                .then((result) => {
-                    console.log(result);
-                
-                    user.email = result.user.email;
-
-                    regDBPromise(user)
-                    .then(function() {
-                        resolve(user);
-                    })
-                    .catch(function(error) {
-                        console.error(error)
-                        reject(error);
-                    });
-                })
-                .catch(function(error) {
-                    console.log(error);
-                    reject(error);
-                });
-            } else {
-                auth.createUserAndRetrieveDataWithEmailAndPassword(user.email, password)
-                .then(function() {
-                    regDBPromise(user)
-                    .then(
-                        function(data) {
-                            console.log(data);
-                            resolve(user);
-                        }
-                    )
-                    .catch(function(error) {
-                        console.log(error);
-                        reject(error);
-                    });
-                })
-                .catch(function(error) {
-                    // Handle Errors here.
-                    reject(error);
-                    console.log(error);
-                });
-            }
-        }
-    );
-}
-
-function saveUser(user) {
+export function signupUser(user) {
+    console.log('omapp.signup')
     return new Promise(function(resolve, reject) {
+        console.log('omapp.signup')
         db.collection('users').doc(user.username).set(user)
-        .then(() => resolve(user)
-        ).catch(function(error) {
-            reject(error)
-        })
+        .then(result => resolve(result))
+        .catch(error => reject(error))
     })
 }
 
-export function signupWithGoogle(username){
-    return new Promise((resolve) => {
+export function getUserInfoFromGoogle(){
+    return new Promise((resolve, reject) => {
         let user = null
         auth.signInWithPopup(provider)
         .then((result) => {
             user = new User()
             user.email = result.user.email
-            user.username = username
             user.profilePhotoURL = result.user.profilePhotoURL
-            saveUser(user)
-            .then(resolve(user))
-            .catch((error) => {
-                console.log(error)
-                reject(error)
-            })
+            resolve(user)
         })
         .catch((error) => {
             console.log(error)
             reject(error)
         })
     })
-}
-
-export function log(){
-    return 'verdadera funcion';
 }

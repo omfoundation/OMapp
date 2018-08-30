@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
+import { User } from '../omapp/omapp'
 
 export default class SignUp extends Component{
-    constructor(props){
-        super(props);
-
-        this.completarReg = this.completarReg.bind(this);
-    }
 
     completarReg(idPlan, authLevel){
         if(this.checkForm()){
             if (this.props.signupMethod === "google.com"){
-                this.props.completeSignupHandler('', '', this.refs.nickText.value, idPlan, authLevel);
+                
+                let user = this.props.user
+                user.username = this.refs.nickText.value
+                this.props.signupUserHandler(user);
             }
             else if (this.props.signupMethod === "email") {
-                this.props.completeSignupHandler(this.refs.email.value, this.refs.psw.value, this.refs.nickText.value, idPlan, authLevel);
+                this.props.signupWithEmailAndPasswordHandler(this.refs.email.value, this.refs.psw.value, this.refs.nickText.value, idPlan, authLevel);
             }
             else{
                 alert('SignUp.js - ERROR');

@@ -125,10 +125,7 @@ class SignupMethodChoicePopup extends Component {
                     <p>Selecciona tu metodo preferido:</p>
                     <a className="btn"><button onClick={()=>{this.signupWithEmailPasswordClickHandler()}}>Con email y contraseña</button></a>
                     <br/>
-
-                    
-                        <button onClick={() => {history.push('/signup'); this.signupWithGoogleClickHandler()}}>Con cuenta Google</button>
-                          
+                    <button onClick={() => this.signupWithGoogleClickHandler()}>Con cuenta Google</button>        
                 </div>
             </div>
         )
@@ -191,7 +188,7 @@ class LoginMethodPopup extends Component {
                         <input type="password" placeholder="Enter contraseña" ref="upsw" required />
                         <button type="submit" className="btn greenBG" onClick={this.onProcessLogin.bind(this)}>Iniciar sesion</button>
                         <br/>
-                        <button className={"entra con google"} onClick={() => {this.onLoginWithGoogle()}}>Entra con Google</button>
+                        <button className={"entra con google"} onClick={() => this.onLoginWithGoogle()}>Entra con Google</button>
                     </div>
                 </div>
             </div>

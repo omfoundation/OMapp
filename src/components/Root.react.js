@@ -1,9 +1,16 @@
-import * as omapp from '../omapp/omapp'
 import React from 'react'
+
 import NavBar from './NavBar.react'
 import Main from './Main.react'
+import Access from "./Access.react";
+import SignUp from "./Signup.react";
+import Loading from "./Loading.react";
 
 import { Container } from 'semantic-ui-react'
+
+import { User } from '../omapp/model'
+import * as omapp from '../omapp/omapp'
+import { rejects } from 'assert';
 
 export default class Root extends React.Component {
 
@@ -98,37 +105,6 @@ export default class Root extends React.Component {
         this.setState({error: true,loading: false});
     }
 
-    completarReg(email,password,nickname,idPlan, authLevel){
-        
-        var thisComponent = this;
-        
-        this.enableLoadingView();
-
-        var userDataToRegister = {
-            email: email,
-            nickname: nickname,
-            idPlan: idPlan,
-            authLevel,
-            signupMethod: this.signupMethod,
-            profilePhotoURL: null
-        };
-
-        omapp.completeRegDBPromise(userDataToRegister, password)
-        .then(function(user){
-                thisComponent.user.email = user.email;
-                thisComponent.user.nickname = user.nickname;
-                thisComponent.setAuthenticationToRegistered();
-                thisComponent.disableLoadingView();
-            }
-        )
-        .catch(function(error){
-                console.log(error);
-                thisComponent.showErrorView(error);
-                thisComponent.setAuthenticationToNotAuthenticated();
-            }
-        );
-    }
-
     changeLoginStatusToRegistered(){
         this.setState({loginStatus: 'REGISTERED', loading: false});
     }
@@ -139,31 +115,77 @@ export default class Root extends React.Component {
     }
 
     signupWithGoogle(){
-        this.user.signupMethod = 'google.com'
         this.signupMethod = 'google.com'
-        this.setState({loginStatus: 'SIGNUP'})       
+        this.setState({loading: true});
+        let thisComponent = this
+        omapp.getUserInfoFromGoogle()
+        .then(result => {
+            thisComponent.user = new User()
+            let user = thisComponent.user
+            user.email = result.email
+            user.profilePhotoURL = result.profilePhotoURL ? result.profilePhotoURL : null
+            thisComponent.signupMethod = 'google.com'
+            thisComponent.setState({loginStatus: 'SIGNUP', loading: false})
+        })
+        .catch(error => console.log(error))
+    }
+
+    signupUser(user){
+        let thisComponent = this
+        thisComponent.setState({loading: true})
+        omapp.isUsernameAlreadyRegistered(user.username)
+        .then(result => {
+            if(result === true){
+                this.error = {errorCode:-1, message: 'Nombre de usuario ya registrado'}
+                thisComponent.setState({loginStatus: 'NOT_AUTHENTICATED', loading: false})
+            }
+            else{
+                omapp.signupUser(user.toJSON())
+                .then(result => {
+                    console.log(result)
+                    thisComponent.user = user
+                    thisComponent.setState({loginStatus: 'REGISTERED', loading: false})
+                })
+                .catch(error => console.log(error))
+            }
+
+        })
+        .catch(error => console.log(error))
     }
 
     render() {
-
-        let nav = () => { 
-            if (this.state.loginStatus === "NOT_AUTHENTICATED"){
-                return null
-            }
-            return <NavBar />
+        
+        if (this.state.loading){
+            return <Loading/>
+        }
+        else if (this.state.loginStatus === 'NOT_AUTHENTICATED'){
+            return (
+                <Access 
+                    googleAuthenticationHandler={() => this.googleAuthenticationHandler()}
+                    processLoginHandler={ () => this.processLogin()}
+                    signupWithEmailAndPasswordHandler={ () => this.signupWithEmailAndPassword()}
+                    signupWithGoogleHandler={() => this.signupWithGoogle()}
+                    error={<ErrorView error={this.error}/>}
+                />
+            )
+        }
+        else if(this.state.loginStatus === 'SIGNUP'){
+            return  (
+                <SignUp 
+                    user={this.user}
+                    signupMethod={this.signupMethod}
+                    signupUserHandler={this.signupUser.bind(this)}
+                    signupWithEmailAndPasswordHandler={this.signupWithEmailAndPassword.bind(this)}
+                /> 
+            )
         }
 
         return (
             <div id='root-container'>
-                {nav()}
+                <NavBar />
                 <Container textAlign='center'>
                     <Main
                         signupMethodHandler={this.signupMethod}
-                        completeSignupHandler={this.completarReg.bind(this)}
-                        googleAuthenticationHandler={this.googleAuthenticationHandler.bind(this)}
-                        processLoginHandler={this.processLogin.bind(this)}
-                        signupWithEmailAndPasswordHandler={this.signupWithEmailAndPassword.bind(this)}
-                        signupWithGoogleHandler={this.signupWithGoogle.bind(this)}
                         logoutHandler={this.logoutHandler.bind(this)}
                         state={this.state}
                         user={this.user}
@@ -174,6 +196,24 @@ export default class Root extends React.Component {
                 </Container>
             </div>
             
+        )
+    }
+}
+
+var ErrorView = class ErrorView extends React.Component {
+
+    isEmpty(str) {
+        return (!str || 0 === str.length);
+    }
+
+    render() {
+        
+        if(this.isEmpty(this.props.error)){
+            return null;
+        }
+
+        return (
+            <p style={{color: 'red'}}>Error: {this.props.error.message}</p>
         )
     }
 }
