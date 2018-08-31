@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
-import { User } from '../omapp/omapp'
+import { User } from '../omapp/model'
 
 import { Form, Grid, Card, Button, List, Icon } from 'semantic-ui-react';
 
 export default class SignUp extends Component {
 
     completarReg(idPlan, authLevel) {
+
+        let mockUser = new User()
+        
+        mockUser.email = 'mock@gmail.com'
+        mockUser.name = 'Mr. Cat Mock'
+        mockUser.username = 'mockUsername'
+        mockUser.profilePhotoURL = 'http://cdn.themindcircle.com/wp-content/uploads/2016/08/maine-coon-cat-photography-robert-sijka-1.jpg'
+
+        this.props.signupUserHandler(mockUser)
+
+        /*
         if (this.checkForm()) {
             if (this.props.signupMethod === "google.com") {
 
@@ -24,9 +35,12 @@ export default class SignUp extends Component {
         else {
             alert('ERROR - SignUp.js - completarReg');
         }
+        */
     }
 
     checkForm() {
+        return true
+        /*
         if (!(this.props.signupMethod === 'google.com')) {
 
             //Registro por email
@@ -73,6 +87,7 @@ export default class SignUp extends Component {
         }
 
         return true;
+        */
     }
 
     render() {

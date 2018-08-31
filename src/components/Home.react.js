@@ -11,7 +11,7 @@ export default class Home extends Component {
             <div>
                 <img src={ this.props.user.profilePhotoURL || this.props.defaultProfilePhotoURL} height='100'  alt='user'/>
                 <p>
-                    Hola {this.props.user.nick}!
+                    Hola {this.props.user.username}
                     <br/>
                     <strong>Correo: </strong> {this.props.user.email}
                 </p>

@@ -114,6 +114,8 @@ export default class Root extends React.Component {
     }
 
     signupWithGoogle(){
+        this.setState({loginStatus: 'SIGNUP', loading: false})
+        /*
         this.signupMethod = 'google.com'
         this.setState({loading: true});
         let thisComponent = this
@@ -127,9 +129,13 @@ export default class Root extends React.Component {
             thisComponent.setState({loginStatus: 'SIGNUP', loading: false})
         })
         .catch(error => console.log(error))
+        */
     }
 
     signupUser(user){
+        this.setState({loginStatus: 'REGISTERED', loading: false})
+        this.user = user
+        /*
         let thisComponent = this
         thisComponent.setState({loading: true})
         omapp.isUsernameAlreadyRegistered(user.username)
@@ -150,6 +156,7 @@ export default class Root extends React.Component {
 
         })
         .catch(error => console.log(error))
+        */
     }
 
     render() {
