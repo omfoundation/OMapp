@@ -2,6 +2,18 @@ import React, { Component } from 'react'
 import { Container, Grid, Header, Form, Checkbox, Button, Input } from 'semantic-ui-react'
 import { User } from '../omapp/omapp'
 
+import { createStore, combineReducers } from 'redux'
+import { reducer as formReducer } from 'redux-form'
+
+import { Field, reduxForm } from 'redux-form';
+
+const reducers = {
+  // ... your other reducers here ...
+  form: formReducer     // <---- Mounted at 'form'
+}
+const reducer = combineReducers(reducers)
+const store = createStore(reducer)
+
 export default class SignUp extends Component{
 
     constructor(props){
@@ -79,29 +91,45 @@ export default class SignUp extends Component{
         return true;
     }
 
-    usernameHandler(){
-
-    }
+    submit = (values) => {
+        // Do something with the form values
+        console.log(values);
+      }
 
     render(){
         return(
             <Grid>
-            <Grid.Row/>
-            <Grid.Row centered>
-            <Grid.Column width={14}>
-            <Header as='h3'>Registro de usuario</Header>
-            <Form>
-            <Form.Field value={this.username}>
-              <label>Nombre de usuario</label>
-              <input onChange={this.handleUsername.bind(this)} placeholder='Anonymouse' />
-              <Input type='hidden' value='1'/>
-              <Form.Button>Subscribir</Form.Button>
-            </Form.Field>
-          </Form>
-          </Grid.Column>
-          </Grid.Row>
-          </Grid>
+                <Grid.Row/>
+                <Grid.Row centered>
+                    <Grid.Column width={14}>
+                        <Header as='h3'>Registro de usuario</Header>
+                            <SignUpForm onSubmit={this.submit}/>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
         ) 
 
     }
 }
+
+
+
+class SignUpForm extends Component {
+    render() {
+        const { handleSubmit } = this.props;
+        return (
+            <Form onSubmit={handleSubmit}>
+                <Form.Field value={this.username}>
+                    <label>Nombre de usuario</label>
+                    <input placeholder='Anonymouse' />
+                    <Input type='hidden' value='1'/>
+                    <Form.Button>Subscribir</Form.Button>
+                </Form.Field>
+            </Form>
+      )
+    }
+  }
+
+  SignUpForm = reduxForm({
+    form: 'signUp' // a unique name for this form
+  })(SignUpForm);
