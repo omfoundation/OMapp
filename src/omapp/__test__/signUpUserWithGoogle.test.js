@@ -1,40 +1,16 @@
-import Root from '../Root.react'
-
-import React from 'react'
-import Enzyme from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-import { User } from '../../omapp/model'
-
-
+import * as omapp from '../omapp'
 import {auth, provider, db} from '../../constants'
-import * as omapp from '../../omapp/omapp'
 
-Enzyme.configure({adapter:new Adapter()})
+describe('Registro de un usuario ', () =>{
+    let username = 'USERNAME_DE_PRUEBA'
 
-describe('signupWithGoogle()', ()=> {
-
-   auth.signInWithPopup = null;
+    auth.signInWithPopup = null;
 
     db.collection = null;
 
     let mockedDB =[]
     
-    let testUser = null
-    
-    beforeAll(function(){
-        testUser = new User()
-        testUser.email = 'test@gmail.com'
-        testUser.profilePhotoURL = 'testProfilePhotoURL'
-
-        let promise = new Promise((resolve) => {
-            resolve(testUser)
-        })
-
-        omapp.getUserInfoFromGoogle = jest.fn()
-        .mockReturnValue(promise)
-
-
-
+    beforeAll( () => {
 
         auth.signInWithPopup = function(){
             let result = {
@@ -89,28 +65,47 @@ describe('signupWithGoogle()', ()=> {
                 }
             }
         } 
-    }         
+    }     
     })
 
-    it('El usuario de prueba debe tener los mismos datos que el usuario guardado en el componente', () => {
-        const wrapper = Enzyme.shallow(<Root/>)
-        return wrapper.instance().signupWithGoogle()
-        .then(result => {
-            const userFromComponent = wrapper.instance().getUser()
-            expect(userFromComponent).toEqual(testUser)
+    test('La función omapp.isEmailAlreadyRegistered debe de estar definida', () => {
+            expect(omapp.isUsernameAlreadyRegistered).toBeDefined();
+    })
+
+    test('El username de un usuario no registrado no debe de estar en la base de datos', () => {
+        let username = "usernameNoRegistrado"
+        return omapp.isUsernameAlreadyRegistered(username)
+        .then( (response) => {
+            return expect(response).toBe(false)
+        }) 
+    })
+
+    test('La función omapp.signupWithGoogle debe de estar definida', () => {
+        expect(omapp.signupWithGoogle).toBeDefined()
+    })
+
+    test('La función omapp.signupWithGoogle debe registrar al usuario en la base ' + 
+            'de datos y devolver un objeto con los datos del usuario', () => {
+
+        return omapp.signupWithGoogle(username)
+        .then((result) => {
+            expect(result.username).toEqual(username)
         })
     })
 
-    it('El usuario de prueba debe tener los mismos datos que el usuario guardado en el componente', () => {
-        const wrapper = Enzyme.shallow(<Root/>)
-        return wrapper.instance().signupWithGoogle()
-        .then(result => {
-            const userFromComponent = wrapper.instance().getUser()
-            userFromComponent.username = "testUsername"
-            wrapper.instance().signupUser(userFromComponent)
-            expect(userFromComponent).toEqual(wrapper.instance().getUser())
-        })
+    test('Luego de haber registrado al usuario la funcion omapp.isUsernameAlreadyRegistered'
+    + ' debe de retornar "true"', () => {
+        return omapp.isUsernameAlreadyRegistered(username)
+        .then( (response) => {
+            return expect(response).toBe(true)
+        })           
     })
+})
 
-
+test('El username de un usuario registrado debe de estar en la base de datos', () => {
+    let username = "usernameRegistrado"
+    return omapp.isUsernameAlreadyRegistered(username)
+    .then(response => {
+        return expect(response).toBe(true)
+    }) 
 })
