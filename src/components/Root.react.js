@@ -1,7 +1,7 @@
 import React from 'react'
 
 import NavBar from './NavBar.react'
-import Main from './Main.react'
+import Home from './Home.react'
 import Access from "./Access.react";
 import SignUp from "./Signup.react";
 import Loading from "./Loading.react";
@@ -189,18 +189,13 @@ export default class Root extends React.Component {
         return (
             <div id='root-container'>
                 <NavBar />
-                <Container textAlign='center'>
-                    <Main
-                        signupMethodHandler={this.signupMethod}
-                        logoutHandler={this.logoutHandler.bind(this)}
-                        state={this.state}
-                        user={this.user}
-                        signupMethod={this.signupMethod}
-                        defaultProfilePhotoURL={this.defaultProfilePhotoURL}
-                        error={this.error}
-                    />
-                </Container>
+                <Home 
+                user={this.user} 
+                defaultProfilePhotoURL={this.defaultProfilePhotoURL} 
+                logoutHandler={this.logoutHandler.bind(this)} 
+                />
             </div>
+            
             
         )
     }
