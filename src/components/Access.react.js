@@ -8,9 +8,9 @@ export default class Access extends Component {
 
     render() {
         return (
-            <Grid verticalAlign='middle' columns={2}>
+            <Grid verticalAlign='middle'>
                 <Grid.Row centered>
-                    <Grid.Column width={8}>
+                    <Grid.Column computer={6} mobile={14} tablet={10}>
                         <br />
                         <br />
                         <Card fluid>
