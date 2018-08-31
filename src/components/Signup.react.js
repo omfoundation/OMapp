@@ -1,8 +1,13 @@
-import React, { Component } from 'react';
-import { Container, Grid, Header, Form, Checkbox, Button } from 'semantic-ui-react'
+import React, { Component } from 'react'
+import { Container, Grid, Header, Form, Checkbox, Button, Input } from 'semantic-ui-react'
 import { User } from '../omapp/omapp'
 
 export default class SignUp extends Component{
+
+    constructor(props){
+        super(props)
+        this.username = "{username}"
+    }
 
     completarReg(idPlan, authLevel){
         if(this.checkForm()){
@@ -74,6 +79,10 @@ export default class SignUp extends Component{
         return true;
     }
 
+    usernameHandler(){
+
+    }
+
     render(){
         return(
             <Grid>
@@ -82,42 +91,12 @@ export default class SignUp extends Component{
             <Grid.Column width={14}>
             <Header as='h3'>Registro de usuario</Header>
             <Form>
-            <Form.Field>
+            <Form.Field value={this.username}>
               <label>Nombre de usuario</label>
-              <input placeholder='Anonymouse' />
+              <input onChange={this.handleUsername.bind(this)} placeholder='Anonymouse' />
+              <Input type='hidden' value='1'/>
+              <Form.Button>Subscribir</Form.Button>
             </Form.Field>
-            <Grid columns={1} stackable>
-            <Grid.Row/>
-            <Grid.Row centered>
-                <Grid.Column width={5} textAlign={"center"} floated={"left"}>
-                    
-                        <Header as='h4' textAlign={"center"}>Plan A</Header>
-                        <Container as='p' textAlign={"justified"}>
-                            Al contrario del pensamiento popular, el texto de Lorem Ipsum no es simplemente texto aleatorio. Tiene sus raices en una pieza cl´sica de la literatura del Latin, que data del año 45 antes de Cristo, haciendo que este adquiera mas de 2000 años de antiguedad. Richard McClintock, un profesor de Latin de la Universidad de Hampden-Sydney en Virginia, encontró una de las palabras más oscuras de la lengua del latín, "consecteur", en un pasaje de Lorem Ipsum, y al seguir leyendo distintos textos del latín, descubrió la fuente indudable. Lorem Ipsum viene de las secciones 1.10.32 y 1.10.33 de "de Finnibus Bonorum et Malorum" (Los Extremos del Bien y El Mal) por Cicero, escrito en el año 45 antes de Cristo. Este libro es un tratado de teoría de éticas, muy popular durante el Renacimiento. La primera linea del Lorem Ipsum, "Lorem ipsum dolor sit amet..", viene de una linea en la sección 1.10.32  
-                        </Container>
-                        <Button type='submit'>Subscribir</Button>
-                    
-                </Grid.Column>
-                <Grid.Column width={5} textAlign={"center"} floated={"left"}>
-                    
-                        <Header as='h4' centered textAlign={"center"}>Plan B</Header>
-                        <Container as='p' textAlign={"justified"}>
-                            Al contrario del pensamiento popular, el texto de Lorem Ipsum no es simplemente texto aleatorio. Tiene sus raices en una pieza cl´sica de la literatura del Latin, que data del año 45 antes de Cristo, haciendo que este adquiera mas de 2000 años de antiguedad. Richard McClintock, un profesor de Latin de la Universidad de Hampden-Sydney en Virginia, encontró una de las palabras más oscuras de la lengua del latín, "consecteur", en un pasaje de Lorem Ipsum, y al seguir leyendo distintos textos del latín, descubrió la fuente indudable. Lorem Ipsum viene de las secciones 1.10.32 y 1.10.33 de "de Finnibus Bonorum et Malorum" (Los Extremos del Bien y El Mal) por Cicero, escrito en el año 45 antes de Cristo. Este libro es un tratado de teoría de éticas, muy popular durante el Renacimiento. La primera linea del Lorem Ipsum, "Lorem ipsum dolor sit amet..", viene de una linea en la sección 1.10.32  
-                        </Container>
-                        <Button type='submit'>Subscribir</Button>
-                   
-                </Grid.Column>
-                <Grid.Column width={5} textAlign={"center"} floated={"left"}>
-                   
-                        <Header as='h4' textAlign={"center"}>Plan C</Header>
-                        <Container as='p' textAlign={"justified"}>
-                            Al contrario del pensamiento popular, el texto de Lorem Ipsum no es simplemente texto aleatorio. Tiene sus raices en una pieza cl´sica de la literatura del Latin, que data del año 45 antes de Cristo, haciendo que este adquiera mas de 2000 años de antiguedad. Richard McClintock, un profesor de Latin de la Universidad de Hampden-Sydney en Virginia, encontró una de las palabras más oscuras de la lengua del latín, "consecteur", en un pasaje de Lorem Ipsum, y al seguir leyendo distintos textos del latín, descubrió la fuente indudable. Lorem Ipsum viene de las secciones 1.10.32 y 1.10.33 de "de Finnibus Bonorum et Malorum" (Los Extremos del Bien y El Mal) por Cicero, escrito en el año 45 antes de Cristo. Este libro es un tratado de teoría de éticas, muy popular durante el Renacimiento. La primera linea del Lorem Ipsum, "Lorem ipsum dolor sit amet..", viene de una linea en la sección 1.10.32  
-                        </Container>
-                        <Button type='submit'>Subscribir</Button>
-                    
-                </Grid.Column>
-            </Grid.Row>
-            </Grid>
           </Form>
           </Grid.Column>
           </Grid.Row>
