@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Container, Grid, Header, Form, Checkbox, Button } from 'semantic-ui-react'
 import { User } from '../omapp/omapp'
 
 export default class SignUp extends Component{
@@ -75,68 +76,52 @@ export default class SignUp extends Component{
 
     render(){
         return(
-            <div> 
-
-                    { this.props.signupMethod !== 'google.com' &&
-                        //Si la forma de login es diferente a google para registrar
-                        //Mostrar esto
-                        <div>
-                            <form>
-                                <label><b>Email</b></label>
-                                <input type="text" placeholder="Enter Email" ref="email" required />
-                            
-                                <label><b>Password</b> (6 caracteres min.)</label>
-                                <input type="password" placeholder="Enter Password" ref="psw" required />
-                            
-                                <label><b>Repeat Password</b></label>
-                                <input type="password" placeholder="Repeat Password" ref="pswRepeat" required />
-                            </form>
-                        </div>  
-                    }
-
-                    <br/>
-                    <label><b>Apodo/Nick:</b></label>
-                    <br/>
-                    <input className='iNick' maxLength="13" type='text' placeholder='Introduzca nick' ref='nickText'required />
-                    <br/>
-                    <br/>
-
-                    <div className='plans'>
-                            <div className="columns">
-                            <ul className="price">
-                                <li className="header">Basico</li>
-                                <li className="grey">Gratis</li>
-                                <li>Id plan: 1</li>
-                                <li>Nivel de acceso: 1</li>
-                                <li>10GB</li>
-                                <li className="grey"><a href="#" onClick={() =>{this.completarReg(1,1)}} className="button">Seleccionar</a></li>
-                            </ul>
-                            </div>
-    
-                            <div className="columns">
-                            <ul className="price">
-                                <li className="header">Pro</li>
-                                <li className="grey">Bs.F 2.99 / mes</li>
-                                <li>Id plan: 2</li>
-                                <li>Nivel de acceso: 3</li>
-                                <li>100GB</li>
-                                <li className="grey"><a href="#" onClick={() =>{this.completarReg(2,3)}} className="button">Seleccionar</a></li>
-                            </ul>
-                            </div>
-    
-                            <div className="columns">
-                            <ul className="price">
-                                <li className="header">Premium</li>
-                                <li className="grey">Bs.S 10 / año</li>
-                                <li>Id plan: 3</li>
-                                <li>Nivel de acceso: 5</li>
-                                <li>10TB</li>
-                                <li className="grey"><a href="#" onClick={() =>{this.completarReg(3,5)}} className="button">Seleccionar</a></li>
-                            </ul>
-                            </div>
-                    </div>
+            <Grid>
+            <Grid.Row/>
+            <Grid.Row centered>
+            <Grid.Column width={14}>
+            <Header as='h3'>Registro de usuario</Header>
+            <Form>
+            <Form.Field>
+              <label>Nombre de usuario</label>
+              <input placeholder='Anonymouse' />
+            </Form.Field>
+            <Grid columns={1} stackable>
+            <Grid.Row/>
+            <Grid.Row centered>
+                <Grid.Column width={5} textAlign={"center"} floated={"left"}>
                     
-            </div>
+                        <Header as='h4' textAlign={"center"}>Plan A</Header>
+                        <Container as='p' textAlign={"justified"}>
+                            Al contrario del pensamiento popular, el texto de Lorem Ipsum no es simplemente texto aleatorio. Tiene sus raices en una pieza cl´sica de la literatura del Latin, que data del año 45 antes de Cristo, haciendo que este adquiera mas de 2000 años de antiguedad. Richard McClintock, un profesor de Latin de la Universidad de Hampden-Sydney en Virginia, encontró una de las palabras más oscuras de la lengua del latín, "consecteur", en un pasaje de Lorem Ipsum, y al seguir leyendo distintos textos del latín, descubrió la fuente indudable. Lorem Ipsum viene de las secciones 1.10.32 y 1.10.33 de "de Finnibus Bonorum et Malorum" (Los Extremos del Bien y El Mal) por Cicero, escrito en el año 45 antes de Cristo. Este libro es un tratado de teoría de éticas, muy popular durante el Renacimiento. La primera linea del Lorem Ipsum, "Lorem ipsum dolor sit amet..", viene de una linea en la sección 1.10.32  
+                        </Container>
+                        <Button type='submit'>Subscribir</Button>
+                    
+                </Grid.Column>
+                <Grid.Column width={5} textAlign={"center"} floated={"left"}>
+                    
+                        <Header as='h4' centered textAlign={"center"}>Plan B</Header>
+                        <Container as='p' textAlign={"justified"}>
+                            Al contrario del pensamiento popular, el texto de Lorem Ipsum no es simplemente texto aleatorio. Tiene sus raices en una pieza cl´sica de la literatura del Latin, que data del año 45 antes de Cristo, haciendo que este adquiera mas de 2000 años de antiguedad. Richard McClintock, un profesor de Latin de la Universidad de Hampden-Sydney en Virginia, encontró una de las palabras más oscuras de la lengua del latín, "consecteur", en un pasaje de Lorem Ipsum, y al seguir leyendo distintos textos del latín, descubrió la fuente indudable. Lorem Ipsum viene de las secciones 1.10.32 y 1.10.33 de "de Finnibus Bonorum et Malorum" (Los Extremos del Bien y El Mal) por Cicero, escrito en el año 45 antes de Cristo. Este libro es un tratado de teoría de éticas, muy popular durante el Renacimiento. La primera linea del Lorem Ipsum, "Lorem ipsum dolor sit amet..", viene de una linea en la sección 1.10.32  
+                        </Container>
+                        <Button type='submit'>Subscribir</Button>
+                   
+                </Grid.Column>
+                <Grid.Column width={5} textAlign={"center"} floated={"left"}>
+                   
+                        <Header as='h4' textAlign={"center"}>Plan C</Header>
+                        <Container as='p' textAlign={"justified"}>
+                            Al contrario del pensamiento popular, el texto de Lorem Ipsum no es simplemente texto aleatorio. Tiene sus raices en una pieza cl´sica de la literatura del Latin, que data del año 45 antes de Cristo, haciendo que este adquiera mas de 2000 años de antiguedad. Richard McClintock, un profesor de Latin de la Universidad de Hampden-Sydney en Virginia, encontró una de las palabras más oscuras de la lengua del latín, "consecteur", en un pasaje de Lorem Ipsum, y al seguir leyendo distintos textos del latín, descubrió la fuente indudable. Lorem Ipsum viene de las secciones 1.10.32 y 1.10.33 de "de Finnibus Bonorum et Malorum" (Los Extremos del Bien y El Mal) por Cicero, escrito en el año 45 antes de Cristo. Este libro es un tratado de teoría de éticas, muy popular durante el Renacimiento. La primera linea del Lorem Ipsum, "Lorem ipsum dolor sit amet..", viene de una linea en la sección 1.10.32  
+                        </Container>
+                        <Button type='submit'>Subscribir</Button>
+                    
+                </Grid.Column>
+            </Grid.Row>
+            </Grid>
+          </Form>
+          </Grid.Column>
+          </Grid.Row>
+          </Grid>
         ) 
 
     }

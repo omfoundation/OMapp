@@ -40,58 +40,6 @@ export function signInWithGooglePromise() {
     });
 }
 
-export function signInWithEmailPromise(email, password) {
-
-    return new Promise(function(resolve, reject) {
-        auth.signInAndRetrieveDataWithEmailAndPassword(email, password)
-        .then(result => {
-            console.log(result);
-            db.collection('users').doc(result.user.email).get()
-            .then((doc) => {
-                if(doc.exists){
-                    resolve(
-                        {
-                            success: true,
-                            user: 
-                            {
-                                email: email,
-                                nickname: doc.nickname,
-                                profilePhotoURL: doc.profilePhotoURL
-                            }
-                        }
-                    )
-                }
-                else{
-                    resolve({success:false, user:null})
-                }
-
-            })
-            .catch(error => 
-                {
-                    reject(error);
-                    console.log(error);
-                }
-            );
-        })
-        .catch(error => 
-            {
-                if(
-                    error.code === 'auth/invalid-email'  ||
-                    error.code === 'auth/user-disabled'  ||
-                    error.code === 'auth/user-not-found' ||
-                    error.code === 'auth/wrong-password'
-                ){
-                    resolve({success:false, user:null})
-                }
-                else{
-                    reject(error)
-                }
-                console.log(error);
-            }
-        );
-    });
-}
-
 export function signOutPromise() {
 
     return new Promise(function(resolve, reject) {

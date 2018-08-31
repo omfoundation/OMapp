@@ -64,6 +64,7 @@ export default class Root extends React.Component {
     processLogin(username, password) {
         var thisComponent = this;
         this.enableLoadingView();
+        /*
         omapp.signInWithEmailPromise(username, password)
         .then((user) => {
             this.user.username = user.username;
@@ -75,6 +76,7 @@ export default class Root extends React.Component {
             thisComponent.disableLoadingView();
         })
         .catch((error) => console.log(error));
+        */
     }
 
     logoutHandler(){

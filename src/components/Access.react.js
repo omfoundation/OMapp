@@ -110,8 +110,8 @@ export default class Access extends Component{
                     <Modal.Content>
                         <Container textAlign={"center"}>
                         <Button.Group vertical={true}>
-                            <Button onClick={() => this.props.onSignupWithGoogleHandler()}>Google</Button>
-                            <Button onClick={() => this.props.onSignupWithGoogleHandler()}>Email</Button>
+                            <Button onClick={() => this.props.signupWithGoogleHandler()}>Google</Button>
+                            <Button onClick={() => alert('Implementar')}>Email</Button>
                             </Button.Group>
                         </Container>
                     </Modal.Content>
