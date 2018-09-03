@@ -1,19 +1,38 @@
 import { combineReducers } from 'redux'
 import {
-    REQUEST_USER_INFO_FROM_GOOGLE
+    SIGN_UP_USER_WITH_GOOGLE,
+    SHOW_SIGN_UP_VIEW,
 } from './actions'
 
-function userInformationObtainedFromGoogle(state = 'reactjs', action) {
+function signUpUserWitnGoogle(previousState, action){
     switch (action.type) {
-      case REQUEST_USER_INFO_FROM_GOOGLE:
-        return action.object
-      default:
-        return state
+        case SIGN_UP_USER_WITH_GOOGLE:
+            newState = Object.assign({}, previousState,
+                { loading:true }
+            )
+            return newState
+        default:
+            return previousState         
+    }
+}
+
+function showSignUpView(previousState, action){
+    switch (action.type) {
+        case SHOW_SIGN_UP_VIEW:
+        newState = Object.assign({}, previousState,
+            { 
+                loading: false,
+                userInfo: action.userInfo,
+                loginStatus: 'SIGNUP_VIEW'
+            }
+        )
+        return newState
     }
 }
 
 const rootReducer = combineReducers({
-    userInformationObtainedFromGoogle
+    signUpUserWitnGoogle,
+    showSignUpView
 })
 
 export default rootReducer
