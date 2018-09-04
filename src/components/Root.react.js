@@ -12,6 +12,8 @@ import Loading from "./Loading.react";
 
 import { Responsive } from 'semantic-ui-react'
 
+import Views from '../views'
+
 import * as omapp from '../omapp/omapp'
 
 export class Root extends Component {
@@ -33,7 +35,7 @@ export class Root extends Component {
 
     render() {
 
-        let { loginStatus, userInfo } = this.props
+        let { view, userInfo } = this.props
 
         /**** Para forzar la entrada directa a Home ***/
         //loginStatus = 'HOME_VIEW'
@@ -43,10 +45,10 @@ export class Root extends Component {
         userInfo = {}
         /**********************************************/ 
             
-        if (loginStatus === 'LOADING'){
+        if (view === Views.Loading){
             return <Loading/>
         }
-        else if(loginStatus === 'SIGN_UP_VIEW'){
+        else if(view === Views.SignUp){
             return  (
                 <SignUp 
                     userInfo={userInfo}
@@ -55,7 +57,7 @@ export class Root extends Component {
                 />
             )
         }
-        else if(loginStatus === 'HOME_VIEW'){
+        else if(view === Views.Home){
         return (
             <div id='root-container'>
                 <Responsive minWidth={401}>
@@ -88,12 +90,12 @@ export class Root extends Component {
 function mapStateToProps(state) {
 
     const {root} = state
-    const {loginStatus, userInfo} = root
+    const {view, userInfo} = root
 
     console.log('userInfo que sale: ', userInfo)
 
     return {
-        loginStatus, userInfo
+        view, userInfo
     }
 } 
 
