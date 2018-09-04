@@ -38,7 +38,7 @@ export class Root extends Component {
         let { view, userInfo } = this.props
 
         /**** Para forzar la entrada directa a Home ***/
-        //loginStatus = 'HOME_VIEW'
+        //view = 'HOME_VIEW'
         /**********************************************/ 
         
         /**** Objeto contenedor de la información del usuario ***/
@@ -60,12 +60,7 @@ export class Root extends Component {
         else if(view === Views.Home){
         return (
             <div id='root-container'>
-                <Responsive minWidth={401}>
                     <NavBar />
-                </Responsive>
-                <Responsive  maxWidth={400}>
-                    <h1>Hammmburguesaaaaa!!! ;-)</h1>
-                </Responsive>
                 <Home 
                     userInfo={userInfo}
                     defaultProfilePhotoURL={this.defaultProfilePhotoURL}
