@@ -4,40 +4,29 @@ import {
     SHOW_SIGN_UP_VIEW,
 } from '../actions'
 
-const initialState = {loginStatus: 'NOT_AUTHENTICATED'}
-
-function signUpUserWitnGoogle(previousState, action){
+function root(previousState, action){
+    let newState = {}
     switch (action.type) {
         case SIGN_UP_USER_WITH_GOOGLE:
-            const newState = Object.assign({}, previousState,
+            newState = Object.assign({}, previousState,
                 { loading:true }
             )
             return newState
-        default:
-            return initialState        
-    }
-}
-
-function showSignUpView(previousState, action){
-    switch (action.type) {
         case SHOW_SIGN_UP_VIEW:
-            const newState = Object.assign({}, previousState,
+            newState = Object.assign({}, previousState,
             { 
                 loading: false,
                 userInfo: action.userInfo,
-                loginStatus: 'SIGNUP_VIEW'
-            }
-        )
+                loginStatus: 'SIGN_UP_VIEW'
+            })
             return newState
-
         default:
-            return initialState
+            return {loginStatus: 'NOT_AUTHENTICATED'}    
     }
 }
 
 const rootReducer = combineReducers({
-    signUpUserWitnGoogle,
-    showSignUpView
+    root
 })
 
 export default rootReducer

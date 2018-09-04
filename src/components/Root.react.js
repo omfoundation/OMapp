@@ -17,14 +17,7 @@ import * as omapp from '../omapp/omapp'
 export class Root extends Component {
 
     constructor(props){
-        super(props);
-        this.state = {};
-        this.state.loginStatus = 'NOT_AUTHENTICATED';
-        this.state.loading = false;
-        this.state.error = false;
-        this.error = null;
-        this.signupMethod = null;
-        this.defaultProfilePhotoURL = 'http://sitelcity.com/wp-content/uploads/2015/04/default-user-image-300x300.png';
+        super(props)
         this.user = {
             registered: false,
             signupMethod: null,
@@ -32,8 +25,17 @@ export class Root extends Component {
             email: null,
             profilePhotoURL: null,
         }
-
+        /*
+        super(props);
+        this.state = {}
+        this.state.loginStatus = 'NOT_AUTHENTICATED';
+        this.state.loading = false;
+        this.state.error = false;
+        this.error = null;
+        this.signupMethod = null;
+        this.defaultProfilePhotoURL = 'http://sitelcity.com/wp-content/uploads/2015/04/default-user-image-300x300.png';
         //this.signupWithGoogleRedux = this.signupWithGoogleRedux.bind(this)
+        */
     }
 
     googleAuthenticationHandler() {
@@ -153,7 +155,6 @@ export class Root extends Component {
 
     signupWithGoogleRedux(){
         const { dispatch } = this.props
-        alert('dispatching!!!')
         dispatch(requestUserInfoFromGoogle())
     }
 
@@ -185,23 +186,13 @@ export class Root extends Component {
     }
 
     render() {
+
+        const { loading, loginStatus } = this.props
         
-        if (this.state.loading){
+        if (loading){
             return <Loading/>
         }
-        else if (this.state.loginStatus === 'NOT_AUTHENTICATED'){
-            return (
-                <Access 
-                    googleAuthenticationHandler={() => this.googleAuthenticationHandler()}
-                    processLoginHandler={ () => this.processLogin()}
-                    signupWithEmailAndPasswordHandler={ () => this.signupWithEmailAndPassword()}
-                    signupWithGoogleHandler={() => this.signupWithGoogle()}
-                    signupWithGoogleReduxHandler={() => this.signupWithGoogleRedux()}
-                    error={<ErrorView error={this.error}/>}
-                />
-            )
-        }
-        else if(this.state.loginStatus === 'SIGNUP'){
+        else if(loginStatus === 'SIGN_UP_VIEW'){
             return  (
                 <SignUp 
                     user={this.user}
@@ -211,7 +202,7 @@ export class Root extends Component {
                 /> 
             )
         }
-
+        else if(loginStatus === 'REGISTERED'){
         return (
             <div id='root-container'>
                 <NavBar />
@@ -226,9 +217,19 @@ export class Root extends Component {
                         error={this.error}
                     />
                 </Container>
-            </div>
-            
+            </div>            
+        )}
+        return (
+            <Access 
+                googleAuthenticationHandler={() => this.googleAuthenticationHandler()}
+                processLoginHandler={ () => this.processLogin()}
+                signupWithEmailAndPasswordHandler={ () => this.signupWithEmailAndPassword()}
+                signupWithGoogleHandler={() => this.signupWithGoogle()}
+                signupWithGoogleReduxHandler={() => this.signupWithGoogleRedux()}
+                error={<ErrorView error={this.error}/>}
+            />
         )
+        
     }
 }
 
@@ -251,10 +252,15 @@ var ErrorView = class ErrorView extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const {
-        loading,
-        loginStatus
-    } = state
+
+    console.log('state que entra por mapStateToProps: ', state)
+
+    const {root} = state
+
+    const {loading, loginStatus} = root
+
+    console.log('loading: ', loading)
+    console.log('loginStatus: ', loginStatus)
 
     return {
         loading,
@@ -263,7 +269,7 @@ function mapStateToProps(state) {
 } 
 
 Root.propTypes = {
-    loading: PropTypes.bool.isRequired,
+    loading: PropTypes.bool,
     dispatch: PropTypes.func.isRequired
 }
 
