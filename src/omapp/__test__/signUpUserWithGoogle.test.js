@@ -1,7 +1,7 @@
 import * as omapp from '../omapp'
 import {auth, provider, db} from '../../constants'
 
-describe('Tests ligados al registro de usuarios mediante Google', () =>{
+describe('Registro de un usuario ', () =>{
     let username = 'USERNAME_DE_PRUEBA'
 
     auth.signInWithPopup = null;

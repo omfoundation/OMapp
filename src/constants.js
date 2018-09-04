@@ -9,13 +9,13 @@ firebase.initializeApp({
     messagingSenderId: "208376306849"
 });
 
-const provider = new firebase.auth.GoogleAuthProvider();
-const auth = firebase.auth();
-const db = firebase.firestore();
-const settings = {
+let provider = new firebase.auth.GoogleAuthProvider();
+let auth = firebase.auth();
+let db = firebase.firestore();
+let settings = {
     timestampsInSnapshots: true
 };
 
 db.settings(settings);
 
-export {provider, auth, db};
+export {provider, auth, db}

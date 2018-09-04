@@ -1,27 +1,23 @@
-import React from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import { requestUserInfoFromGoogle, signUpUser } from '../actions'
 
 import NavBar from './NavBar.react'
-import Home from './Home.react'
+import Main from './Main.react'
 import Access from "./Access.react";
 import SignUp from "./Signup.react";
 import Loading from "./Loading.react";
 
 import { Container } from 'semantic-ui-react'
 
-import { User } from '../omapp/model'
 import * as omapp from '../omapp/omapp'
 
-export default class Root extends React.Component {
+export class Root extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {};
-        this.state.loginStatus = 'REGISTERED';
-        this.state.loading = false;
-        this.state.error = false;
-        this.error = null;
-        this.signupMethod = null;
-        this.defaultProfilePhotoURL = 'http://sitelcity.com/wp-content/uploads/2015/04/default-user-image-300x300.png';
+    constructor(props){
+        super(props)
         this.user = {
             registered: false,
             signupMethod: null,
@@ -29,6 +25,17 @@ export default class Root extends React.Component {
             email: null,
             profilePhotoURL: null,
         }
+        /*
+        super(props);
+        this.state = {}
+        this.state.loginStatus = 'NOT_AUTHENTICATED';
+        this.state.loading = false;
+        this.state.error = false;
+        this.error = null;
+        this.signupMethod = null;
+        this.defaultProfilePhotoURL = 'http://sitelcity.com/wp-content/uploads/2015/04/default-user-image-300x300.png';
+        //this.signupWithGoogleRedux = this.signupWithGoogleRedux.bind(this)
+        */
     }
 
     googleAuthenticationHandler() {
@@ -57,9 +64,14 @@ export default class Root extends React.Component {
         this.user.profilePhotoURL = user.profilePhotoURL;
     }
 
+    getUser(){
+        return this.user
+    }
+
     processLogin(username, password) {
         var thisComponent = this;
         this.enableLoadingView();
+        /*
         omapp.signInWithEmailPromise(username, password)
             .then((user) => {
                 this.user.username = user.username;
@@ -71,6 +83,7 @@ export default class Root extends React.Component {
                 thisComponent.disableLoadingView();
             })
             .catch((error) => console.log(error));
+        */
     }
 
     logoutHandler() {
@@ -113,31 +126,16 @@ export default class Root extends React.Component {
         this.setState({ loginStatus: 'SIGNUP' });
     }
 
-    signupWithGoogle() {
-        this.setState({ loginStatus: 'SIGNUP', loading: false })
-        /*
-        this.signupMethod = 'google.com'
-        this.setState({loading: true});
-        let thisComponent = this
-        omapp.getUserInfoFromGoogle()
-        .then(result => {
-            thisComponent.user = new User()
-            let user = thisComponent.user
-            user.email = result.email
-            user.profilePhotoURL = result.profilePhotoURL ? result.profilePhotoURL : null
-            thisComponent.signupMethod = 'google.com'
-            thisComponent.setState({loginStatus: 'SIGNUP', loading: false})
-        })
-        .catch(error => console.log(error))
-        */
+    signupWithGoogle(){
+        const { dispatch } = this.props
+        dispatch(requestUserInfoFromGoogle())
     }
 
-    signupUser(user) {
-        this.setState({ loginStatus: 'REGISTERED', loading: false })
-        this.user = user
+    signupUser(userInfo){
+        const { dispatch } = this.props
+        dispatch(signUpUser(userInfo))
+        
         /*
-        let thisComponent = this
-        thisComponent.setState({loading: true})
         omapp.isUsernameAlreadyRegistered(user.username)
         .then(result => {
             if(result === true){
@@ -161,23 +159,14 @@ export default class Root extends React.Component {
 
     render() {
 
-        if (this.state.loading) {
-            return <Loading />
+        const { loading, loginStatus } = this.props
+        
+        if (loginStatus === 'LOADING'){
+            return <Loading/>
         }
-        else if (this.state.loginStatus === 'NOT_AUTHENTICATED') {
-            return (
-                <Access
-                    googleAuthenticationHandler={() => this.googleAuthenticationHandler()}
-                    processLoginHandler={() => this.processLogin()}
-                    signupWithEmailAndPasswordHandler={() => this.signupWithEmailAndPassword()}
-                    signupWithGoogleHandler={() => this.signupWithGoogle()}
-                    error={<ErrorView error={this.error} />}
-                />
-            )
-        }
-        else if (this.state.loginStatus === 'SIGNUP') {
-            return (
-                <SignUp
+        else if(loginStatus === 'SIGN_UP_VIEW'){
+            return  (
+                <SignUp 
                     user={this.user}
                     signupMethod={this.signupMethod}
                     signupUserHandler={this.signupUser.bind(this)}
@@ -185,20 +174,34 @@ export default class Root extends React.Component {
                 />
             )
         }
-
+        else if(loginStatus === 'HOME_VIEW'){
         return (
             <div id='root-container'>
-                <NavBar logoutHandler={this.logoutHandler.bind(this)} />
-
-                <Home
-                    user={this.user}
-                    defaultProfilePhotoURL={this.defaultProfilePhotoURL}
-                />
-            </div>
-
-
-
+                <NavBar />
+                <Container textAlign='center'>
+                    <Main
+                        signupMethodHandler={this.signupMethod}
+                        logoutHandler={this.logoutHandler.bind(this)}
+                        state={this.state}
+                        user={this.user}
+                        signupMethod={this.signupMethod}
+                        defaultProfilePhotoURL={this.defaultProfilePhotoURL}
+                        error={this.error}
+                    />
+                </Container>
+            </div>            
+        )}
+        return (
+            <Access 
+                googleAuthenticationHandler={() => this.googleAuthenticationHandler()}
+                processLoginHandler={ () => this.processLogin()}
+                signupWithEmailAndPasswordHandler={ () => this.signupWithEmailAndPassword()}
+                signupWithGoogleHandler={() => this.signupWithGoogle()}
+                signupWithGoogleReduxHandler={() => this.signupWithGoogleRedux()}
+                error={<ErrorView error={this.error}/>}
+            />
         )
+        
     }
 }
 
@@ -219,3 +222,20 @@ var ErrorView = class ErrorView extends React.Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+
+    const {root} = state
+    const {loginStatus} = root
+
+    return {
+        loginStatus
+    }
+} 
+
+Root.propTypes = {
+    loading: PropTypes.bool,
+    dispatch: PropTypes.func.isRequired
+}
+
+export default connect(mapStateToProps)(Root)
