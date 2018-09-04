@@ -1,26 +1,34 @@
 import React, { Component } from 'react';
-import { Menu, Dropdown, Tab, Responsive, Grid, TabPane, Icon } from 'semantic-ui-react';
+import { Menu, Dropdown, Tab, Responsive, Grid, TabPane, Icon, Accordion } from 'semantic-ui-react';
 
 export default class NavBar extends Component {
     constructor(props) {
         super(props);
         /*Pasar por prop screen activa de loginStatus*/
-        this.state = { activeItem: 'home' };
+        this.state = { activeItem: 'home', activeIndex: 0 };
     }
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
+    handleClick = (e, titleProps) => {
+        const { index } = titleProps
+        const { activeIndex } = this.state
+        const newIndex = activeIndex === index ? -1 : index
+
+        this.setState({ activeIndex: newIndex })
+    }
 
     LogOutClick() {
         this.props.logoutHandler();
     }
 
-    toggleMenu(){
+    toggleMenu() {
         let menu = document.getElementById('verticalmenu');
-        
-        if(menu.style.display == 'block'){
+
+        if (menu.style.display == 'block') {
             //ACITVO >> desactivar
             menu.style.display = 'none';
-        }else{
+        } else {
             menu.style.display = 'block';
         }
     }
@@ -85,14 +93,14 @@ export default class NavBar extends Component {
                 menuItem: 'Home',
                 render: () =>
                     <Tab.Pane style={tabStyle}>
-                        <Menu stackable secondary>
-                            <Menu.Item name="home" active={this.state.activeItem === 'home'} onClick={this.handleItemClick}>
+                        <Menu secondary>
+                            <Menu.Item name="op1" active={this.state.activeItem === 'op1'} onClick={this.handleItemClick}>
                                 Opcion 1
                             </Menu.Item>
-                            <Menu.Item name="feed" active={this.state.activeItem === 'feed'} onClick={this.handleItemClick}>
+                            <Menu.Item name="op2" active={this.state.activeItem === 'op2'} onClick={this.handleItemClick}>
                                 Opcion 2
                             </Menu.Item>
-                            <Menu.Item name="feeds" active={this.state.activeItem === 'feeds'} onClick={this.handleItemClick}>
+                            <Menu.Item name="op3" active={this.state.activeItem === 'op3'} onClick={this.handleItemClick}>
                                 Opcion 3
                             </Menu.Item>
                         </Menu>
@@ -101,14 +109,16 @@ export default class NavBar extends Component {
             {
                 menuItem: 'Tab 2', render: () =>
                     <Tab.Pane style={tabStyle}>
-                        <Menu stackable secondary>
-                            <Dropdown item text='Conf' active={this.state.activeItem === 'home'}>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item>Opcion 1</Dropdown.Item>
-                                    <Dropdown.Item>Opcion 2</Dropdown.Item>
-                                    <Dropdown.Item>Opcion 3</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                        <Menu secondary>
+                            <Menu.Item name="op4" active={this.state.activeItem === 'op4'} onClick={this.handleItemClick}>
+                                Opcion 4
+                            </Menu.Item>
+                            <Menu.Item name="op5" active={this.state.activeItem === 'op5'} onClick={this.handleItemClick}>
+                                Opcion 5
+                            </Menu.Item>
+                            <Menu.Item name="op6" active={this.state.activeItem === 'op6'} onClick={this.handleItemClick}>
+                                Opcion 6
+                            </Menu.Item>
                         </Menu>
                     </Tab.Pane>
             },
@@ -137,29 +147,50 @@ export default class NavBar extends Component {
                         </Menu.Menu>
                     </Menu>
 
-                    <Menu vertical style={vertMenu} fluid stackable id="verticalmenu">
+                    <Accordion as={Menu} vertical style={vertMenu} fluid stackable id="verticalmenu">
                         <Menu.Item>
-                            Home
-                            <Menu.Menu>
-                                <Menu.Item name="home" active={this.state.activeItem === 'home'} onClick={this.handleItemClick}>
-                                    Opcion 1
-                                </Menu.Item>
-                                <Menu.Item name="feed" active={this.state.activeItem === 'feed'} onClick={this.handleItemClick}>
-                                    Opcion 2
-                                </Menu.Item>
-                                <Menu.Item name="feeds" active={this.state.activeItem === 'feeds'} onClick={this.handleItemClick}>
-                                    Opcion 3
-                                </Menu.Item>
-                            </Menu.Menu>
+                            <Accordion.Title active={this.state.activeIndex === 0} index={0} onClick={this.handleClick}>
+                                <Icon name='dropdown' />
+                                Home
+                            </Accordion.Title>
+                            <Accordion.Content active={this.state.activeIndex === 0}>
+                                <Menu.Menu>
+                                    <Menu.Item name="op1" active={this.state.activeItem === 'op1'} onClick={this.handleItemClick}>
+                                        Opcion 1
+                                    </Menu.Item>
+                                    <Menu.Item name="op2" active={this.state.activeItem === 'op2'} onClick={this.handleItemClick}>
+                                        Opcion 2
+                                    </Menu.Item>
+                                    <Menu.Item name="op3" active={this.state.activeItem === 'op3'} onClick={this.handleItemClick}>
+                                        Opcion 3
+                                    </Menu.Item>
+                                </Menu.Menu>
+                            </Accordion.Content>
                         </Menu.Item>
 
                         <Menu.Item name='browse' active={this.state.activeItem === 'browse'} onClick={this.handleItemClick}>
-                            <Icon name='grid layout' />Browse
+                            <Accordion.Title active={this.state.activeIndex === 1} index={1} onClick={this.handleClick}>
+                                <Icon name='dropdown' />
+                                Tab 2
+                            </Accordion.Title>
+                            <Accordion.Content active={this.state.activeIndex === 1}>
+                                <Menu.Menu>
+                                    <Menu.Item name="op4" active={this.state.activeItem === 'op4'} onClick={this.handleItemClick}>
+                                        Opcion 4
+                                    </Menu.Item>
+                                    <Menu.Item name="op5" active={this.state.activeItem === 'op5'} onClick={this.handleItemClick}>
+                                        Opcion 5
+                                    </Menu.Item>
+                                    <Menu.Item name="op6" active={this.state.activeItem === 'op6'} onClick={this.handleItemClick}>
+                                        Opcion 6
+                                    </Menu.Item>
+                                </Menu.Menu>
+                            </Accordion.Content>
                         </Menu.Item>
                         <Menu.Item name='messages' active={this.state.activeItem === 'messages'} onClick={this.handleItemClick}>
-                            Messages
+                            Salir
                         </Menu.Item>
-                    </Menu>
+                    </Accordion>
                 </Responsive>
             </div>
             //</Menu>
