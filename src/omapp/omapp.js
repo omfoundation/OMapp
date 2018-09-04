@@ -6,11 +6,9 @@ export function isUsernameAlreadyRegistered(username){
         db.collection('users').doc(username).get()
         .then((doc) => { 
             if(doc.exists){
-                console.log('dentro de isUsernameAlreadyRegistered: true')
                 resolve(true)
             }
             else{
-                console.log('dentro de isUsernameAlreadyRegistered: false')
                 resolve(false)
             }
         })
@@ -18,59 +16,22 @@ export function isUsernameAlreadyRegistered(username){
     })
 }
 
-export function signInWithGooglePromise() {
-
-    return new Promise(function(resolve, reject) {
-        auth.signInWithPopup(provider)
-        .then((result) => {
-            db.collection('users').doc(result.user.username).get()
-                .then((doc) => {
-                    resolve({
-                        email: result.user.email,
-                        username: doc.username,
-                        signupMethod: doc.signupMethod,
-                        registered: true,
-                        profilePhotoURL: doc.profilePhotoURL
-                    })
-                });
-        }).catch((error) => {
-            console.log(error);
-            reject(error);
-        });
-    });
-}
-
-export function signOutPromise() {
-
-    return new Promise(function(resolve, reject) {
-        auth.signOut()
-        .then(() => {
-            resolve();
-        }).catch(function(error) {
-            console.log(error);
-            reject(error);
-        });
-    });
-}
-
 export function signupUser(user) {
-    console.log('omapp.signup')
     return new Promise(function(resolve, reject) {
-        console.log('omapp.signup')
         db.collection('users').doc(user.username).set(user)
-        .then(result => resolve(result))
+        .then(() => resolve(true))
         .catch(error => reject(error))
     })
 }
 
 export function getUserInfoFromGoogle(){
     return new Promise((resolve, reject) => {
-        let user = null
+        let user = new User()
         auth.signInWithPopup(provider)
-        .then((result) => {
-            user = new User()
-            user.email = result.user.email
-            user.profilePhotoURL = result.user.profilePhotoURL
+        .then( result => {
+            user.setEmail(result.user.email)
+            user.setName(result.user.name)
+            user.setProfilePhotoURL(result.user.photoURL)
             resolve(user)
         })
         .catch((error) => {

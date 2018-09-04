@@ -6,6 +6,41 @@ class User {
         this.profilePhotoURL = null;
     }
 
+    setName(value){
+        this.name = value
+    }
+
+    getName(){
+        return this.name
+    }
+
+
+    setEmail(value){
+        this.email = value
+    }
+
+    getName(){
+        return this.email
+    }
+
+
+    setUsername(value){
+        this.username = value
+    }
+
+    getUsername(){
+        return this.username
+    }
+
+
+    setProfilePhotoURL(value){
+        this.profilePhotoURL = value
+    }
+
+    getProfilePhotoURL(){
+        return this.profilePhotoURL
+    }
+
     toJSON(){
         console.log("A VER", this.profilePhotoURL)
         return {

@@ -8,9 +8,11 @@ export default class NavBar extends Component {
         this.state = { activeItem: 'home', activeIndex: 0 };
     }
 
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+    handleItemClick(e, { name }) { 
+        this.setState({ activeItem: name })
+    }
 
-    handleClick = (e, titleProps) => {
+    handleClick(e, titleProps) {
         const { index } = titleProps
         const { activeIndex } = this.state
         const newIndex = activeIndex === index ? -1 : index
@@ -23,50 +25,15 @@ export default class NavBar extends Component {
     }
 
     toggleMenu() {
-        let menu = document.getElementById('verticalmenu');
+        let menu = document.getElementById('verticalMenu');
 
         if (menu.style.display == 'block') {
-            //ACITVO >> desactivar
+            //ACTIVO >> desactivar
             menu.style.display = 'none';
         } else {
             menu.style.display = 'block';
         }
     }
-
-    /*  getNameScreen() {
-         let nscr;
- 
-         switch (window.location.pathname) {
-             case '/':
-                 nscr = 'Acceder al sistema'
-                 break;
- 
-             case '/login':
-                 nscr = 'Iniciar sesion'
-                 break;
- 
-             case '/load':
-                 nscr = 'Cargando...'
-                 break;
- 
-             case '/signup':
-                 nscr = 'Sign Up'
-                 break;
- 
-             case '/home':
-                 nscr = 'Home'
-                 break;
- 
-             case '/feed':
-                 nscr = 'Feed'
-                 break;
- 
-             default:
-                 nscr = '404 Error'
-         }
- 
-         return nscr;
-     } */
 
     render() {
         var vertMenu = {
@@ -147,7 +114,7 @@ export default class NavBar extends Component {
                         </Menu.Menu>
                     </Menu>
 
-                    <Accordion as={Menu} vertical style={vertMenu} fluid stackable id="verticalmenu">
+                    <Accordion as={Menu} vertical style={vertMenu} fluid stackable id="verticalMenu">
                         <Menu.Item>
                             <Accordion.Title active={this.state.activeIndex === 0} index={0} onClick={this.handleClick}>
                                 <Icon name='dropdown' />
