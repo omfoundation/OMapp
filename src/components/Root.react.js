@@ -1,8 +1,8 @@
-import React from 'react'
-
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
 import { connect } from 'react-redux'
+
+import { requestUserInfoFromGoogle } from '../actions'
 
 import NavBar from './NavBar.react'
 import Main from './Main.react'
@@ -12,12 +12,9 @@ import Loading from "./Loading.react";
 
 import { Container } from 'semantic-ui-react'
 
-import { User } from '../omapp/model'
 import * as omapp from '../omapp/omapp'
 
-import { requestUserInfoFromGoogle } from '../actions'
-
-export class Root extends React.Component {
+export class Root extends Component {
 
     constructor(props){
         super(props);
@@ -36,7 +33,7 @@ export class Root extends React.Component {
             profilePhotoURL: null,
         }
 
-        this.signupWithGoogleRedux = this.signupWithGoogleRedux.bind(this)
+        //this.signupWithGoogleRedux = this.signupWithGoogleRedux.bind(this)
     }
 
     googleAuthenticationHandler() {
@@ -156,6 +153,7 @@ export class Root extends React.Component {
 
     signupWithGoogleRedux(){
         const { dispatch } = this.props
+        alert('dispatching!!!')
         dispatch(requestUserInfoFromGoogle())
     }
 

@@ -4,7 +4,7 @@ import {
     SHOW_SIGN_UP_VIEW,
 } from '../actions'
 
-const initialState = {}
+const initialState = {loginStatus: 'NOT_AUTHENTICATED'}
 
 function signUpUserWitnGoogle(previousState, action){
     switch (action.type) {
