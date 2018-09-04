@@ -1,26 +1,16 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-
+import { Provider } from 'react-redux'
+import configureStore from './configureStore'
 import Root from './components/Root.react'
 
-import { requestUserInfoFromGoogle } from './actions'
+const store = configureStore()
 
-class AsyncApp extends Component {
-  render() {
-    return (<Root/>)
-  }
-}
-
-function mapStateToProps(state) {
-    const {
-      loading,
-      defaultState 
-    } = state
-
-    return {
-        loading,
-        defaultState
+export default class AsyncApp extends Component {
+    render() {
+        return (
+            <Provider store={store}>
+                <Root/>
+            </Provider>
+            )
     }
-} 
-  
-export default connect(mapStateToProps)(AsyncApp)
+}

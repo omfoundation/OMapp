@@ -111,6 +111,7 @@ export default class Access extends Component{
                         <Container textAlign={"center"}>
                         <Button.Group vertical={true}>
                             <Button onClick={() => this.props.signupWithGoogleHandler()}>Google</Button>
+                            <Button onClick={this.props.signupWithGoogleReduxHandler()}>Google (Redux)</Button> 
                             <Button onClick={() => alert('Implementar')}>Email</Button>
                             </Button.Group>
                         </Container>

@@ -1,5 +1,9 @@
 import React from 'react'
 
+import PropTypes from 'prop-types'
+
+import { connect } from 'react-redux'
+
 import NavBar from './NavBar.react'
 import Main from './Main.react'
 import Access from "./Access.react";
@@ -11,7 +15,9 @@ import { Container } from 'semantic-ui-react'
 import { User } from '../omapp/model'
 import * as omapp from '../omapp/omapp'
 
-export default class Root extends React.Component {
+import { requestUserInfoFromGoogle } from '../actions'
+
+export class Root extends React.Component {
 
     constructor(props){
         super(props);
@@ -29,6 +35,8 @@ export default class Root extends React.Component {
             email: null,
             profilePhotoURL: null,
         }
+
+        this.signupWithGoogleRedux = this.signupWithGoogleRedux.bind(this)
     }
 
     googleAuthenticationHandler() {
@@ -146,6 +154,11 @@ export default class Root extends React.Component {
         */
     }
 
+    signupWithGoogleRedux(){
+        const { dispatch } = this.props
+        dispatch(requestUserInfoFromGoogle())
+    }
+
     signupUser(user){
         let thisComponent = this
         thisComponent.setState({loading: true})
@@ -185,6 +198,7 @@ export default class Root extends React.Component {
                     processLoginHandler={ () => this.processLogin()}
                     signupWithEmailAndPasswordHandler={ () => this.signupWithEmailAndPassword()}
                     signupWithGoogleHandler={() => this.signupWithGoogle()}
+                    signupWithGoogleReduxHandler={() => this.signupWithGoogleRedux()}
                     error={<ErrorView error={this.error}/>}
                 />
             )
@@ -237,3 +251,22 @@ var ErrorView = class ErrorView extends React.Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+    const {
+        loading,
+        loginStatus
+    } = state
+
+    return {
+        loading,
+        loginStatus
+    }
+} 
+
+Root.propTypes = {
+    loading: PropTypes.bool.isRequired,
+    dispatch: PropTypes.func.isRequired
+}
+
+export default connect(mapStateToProps)(Root)
