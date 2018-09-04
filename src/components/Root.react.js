@@ -159,8 +159,6 @@ export class Root extends Component {
     }
 
     signupUser(user){
-        let thisComponent = this
-        thisComponent.setState({loading: true})
         /*
         omapp.isUsernameAlreadyRegistered(user.username)
         .then(result => {
@@ -181,15 +179,13 @@ export class Root extends Component {
         })
         .catch(error => console.log(error))
         */
-       thisComponent.setState({loginStatus: 'REGISTERED', loading: false})
-       console.log('Login status: ', this.state.loginStatus)
     }
 
     render() {
 
         const { loading, loginStatus } = this.props
         
-        if (loading){
+        if (loginStatus === 'LOADING'){
             return <Loading/>
         }
         else if(loginStatus === 'SIGN_UP_VIEW'){
@@ -202,7 +198,7 @@ export class Root extends Component {
                 /> 
             )
         }
-        else if(loginStatus === 'REGISTERED'){
+        else if(loginStatus === 'HOME_VIEW'){
         return (
             <div id='root-container'>
                 <NavBar />
@@ -253,17 +249,10 @@ var ErrorView = class ErrorView extends React.Component {
 
 function mapStateToProps(state) {
 
-    console.log('state que entra por mapStateToProps: ', state)
-
     const {root} = state
-
-    const {loading, loginStatus} = root
-
-    console.log('loading: ', loading)
-    console.log('loginStatus: ', loginStatus)
+    const {loginStatus} = root
 
     return {
-        loading,
         loginStatus
     }
 } 
