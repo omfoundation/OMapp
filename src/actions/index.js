@@ -37,18 +37,24 @@ function showLoadingState() {
 
 
 export function signUpUser(userInfo){
+    /*
     return dispatch => {
         dispatch(showLoadingState())
         return  omapp.signupUser(userInfo)
                 .then(userInfo => dispatch(showHomeView(userInfo)))
     }
+    */
+   return showHomeView(userInfo)
 }
 
 export function requestUserInfoFromGoogle() {
+    /*
     return dispatch => {
         dispatch(showLoadingState())
         dispatch(signUpUserWitnGoogle())
         return  omapp.getUserInfoFromGoogle()
                 .then(userInfo => dispatch(showSignUpView(userInfo)))
     }
+    */
+   return showSignUpView()
 }

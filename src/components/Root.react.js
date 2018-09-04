@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { requestUserInfoFromGoogle } from '../actions'
+import { requestUserInfoFromGoogle, signUpUser } from '../actions'
 
 import NavBar from './NavBar.react'
 import Main from './Main.react'
@@ -127,38 +127,14 @@ export class Root extends Component {
     }
 
     signupWithGoogle(){
-        let thisComponent = this
-        thisComponent.setState({loginStatus: 'SIGNUP', loading: false})
-
-        /*
-        return new Promise((resolve, reject) => {
-            this.signupMethod = 'google.com'
-            this.setState({loading: true});
-            let thisComponent = this
-            omapp.getUserInfoFromGoogle()
-            .then(result => {
-                thisComponent.user = new User()
-                let user = thisComponent.user
-                user.email = result.email
-                user.profilePhotoURL = result.profilePhotoURL ? result.profilePhotoURL : null
-                thisComponent.signupMethod = 'google.com'
-                thisComponent.setState({loginStatus: 'SIGNUP', loading: false})
-                resolve(true)
-            })
-            .catch(error => {
-                console.log(error)
-                reject(error)
-            })
-        })
-        */
-    }
-
-    signupWithGoogleRedux(){
         const { dispatch } = this.props
         dispatch(requestUserInfoFromGoogle())
     }
 
-    signupUser(user){
+    signupUser(userInfo){
+        const { dispatch } = this.props
+        dispatch(signUpUser(userInfo))
+        
         /*
         omapp.isUsernameAlreadyRegistered(user.username)
         .then(result => {
