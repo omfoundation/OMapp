@@ -38,7 +38,7 @@ export class Root extends Component {
         let { view, userInfo } = this.props
 
         /**** Para forzar la entrada directa a Home ***/
-        //view = 'HOME_VIEW'
+        view = Views.Access
         /**********************************************/ 
         
         /**** Objeto contenedor de la información del usuario ***/
