@@ -10,7 +10,7 @@ import Access from "./Access.react";
 import SignUp from "./Signup.react";
 import Loading from "./Loading.react";
 
-import { Container } from 'semantic-ui-react'
+import { Responsive } from 'semantic-ui-react'
 
 import * as omapp from '../omapp/omapp'
 
@@ -183,7 +183,12 @@ export class Root extends Component {
         else if(loginStatus === 'HOME_VIEW'){
         return (
             <div id='root-container'>
-                <NavBar />
+                <Responsive minWidth={401}>
+                    <NavBar />
+                </Responsive>
+                <Responsive  maxWidth={400}>
+                    <h1>Hammmburguesaaaaa!!! ;-)</h1>
+                </Responsive>
                 <Home 
                     userInfo={userInfo}
                     defaultProfilePhotoURL={this.defaultProfilePhotoURL}
