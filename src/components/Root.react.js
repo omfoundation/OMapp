@@ -39,23 +39,23 @@ export class Root extends Component {
     }
 
     googleAuthenticationHandler() {
-        this.setState({loading: true});
+        this.setState({ loading: true });
         var thisComponent = this;
         omapp.signInWithGooglePromise()
-        .then((user) => {
+            .then((user) => {
                 user.registered = true;
                 thisComponent.setUser(user);
                 thisComponent.setAuthenticationToRegistered();
                 thisComponent.disableLoadingView();
             }
-        )
-        .catch((error) => {
-            console.log(error);
-            thisComponent.disableLoadingView();
-        });
+            )
+            .catch((error) => {
+                console.log(error);
+                thisComponent.disableLoadingView();
+            });
     }
 
-    setUser(user){
+    setUser(user) {
         this.user.email = user.email;
         this.user.username = user.username;
         this.user.idPlan = user.idPlan;
@@ -73,57 +73,57 @@ export class Root extends Component {
         this.enableLoadingView();
         /*
         omapp.signInWithEmailPromise(username, password)
-        .then((user) => {
-            this.user.username = user.username;
-            this.user.email = user.email;
-            this.user.profilePhotoURL = user.profilePhotoURL;
-            this.user.registered = true;
-            //this.user.user.signupMethod = user.signupMethod;
-            thisComponent.setAuthenticationToRegistered();
-            thisComponent.disableLoadingView();
-        })
-        .catch((error) => console.log(error));
+            .then((user) => {
+                this.user.username = user.username;
+                this.user.email = user.email;
+                this.user.profilePhotoURL = user.profilePhotoURL;
+                this.user.registered = true;
+                //this.user.user.signupMethod = user.signupMethod;
+                thisComponent.setAuthenticationToRegistered();
+                thisComponent.disableLoadingView();
+            })
+            .catch((error) => console.log(error));
         */
     }
 
-    logoutHandler(){
+    logoutHandler() {
         var thisComponent = this;
         omapp.signOutPromise().then(
-            function(){
+            function () {
                 thisComponent.setAuthenticationToNotAuthenticated();
-            }    
+            }
         );
     }
 
-    enableLoadingView(){
-        this.setState({loading: true});
+    enableLoadingView() {
+        this.setState({ loading: true });
     }
 
-    disableLoadingView(){
-        this.setState({loading: false});
+    disableLoadingView() {
+        this.setState({ loading: false });
     }
 
-    setAuthenticationToRegistered(){
+    setAuthenticationToRegistered() {
         console.log("Root.react.js - State changed to 'REGISTERED'")
-        this.setState({loginStatus: 'REGISTERED'});
+        this.setState({ loginStatus: 'REGISTERED' });
     }
 
-    setAuthenticationToNotAuthenticated(){
-        this.setState({loginStatus: 'NOT_AUTHENTICATED'});
+    setAuthenticationToNotAuthenticated() {
+        this.setState({ loginStatus: 'NOT_AUTHENTICATED' });
     }
 
-    showErrorView(error){
+    showErrorView(error) {
         this.error = error;
-        this.setState({error: true,loading: false});
+        this.setState({ error: true, loading: false });
     }
 
-    changeLoginStatusToRegistered(){
-        this.setState({loginStatus: 'REGISTERED', loading: false});
+    changeLoginStatusToRegistered() {
+        this.setState({ loginStatus: 'REGISTERED', loading: false });
     }
 
-    signupWithEmailAndPassword(){
+    signupWithEmailAndPassword() {
         this.signupMethod = 'email';
-        this.setState({loginStatus: 'SIGNUP'});        
+        this.setState({ loginStatus: 'SIGNUP' });
     }
 
     signupWithGoogle(){
@@ -171,7 +171,7 @@ export class Root extends Component {
                     signupMethod={this.signupMethod}
                     signupUserHandler={this.signupUser.bind(this)}
                     signupWithEmailAndPasswordHandler={this.signupWithEmailAndPassword.bind(this)}
-                /> 
+                />
             )
         }
         else if(loginStatus === 'HOME_VIEW'){
@@ -212,13 +212,13 @@ var ErrorView = class ErrorView extends React.Component {
     }
 
     render() {
-        
-        if(this.isEmpty(this.props.error)){
+
+        if (this.isEmpty(this.props.error)) {
             return null;
         }
 
         return (
-            <p style={{color: 'red'}}>Error: {this.props.error.message}</p>
+            <p style={{ color: 'red' }}>Error: {this.props.error.message}</p>
         )
     }
 }

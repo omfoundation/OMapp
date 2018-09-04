@@ -20,9 +20,9 @@ export default class Access extends Component {
                                 <Card.Meta>OlimMorin app</Card.Meta>
                                 <Card.Description>
                                     Para disfrutar de los servicios que ofrece la plataforma desde registrarte o iniciar sesion.
-                                    <br/>
+                                    <br />
                                     Prodras hacerlo facilmente:
-                                    <br/>
+                                    <br />
                                     {this.props.error}
                                 </Card.Description>
                             </Card.Content>
@@ -48,7 +48,7 @@ export default class Access extends Component {
 
                                         <Modal.Actions>
                                             <Button type="submit" className="btn" onClick={() => alert('implementar')}>Iniciar sesion</Button>
-                                            <Button onClick={() => this.props.onSignupWithGoogleHandler()} positive> <Icon name="google" />Entra con Google</Button>
+                                            <Button onClick={() => this.props.googleAuthenticationHandler()} positive> <Icon name="google" />Entra con Google</Button>
                                         </Modal.Actions>
                                     </Modal>
                                     {/*****************Registro modal *************/}
