@@ -25,6 +25,7 @@ export class Root extends Component {
             email: null,
             profilePhotoURL: null,
         }
+        
         /*
         super(props);
         this.state = {}
@@ -32,9 +33,9 @@ export class Root extends Component {
         this.state.loading = false;
         this.state.error = false;
         this.error = null;
-        this.signupMethod = null;
+        this.signupMethod = null;*/
         this.defaultProfilePhotoURL = 'http://sitelcity.com/wp-content/uploads/2015/04/default-user-image-300x300.png';
-        //this.signupWithGoogleRedux = this.signupWithGoogleRedux.bind(this)
+        /* //this.signupWithGoogleRedux = this.signupWithGoogleRedux.bind(this)
         */
     }
 
@@ -159,8 +160,9 @@ export class Root extends Component {
 
     render() {
 
-        const { loading, loginStatus } = this.props
-        
+        var { loading, loginStatus } = this.props
+        loginStatus= 'HOME_VIEW';
+
         if (loginStatus === 'LOADING'){
             return <Loading/>
         }
