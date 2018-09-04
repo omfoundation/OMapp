@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Dropdown, Tab, TabPane } from 'semantic-ui-react';
+import { Menu, Dropdown, Tab, Responsive, Grid, TabPane, Icon } from 'semantic-ui-react';
 
 export default class NavBar extends Component {
     constructor(props) {
@@ -12,6 +12,17 @@ export default class NavBar extends Component {
 
     LogOutClick() {
         this.props.logoutHandler();
+    }
+
+    toggleMenu(){
+        let menu = document.getElementById('verticalmenu');
+        
+        if(menu.style.display == 'block'){
+            //ACITVO >> desactivar
+            menu.style.display = 'none';
+        }else{
+            menu.style.display = 'block';
+        }
     }
 
     /*  getNameScreen() {
@@ -50,17 +61,30 @@ export default class NavBar extends Component {
      } */
 
     render() {
+        var vertMenu = {
+            padding: 0,
+            width: "100%",
+            marginTop: 0,
+            display: "none"
+
+        };
+        const navMenu = {
+            padding: 0,
+            width: "100%",
+            marginBottom: 0
+        };
+
         const tabStyle = {
             padding: 0,
             width: "100%"
-        }
+        };
 
         const panes = [
-            { menuItem: <Menu.Item header as="h4"><img src="favicon.ico" /> OMapp</Menu.Item>},
+            { menuItem: <Menu.Item header as="h4"><img src="favicon.ico" /> OMapp</Menu.Item> },
             {
                 menuItem: 'Home',
-                render: () => 
-                    <Tab.Pane style={tabStyle}> 
+                render: () =>
+                    <Tab.Pane style={tabStyle}>
                         <Menu stackable secondary>
                             <Menu.Item name="home" active={this.state.activeItem === 'home'} onClick={this.handleItemClick}>
                                 Opcion 1
@@ -75,7 +99,7 @@ export default class NavBar extends Component {
                     </Tab.Pane>
             },
             {
-                menuItem: 'Tab 2', render: () => 
+                menuItem: 'Tab 2', render: () =>
                     <Tab.Pane style={tabStyle}>
                         <Menu stackable secondary>
                             <Dropdown item text='Conf' active={this.state.activeItem === 'home'}>
@@ -88,14 +112,56 @@ export default class NavBar extends Component {
                         </Menu>
                     </Tab.Pane>
             },
-            { menuItem: 'Salir'}
+            { menuItem: 'Salir' }
         ]
 
-        
+
 
         return (
             //<Menu stackable>
-                <Tab menu={{ attached: 'top' }} panes={panes} style={tabStyle}/>
+            <div>
+                <Responsive minWidth={Responsive.onlyTablet.minWidth}>
+                    <Tab menu={{ attached: 'top', fixed: true }} panes={panes} style={tabStyle} />
+                </Responsive>
+
+                <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
+                    <Menu borderless fixed style={navMenu} fluid>
+                        <Menu.Item>
+                            <img src="favicon.ico" /> OMapp
+                        </Menu.Item>
+
+                        <Menu.Menu position="right">
+                            <Menu.Item name='HGmenu' active={this.state.activeItem === 'HGmenu'} onClick={this.toggleMenu}>
+                                <Icon disabled name='bars' color='black' />
+                            </Menu.Item>
+                        </Menu.Menu>
+                    </Menu>
+
+                    <Menu vertical style={vertMenu} fluid stackable id="verticalmenu">
+                        <Menu.Item>
+                            Home
+                            <Menu.Menu>
+                                <Menu.Item name="home" active={this.state.activeItem === 'home'} onClick={this.handleItemClick}>
+                                    Opcion 1
+                                </Menu.Item>
+                                <Menu.Item name="feed" active={this.state.activeItem === 'feed'} onClick={this.handleItemClick}>
+                                    Opcion 2
+                                </Menu.Item>
+                                <Menu.Item name="feeds" active={this.state.activeItem === 'feeds'} onClick={this.handleItemClick}>
+                                    Opcion 3
+                                </Menu.Item>
+                            </Menu.Menu>
+                        </Menu.Item>
+
+                        <Menu.Item name='browse' active={this.state.activeItem === 'browse'} onClick={this.handleItemClick}>
+                            <Icon name='grid layout' />Browse
+                        </Menu.Item>
+                        <Menu.Item name='messages' active={this.state.activeItem === 'messages'} onClick={this.handleItemClick}>
+                            Messages
+                        </Menu.Item>
+                    </Menu>
+                </Responsive>
+            </div>
             //</Menu>
         );
     }
