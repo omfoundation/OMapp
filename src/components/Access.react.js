@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
 
 import { Container, Grid, Button, Icon } from 'semantic-ui-react'
-import { Header, Image, Modal, Form, Card } from 'semantic-ui-react'
+import { Image, Modal, Form, Card } from 'semantic-ui-react'
 
 export default class Access extends Component {
 

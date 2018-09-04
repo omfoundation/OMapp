@@ -7,6 +7,8 @@ import {
     SIGN_UP_USER
 } from '../actions'
 
+import Views from '../views'
+
 function root(previousState, action){
     let newState = {}
     switch (action.type) {
@@ -16,26 +18,26 @@ function root(previousState, action){
             newState = Object.assign({}, previousState,
             { 
                 userInfo: action.userInfo,
-                loginStatus: 'SIGN_UP_VIEW'
+                view: Views.SignUp
             })
             return newState
         case SHOW_HOME_VIEW:
             newState = Object.assign({}, previousState,
             { 
                 userInfo: action.userInfo,
-                loginStatus: 'HOME_VIEW'
+                view: Views.Home
             })
             return newState
         case SHOW_LOADING_STATE:
             newState = Object.assign({}, previousState,
             { 
-                loginStatus: 'LOADING',
+                view: Views.Loading,
             })
             return newState
         case SIGN_UP_USER:
             return previousState
         default:
-            return {loginStatus: 'NOT_AUTHENTICATED'}    
+            return {view: Views.Access}    
     }
 }
 
