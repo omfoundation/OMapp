@@ -1,71 +1,79 @@
 import React, { Component } from 'react';
+import { Menu, Dropdown, Tab, TabPane } from 'semantic-ui-react';
 
-export default class NavBar extends Component{
-    
-    openNav() {
-        this.refs.sidenav.style.width = '250px';
+export default class NavBar extends Component {
+    constructor(props) {
+        super(props);
+        /*Pasar por prop screen actica*/
+        this.state = { activeItem: 'home' };
     }
 
-    closeNav() {
-        this.refs.sidenav.style.width = '0';
+    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
+    LogOutClick() {
+        this.props.logoutHandler();
     }
 
-    getNameScreen(){
+   /*  getNameScreen() {
         let nscr;
 
-        switch(window.location.pathname){
+        switch (window.location.pathname) {
             case '/':
                 nscr = 'Acceder al sistema'
-            break;
+                break;
 
             case '/login':
                 nscr = 'Iniciar sesion'
-            break;
+                break;
 
             case '/load':
                 nscr = 'Cargando...'
-            break;
+                break;
 
             case '/signup':
                 nscr = 'Sign Up'
-            break;
+                break;
 
             case '/home':
                 nscr = 'Home'
-            break;
+                break;
 
             case '/feed':
                 nscr = 'Feed'
-            break;
+                break;
 
             default:
                 nscr = '404 Error'
         }
 
         return nscr;
-    }
-    
-    render(){
-        
-        return(
-            <div className='nav'>
-                <div className='topnav'>
-                    <a onClick={this.openNav.bind(this)} className='menuBtn'>
-                        <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'>
-                            <path d='M0 0h24v24H0z' fill='none'/>
-                            <path d='M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z' fill='white'/>
-                        </svg>
-                    </a>
+    } */
 
-                    <p className='title'>OMapp: <span className='nameScreen'>{this.getNameScreen()}</span></p>
-                </div>
+    render() {
 
-                <div id='mySidenav' ref='sidenav' className='sidenav'>
-                    <a href='javascript:void(0)' className='closebtn' onClick={this.closeNav.bind(this)}>&times;</a>
-                    <a to='/home' onClick={this.closeNav.bind(this)}>Home</a>
-                    <a to='/feed' onClick={this.closeNav.bind(this)}>Feed</a>
-                </div>
-            </div>
+        return (
+                <Menu stackable borderless attached='top'> 
+                    <Menu.Item header as="h4">
+                        <img src="favicon.ico" /> OMapp
+                    </Menu.Item>
+                    <Menu.Item name="home" active={this.state.activeItem === 'home'} onClick={this.handleItemClick}>
+                        Home
+                    </Menu.Item>
+                    <Menu.Item name="feed" active={this.state.activeItem === 'feed'} onClick={this.handleItemClick}>
+                        Feed
+                    </Menu.Item>
+                    <Dropdown item text='Conf' active={this.state.activeItem === 'home'}>
+                        <Dropdown.Menu>
+                            <Dropdown.Item>Opcion 1</Dropdown.Item>
+                            <Dropdown.Item>Opcion 2</Dropdown.Item>
+                            <Dropdown.Item>Opcion 3</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+
+                    <Menu.Menu position="right">
+                        <Menu.Item onClick={() => this.LogOutClick()}>Salir</Menu.Item>
+                    </Menu.Menu>
+                </Menu>
         );
     }
 }

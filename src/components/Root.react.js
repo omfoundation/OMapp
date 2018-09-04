@@ -13,10 +13,10 @@ import * as omapp from '../omapp/omapp'
 
 export default class Root extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {};
-        this.state.loginStatus = 'NOT_AUTHENTICATED';
+        this.state.loginStatus = 'REGISTERED';
         this.state.loading = false;
         this.state.error = false;
         this.error = null;
@@ -32,23 +32,23 @@ export default class Root extends React.Component {
     }
 
     googleAuthenticationHandler() {
-        this.setState({loading: true});
+        this.setState({ loading: true });
         var thisComponent = this;
         omapp.signInWithGooglePromise()
-        .then((user) => {
+            .then((user) => {
                 user.registered = true;
                 thisComponent.setUser(user);
                 thisComponent.setAuthenticationToRegistered();
                 thisComponent.disableLoadingView();
             }
-        )
-        .catch((error) => {
-            console.log(error);
-            thisComponent.disableLoadingView();
-        });
+            )
+            .catch((error) => {
+                console.log(error);
+                thisComponent.disableLoadingView();
+            });
     }
 
-    setUser(user){
+    setUser(user) {
         this.user.email = user.email;
         this.user.username = user.username;
         this.user.idPlan = user.idPlan;
@@ -61,60 +61,60 @@ export default class Root extends React.Component {
         var thisComponent = this;
         this.enableLoadingView();
         omapp.signInWithEmailPromise(username, password)
-        .then((user) => {
-            this.user.username = user.username;
-            this.user.email = user.email;
-            this.user.profilePhotoURL = user.profilePhotoURL;
-            this.user.registered = true;
-            //this.user.user.signupMethod = user.signupMethod;
-            thisComponent.setAuthenticationToRegistered();
-            thisComponent.disableLoadingView();
-        })
-        .catch((error) => console.log(error));
+            .then((user) => {
+                this.user.username = user.username;
+                this.user.email = user.email;
+                this.user.profilePhotoURL = user.profilePhotoURL;
+                this.user.registered = true;
+                //this.user.user.signupMethod = user.signupMethod;
+                thisComponent.setAuthenticationToRegistered();
+                thisComponent.disableLoadingView();
+            })
+            .catch((error) => console.log(error));
     }
 
-    logoutHandler(){
+    logoutHandler() {
         var thisComponent = this;
         omapp.signOutPromise().then(
-            function(){
+            function () {
                 thisComponent.setAuthenticationToNotAuthenticated();
-            }    
+            }
         );
     }
 
-    enableLoadingView(){
-        this.setState({loading: true});
+    enableLoadingView() {
+        this.setState({ loading: true });
     }
 
-    disableLoadingView(){
-        this.setState({loading: false});
+    disableLoadingView() {
+        this.setState({ loading: false });
     }
 
-    setAuthenticationToRegistered(){
+    setAuthenticationToRegistered() {
         console.log("Root.react.js - State changed to 'REGISTERED'")
-        this.setState({loginStatus: 'REGISTERED'});
+        this.setState({ loginStatus: 'REGISTERED' });
     }
 
-    setAuthenticationToNotAuthenticated(){
-        this.setState({loginStatus: 'NOT_AUTHENTICATED'});
+    setAuthenticationToNotAuthenticated() {
+        this.setState({ loginStatus: 'NOT_AUTHENTICATED' });
     }
 
-    showErrorView(error){
+    showErrorView(error) {
         this.error = error;
-        this.setState({error: true,loading: false});
+        this.setState({ error: true, loading: false });
     }
 
-    changeLoginStatusToRegistered(){
-        this.setState({loginStatus: 'REGISTERED', loading: false});
+    changeLoginStatusToRegistered() {
+        this.setState({ loginStatus: 'REGISTERED', loading: false });
     }
 
-    signupWithEmailAndPassword(){
+    signupWithEmailAndPassword() {
         this.signupMethod = 'email';
-        this.setState({loginStatus: 'SIGNUP'});        
+        this.setState({ loginStatus: 'SIGNUP' });
     }
 
-    signupWithGoogle(){
-        this.setState({loginStatus: 'SIGNUP', loading: false})
+    signupWithGoogle() {
+        this.setState({ loginStatus: 'SIGNUP', loading: false })
         /*
         this.signupMethod = 'google.com'
         this.setState({loading: true});
@@ -132,8 +132,8 @@ export default class Root extends React.Component {
         */
     }
 
-    signupUser(user){
-        this.setState({loginStatus: 'REGISTERED', loading: false})
+    signupUser(user) {
+        this.setState({ loginStatus: 'REGISTERED', loading: false })
         this.user = user
         /*
         let thisComponent = this
@@ -160,43 +160,44 @@ export default class Root extends React.Component {
     }
 
     render() {
-        
-        if (this.state.loading){
-            return <Loading/>
+
+        if (this.state.loading) {
+            return <Loading />
         }
-        else if (this.state.loginStatus === 'NOT_AUTHENTICATED'){
+        else if (this.state.loginStatus === 'NOT_AUTHENTICATED') {
             return (
-                <Access 
+                <Access
                     googleAuthenticationHandler={() => this.googleAuthenticationHandler()}
-                    processLoginHandler={ () => this.processLogin()}
-                    signupWithEmailAndPasswordHandler={ () => this.signupWithEmailAndPassword()}
+                    processLoginHandler={() => this.processLogin()}
+                    signupWithEmailAndPasswordHandler={() => this.signupWithEmailAndPassword()}
                     signupWithGoogleHandler={() => this.signupWithGoogle()}
-                    error={<ErrorView error={this.error}/>}
+                    error={<ErrorView error={this.error} />}
                 />
             )
         }
-        else if(this.state.loginStatus === 'SIGNUP'){
-            return  (
-                <SignUp 
+        else if (this.state.loginStatus === 'SIGNUP') {
+            return (
+                <SignUp
                     user={this.user}
                     signupMethod={this.signupMethod}
                     signupUserHandler={this.signupUser.bind(this)}
                     signupWithEmailAndPasswordHandler={this.signupWithEmailAndPassword.bind(this)}
-                /> 
+                />
             )
         }
 
         return (
             <div id='root-container'>
-                <NavBar />
-                <Home 
-                user={this.user} 
-                defaultProfilePhotoURL={this.defaultProfilePhotoURL} 
-                logoutHandler={this.logoutHandler.bind(this)} 
+                <NavBar logoutHandler={this.logoutHandler.bind(this)} />
+
+                <Home
+                    user={this.user}
+                    defaultProfilePhotoURL={this.defaultProfilePhotoURL}
                 />
             </div>
-            
-            
+
+
+
         )
     }
 }
@@ -208,13 +209,13 @@ var ErrorView = class ErrorView extends React.Component {
     }
 
     render() {
-        
-        if(this.isEmpty(this.props.error)){
+
+        if (this.isEmpty(this.props.error)) {
             return null;
         }
 
         return (
-            <p style={{color: 'red'}}>Error: {this.props.error.message}</p>
+            <p style={{ color: 'red' }}>Error: {this.props.error.message}</p>
         )
     }
 }
