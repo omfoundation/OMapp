@@ -9,11 +9,11 @@ export default class Home extends Component {
             <Grid verticalAlign='middle'  textAlign='center'>
                 <Grid.Row centered>
                     <Grid.Column computer={6} mobile={14} tablet={10} textAlign='center'>
-                        <img src={this.props.user.profilePhotoURL || this.props.defaultProfilePhotoURL} height='100' alt='user' />
+                        <img src={this.props.userInfo.profilePhotoURL || this.props.defaultProfilePhotoURL } height='250' alt='user' />
                         <p>
-                            Hola {this.props.user.username}
+                            Hola {this.props.userInfo.username}
                             <br />
-                            <strong>Correo: </strong> {this.props.user.email}
+                            <strong>Correo: </strong> {this.props.userInfo.email || "{email}"}
                         </p>
                     </Grid.Column>
                 </Grid.Row>

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { requestUserInfoFromGoogle, signUpUser } from '../actions'
 
 import NavBar from './NavBar.react'
-import Main from './Main.react'
+import Home from './Home.react'
 import Access from "./Access.react";
 import SignUp from "./Signup.react";
 import Loading from "./Loading.react";
@@ -34,7 +34,7 @@ export class Root extends Component {
         this.state.error = false;
         this.error = null;
         this.signupMethod = null;*/
-        this.defaultProfilePhotoURL = 'http://sitelcity.com/wp-content/uploads/2015/04/default-user-image-300x300.png';
+        this.defaultProfilePhotoURL = 'https://discourse-cdn-sjc1.com/gethopscotch/uploads/default/original/3X/9/6/961305dba186fe363dbef523761f620698b7050a.gif';
         /* //this.signupWithGoogleRedux = this.signupWithGoogleRedux.bind(this)
         */
     }
@@ -159,17 +159,21 @@ export class Root extends Component {
     }
 
     render() {
+        
+        let { loginStatus, userInfo } = this.props
 
-        var { loading, loginStatus } = this.props
-        loginStatus= 'HOME_VIEW';
-
+        /**** Para forzar la entrada directa a Home ***/
+        loginStatus = 'HOME_VIEW'
+        userInfo = {}
+        /**********************************************/    
+            
         if (loginStatus === 'LOADING'){
             return <Loading/>
         }
         else if(loginStatus === 'SIGN_UP_VIEW'){
             return  (
                 <SignUp 
-                    user={this.user}
+                    userInfo={userInfo}
                     signupMethod={this.signupMethod}
                     signupUserHandler={this.signupUser.bind(this)}
                     signupWithEmailAndPasswordHandler={this.signupWithEmailAndPassword.bind(this)}
@@ -180,17 +184,11 @@ export class Root extends Component {
         return (
             <div id='root-container'>
                 <NavBar />
-                <Container textAlign='center'>
-                    <Main
-                        signupMethodHandler={this.signupMethod}
-                        logoutHandler={this.logoutHandler.bind(this)}
-                        state={this.state}
-                        user={this.user}
-                        signupMethod={this.signupMethod}
-                        defaultProfilePhotoURL={this.defaultProfilePhotoURL}
-                        error={this.error}
-                    />
-                </Container>
+                <Home 
+                    userInfo={userInfo}
+                    defaultProfilePhotoURL={this.defaultProfilePhotoURL}
+                    error={this.error}
+                />
             </div>            
         )}
         return (
@@ -228,16 +226,19 @@ var ErrorView = class ErrorView extends React.Component {
 function mapStateToProps(state) {
 
     const {root} = state
-    const {loginStatus} = root
+    const {loginStatus, userInfo} = root
+
+    console.log('userInfo que sale: ', userInfo)
 
     return {
-        loginStatus
+        loginStatus, userInfo
     }
 } 
 
 Root.propTypes = {
     loading: PropTypes.bool,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    userInfo: PropTypes.object
 }
 
 export default connect(mapStateToProps)(Root)
