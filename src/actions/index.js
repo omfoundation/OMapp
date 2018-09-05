@@ -5,6 +5,7 @@ export const SHOW_SIGN_UP_VIEW = 'SHOW_SIGN_UP_VIEW'
 export const SHOW_HOME_VIEW = 'SHOW_HOME_VIEW'
 export const SHOW_LOADING_STATE = 'SHOW_LOADING_STATE'
 export const SIGN_UP_USER = 'SIGN_UP_USER'
+export const LOG_OUT_START = 'LOG_OUT_START'
 
 function signUpUserWitnGoogle() {
       return {
@@ -21,6 +22,9 @@ function showSignUpView(userInfo) {
 }
 
 function showHomeView(userInfo) {
+    if(userInfo === undefined){
+        userInfo = {}
+    }
     return {
         type: 
             SHOW_HOME_VIEW,
@@ -35,6 +39,12 @@ function showLoadingState() {
         }
 }
 
+export function logOut(){
+    return {
+        type: 
+            LOG_OUT_START
+        }   
+}
 
 export function signUpUser(userInfo){
     /*

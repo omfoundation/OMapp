@@ -4,7 +4,8 @@ import {
     SHOW_SIGN_UP_VIEW,
     SHOW_HOME_VIEW,
     SHOW_LOADING_STATE,
-    SIGN_UP_USER
+    SIGN_UP_USER,
+    LOG_OUT_START
 } from '../actions'
 
 import Views from '../views'
@@ -41,8 +42,23 @@ function root(previousState, action){
     }
 }
 
+function home(previousState, action){
+    let newState = {}
+    switch (action.type) {
+        case LOG_OUT_START:
+            newState = Object.assign({}, previousState,
+            { 
+                view: Views.Loading,
+            })
+            return newState
+        default:
+            return { view: Views.Access }    
+    }
+}
+
 const rootReducer = combineReducers({
-    root
+    root,
+    home
 })
 
 export default rootReducer

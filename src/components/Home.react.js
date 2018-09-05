@@ -1,23 +1,51 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import {Grid} from 'semantic-ui-react';
+import { logOut } from '../actions'
 
-export default class Home extends Component {
+import { connect } from 'react-redux'
+
+import {Grid, Button} from 'semantic-ui-react'
+
+export class Home extends Component {
 
     render() {
+        
+        let { view, userInfo } = this.props
+
         return (
             <Grid verticalAlign='middle'  textAlign='center'>
                 <Grid.Row centered>
                     <Grid.Column computer={6} mobile={14} tablet={10} textAlign='center'>
-                        <img src={this.props.userInfo.profilePhotoURL || this.props.defaultProfilePhotoURL } height='250px' alt='user' />
+                        <img src={userInfo.profilePhotoURL || this.props.defaultProfilePhotoURL } height='250px' alt='user' />
                         <p>
-                            Hola {this.props.userInfo.username}
+                            Hola {userInfo.username}
                             <br />
-                            <strong>Correo: </strong> {this.props.userInfo.email || "{email}"}
+                            <strong>Correo: </strong> {userInfo.email || "{email}"}
                         </p>
+                        <Button onClick={ () => this.props.dispatch(logOut()) }></Button>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
         )
     }
 }
+
+function mapStateToProps(state) {
+
+    const { home, root} = state
+    const { xxx } = home
+    const { userInfo, view } = root
+
+    return {
+        view, userInfo
+    }
+} 
+
+Home.propTypes = {
+    loading: PropTypes.bool,
+    dispatch: PropTypes.func.isRequired,
+    userInfo: PropTypes.object.isRequired
+}
+
+export default connect(mapStateToProps)(Home)

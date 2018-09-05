@@ -23,7 +23,7 @@ export class Root extends Component {
         this.defaultProfilePhotoURL = 'https://discourse-cdn-sjc1.com/gethopscotch/uploads/default/original/3X/9/6/961305dba186fe363dbef523761f620698b7050a.gif'
     }
 
-    signupWithGoogle(){
+    signupWithGoogleHandler(){
         const { dispatch } = this.props
         dispatch(requestUserInfoFromGoogle())
     }
@@ -38,7 +38,7 @@ export class Root extends Component {
         let { view, userInfo } = this.props
 
         /**** Para forzar la entrada directa a Home ***/
-        view = Views.Access
+        //view = Views.Access
         /**********************************************/ 
         
         /**** Objeto contenedor de la información del usuario ***/
@@ -51,31 +51,25 @@ export class Root extends Component {
         else if(view === Views.SignUp){
             return  (
                 <SignUp 
-                    userInfo={userInfo}
+                    userInfo={ userInfo }
                     signupUserHandler={ () => this.signupUser() }
-                    signupWithEmailAndPasswordHandler={ () => alert('signupWithEmailAndPasswordHandler - click') }
                 />
             )
         }
         else if(view === Views.Home){
+        console.log('userInfo que entra a Home: ', userInfo)
         return (
             <div id='root-container'>
-                    <NavBar />
+                <NavBar />
                 <Home 
-                    userInfo={userInfo}
-                    defaultProfilePhotoURL={this.defaultProfilePhotoURL}
-                    error={this.error}
+                    userInfo={ userInfo }
+                    defaultProfilePhotoURL={ this.defaultProfilePhotoURL }
                 />
             </div>            
         )}
         return (
             <Access 
-                googleAuthenticationHandler={() => this.googleAuthenticationHandler()}
-                processLoginHandler={ () => this.processLogin()}
-                signupWithEmailAndPasswordHandler={ () => this.signupWithEmailAndPassword()}
-                signupWithGoogleHandler={() => this.signupWithGoogle()}
-                signupWithGoogleReduxHandler={() => this.signupWithGoogleRedux()}
-                error={this.error}
+                signupWithGoogleHandler={ () => this.signupWithGoogleHandler() }
             />
         )
         
@@ -84,8 +78,8 @@ export class Root extends Component {
 
 function mapStateToProps(state) {
 
-    const {root} = state
-    const {view, userInfo} = root
+    const { root } = state
+    const { view, userInfo } = root
 
     console.log('userInfo que sale: ', userInfo)
 

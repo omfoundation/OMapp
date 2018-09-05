@@ -11,7 +11,7 @@ import * as omapp from '../../omapp/omapp'
 
 Enzyme.configure({adapter:new Adapter()})
 
-describe('signupWithGoogle()', ()=> {
+describe('signupWithGoogleHandler()', ()=> {
     it('Dumb test', () => {})
 /*
    auth.signInWithPopup = null;
@@ -100,7 +100,7 @@ describe('signupWithGoogle()', ()=> {
 
     it('El usuario de prueba debe tener los mismos datos que el usuario guardado en el componente', () => {
         const wrapper = Enzyme.shallow(<Root/>)
-        return wrapper.instance().signupWithGoogle()
+        return wrapper.instance().signupWithGoogleHandler()
         .then(result => {
             const userFromComponent = wrapper.instance().getUser()
             expect(userFromComponent).toEqual(testUser)
@@ -109,7 +109,7 @@ describe('signupWithGoogle()', ()=> {
 
     it('El usuario de prueba debe tener los mismos datos que el usuario guardado en el componente', () => {
         const wrapper = Enzyme.shallow(<Root/>)
-        return wrapper.instance().signupWithGoogle()
+        return wrapper.instance().signupWithGoogleHandler()
         .then(result => {
             const userFromComponent = wrapper.instance().getUser()
             userFromComponent.username = "testUsername"
