@@ -98,7 +98,7 @@ export default class SignUp extends Component {
                 <br />
                 <Grid verticalAlign='middle'>
                     <Grid.Row centered>
-                        <Grid.Column computer={10} mobile={14} tablet={12}>
+                        <Grid.Column computer={11} mobile={14} tablet={12}>
                             {this.props.signupMethod !== 'google.com' &&
                                 //Si la forma de login es diferente a google para registrar
                                 //Mostrar esto
@@ -132,8 +132,7 @@ export default class SignUp extends Component {
                                 <br />
                             </Form>
                             <br />
-
-                            <Card.Group centered itemsPerRow={3}>
+                            <Card.Group centered>
                                 <Card>
                                     <Card.Content>
                                         <Card.Header>Basico</Card.Header>

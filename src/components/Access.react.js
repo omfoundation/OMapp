@@ -56,8 +56,8 @@ export default class Access extends Component {
                                         <Modal.Content>
                                             <h2>Registrate con los siguientes metodos:</h2>
                                             <Container textAlign={"center"}>
-                                                <Button.Group >
-                                                    <Button onClick={() => alert('implementar')}>Con email y contraseña</Button>
+                                                <Button.Group widths='2'>
+                                                    <Button onClick={() => alert('implementar')} >Con email y contraseña</Button>
                                                     <Button.Or text='O' />
                                                     <Button onClick={() => this.props.signupWithGoogleHandler()} positive><Icon name="google" />Con cuenta Google</Button>
                                                 </Button.Group>
