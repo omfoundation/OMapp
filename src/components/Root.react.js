@@ -4,13 +4,10 @@ import { connect } from 'react-redux'
 
 import { requestUserInfoFromGoogle, signUpUser } from '../actions'
 
-import NavBar from './NavBar.react'
-import Home from './Home.react'
+import Main from './Main.react'
 import Access from "./Access.react";
 import SignUp from "./Signup.react";
 import Loading from "./Loading.react";
-
-import { Responsive } from 'semantic-ui-react'
 
 import Views from '../views'
 
@@ -57,16 +54,8 @@ export class Root extends Component {
             )
         }
         else if(view === Views.Home){
-        console.log('userInfo que entra a Home: ', userInfo)
-        return (
-            <div id='root-container'>
-                <NavBar />
-                <Home 
-                    userInfo={ userInfo }
-                    defaultProfilePhotoURL={ this.defaultProfilePhotoURL }
-                />
-            </div>            
-        )}
+            return <Main/>
+        }
         return (
             <Access 
                 signupWithGoogleHandler={ () => this.signupWithGoogleHandler() }

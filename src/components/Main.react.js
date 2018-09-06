@@ -1,17 +1,22 @@
-import React from "react";
-import { Route } from 'react-router-dom'
+import React from 'react';
+import { Container } from 'semantic-ui-react';
 
-import Home from "./Home.react";
-import Loading from "./Loading.react";
+import Home from './Home.react';
+import NavBar from './NavBar.react';
+import Loading from './Loading.react';
 
 export default class Main extends React.Component {
     render() {
+
+        let activeView = <Home/>;
+
+        activeView = <Loading/>;
+
         return (
-            <Home 
-                user={this.props.user} 
-                defaultProfilePhotoURL={this.props.defaultProfilePhotoURL} 
-                logoutHandler={this.props.logoutHandler.bind(this)}
-            />
+            <Container>
+                <NavBar />
+                { activeView }
+            </Container>    
         )
     }
 }

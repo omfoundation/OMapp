@@ -19,7 +19,7 @@ class User {
         this.email = value
     }
 
-    getName(){
+    getEmail(){
         return this.email
     }
 
