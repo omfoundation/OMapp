@@ -94,7 +94,6 @@ export default class SignUp extends Component {
         return (
             <div>
                 <br />
-                {/* NAVBAR ACTIVO AQUI??*/}
                 <br />
                 <Grid verticalAlign='middle'>
                     <Grid.Row centered>
@@ -132,7 +131,7 @@ export default class SignUp extends Component {
                                 <br />
                             </Form>
                             <br />
-                            <Card.Group centered>
+                            <Card.Group centered stackable itemsPerRow={3}>
                                 <Card>
                                     <Card.Content>
                                         <Card.Header>Basico</Card.Header>
