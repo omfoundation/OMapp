@@ -12,18 +12,18 @@ export class Home extends Component {
     render() {
         
         let { view, userInfo } = this.props
-
+       
         return (
             <Grid verticalAlign='middle'  textAlign='center'>
                 <Grid.Row centered>
                     <Grid.Column computer={6} mobile={14} tablet={10} textAlign='center'>
-                        <img src={userInfo.profilePhotoURL || this.props.defaultProfilePhotoURL } height='250px' alt='user' />
+                        <img src={/*userInfo.profilePhotoURL || */ this.props.defaultProfilePhotoURL } height='250px' alt='user' />
                         <p>
-                            Hola {userInfo.username}
+                            Hola {"TESTER" || userInfo.username}
                             <br />
-                            <strong>Correo: </strong> {userInfo.email || "{email}"}
+                            <strong>Correo: </strong> {"{email}" || userInfo.email  }
                         </p>
-                        <Button onClick={ () => this.props.dispatch(logOut()) }></Button>
+                        
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

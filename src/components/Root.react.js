@@ -35,13 +35,13 @@ export class Root extends Component {
         let { view, userInfo } = this.props
 
         /**** Para forzar la entrada directa a Home ***/
-        //view = Views.Access
+        view = Views.Home;
         /**********************************************/ 
         
         /**** Objeto contenedor de la información del usuario ***/
         userInfo = {}
         /**********************************************/ 
-            
+        
         if (view === Views.Loading){
             return <Loading/>
         }
@@ -54,7 +54,10 @@ export class Root extends Component {
             )
         }
         else if(view === Views.Home){
-            return <Main/>
+            return <Main
+                    defaultProfilePhotoURL={ this.defaultProfilePhotoURL }
+                    userInfo={ userInfo }
+                />
         }
         return (
             <Access 

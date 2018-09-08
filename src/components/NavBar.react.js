@@ -5,12 +5,15 @@ export default class NavBar extends Component {
     constructor(props) {
         super(props);
         /*Pasar por prop screen activa de loginStatus*/
-        this.state = { activeItem: this.props.getViewName()
+        this.state = { activeItem: this.props.getterView()
                         , activeIndex: 0 };
     }
 
-    handleItemClick(e, { name }) { 
-        this.setState({ activeItem: name })
+    handleItemClick = (e, { name }) => {
+        //cambiamos componente
+        this.props.manageView(name);
+        //seteamos nombre
+        this.setState({ activeItem: name });
     }
 
     handleClick(e, titleProps) {
@@ -22,7 +25,8 @@ export default class NavBar extends Component {
     }
 
     LogOutClick() {
-        this.props.logoutHandler();
+        //this.props.logoutHandler();
+        alert("saliendo");
     }
 
     toggleMenu() {
@@ -41,29 +45,35 @@ export default class NavBar extends Component {
             padding: 0,
             width: "100%",
             marginTop: 0,
+            marginLeft: 0,
+            marginRigth: 0,
             display: "none"
 
         };
         const navMenu = {
             padding: 0,
             width: "100%",
+            marginLeft: 0,
+            marginRigth: 0,
             marginBottom: 0
         };
 
         const tabStyle = {
             padding: 0,
+            marginLeft: 0,
+            marginRigth: 0,
             width: "100%"
         };
 
         const panes = [
             { menuItem: <Menu.Item header as="h4"><img src="favicon.ico" /> OMapp</Menu.Item> },
             {
-                menuItem: 'Home',
+                menuItem: 'Social',
                 render: () =>
                     <Tab.Pane style={tabStyle}>
                         <Menu secondary>
-                            <Menu.Item name="op1" active={this.state.activeItem === 'op1'} onClick={this.handleItemClick}>
-                                Opcion 1
+                            <Menu.Item name="Home" active={this.state.activeItem === 'Home'} onClick={this.handleItemClick}>
+                                Home
                             </Menu.Item>
                             <Menu.Item name="op2" active={this.state.activeItem === 'op2'} onClick={this.handleItemClick}>
                                 Opcion 2
@@ -78,8 +88,8 @@ export default class NavBar extends Component {
                 menuItem: 'Tab 2', render: () =>
                     <Tab.Pane style={tabStyle}>
                         <Menu secondary>
-                            <Menu.Item name="op4" active={this.state.activeItem === 'op4'} onClick={this.handleItemClick}>
-                                Opcion 4
+                            <Menu.Item name="Feed" active={this.state.activeItem === 'Feed'} onClick={this.handleItemClick}>
+                                Feed
                             </Menu.Item>
                             <Menu.Item name="op5" active={this.state.activeItem === 'op5'} onClick={this.handleItemClick}>
                                 Opcion 5
@@ -105,7 +115,7 @@ export default class NavBar extends Component {
                 <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
                     <Menu borderless fixed style={navMenu} fluid>
                         <Menu.Item>
-                            <img src="favicon.ico" /> OMapp
+                            <img src="favicon.ico" /> OMapp: 
                         </Menu.Item>
 
                         <Menu.Menu position="right">
@@ -143,13 +153,13 @@ export default class NavBar extends Component {
                             </Accordion.Title>
                             <Accordion.Content active={this.state.activeIndex === 1}>
                                 <Menu.Menu>
-                                    <Menu.Item name="op4" active={this.state.activeItem === 'op4'} onClick={this.handleItemClick}>
+                                    <Menu.Item name="op4" active={this.state.activeIndex === 'op4'} onClick={this.handleItemClick}>
                                         Opcion 4
                                     </Menu.Item>
-                                    <Menu.Item name="op5" active={this.state.activeItem === 'op5'} onClick={this.handleItemClick}>
+                                    <Menu.Item name="op5" active={this.state.activeIndex === 'op5'} onClick={this.handleItemClick}>
                                         Opcion 5
                                     </Menu.Item>
-                                    <Menu.Item name="op6" active={this.state.activeItem === 'op6'} onClick={this.handleItemClick}>
+                                    <Menu.Item name="op6" active={this.state.activeIndex === 'op6'} onClick={this.handleItemClick}>
                                         Opcion 6
                                     </Menu.Item>
                                 </Menu.Menu>

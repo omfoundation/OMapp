@@ -7,27 +7,53 @@ import Loading from './Loading.react';
 import { userRecordConstructor } from '../../node_modules/firebase-functions/lib/providers/auth';
 
 export default class Main extends React.Component {
-    render() {
-        constructor(props){
-            super(props);
-            this.state = {
-                activeView: <Home/>
+    constructor(props){
+        super(props);
+        this.state = {
+            activeView: <Home user={this.props.user}
+                defaultProfilePhotoURL={this.props.defaultProfilePhotoURL} 
+                /*logoutHandler={this.props.logoutHandler.bind(this)}*/
+                />,
+            nameView: "Home"
+        }
+    };
+    //let activeView = <Home/>;
+        //activeView = <Loading/>;
+        changerView(newView){
+            console.log("cambiando vista");
+            switch (newView) {
+                case "Home":
+                    this.setState({
+                        activeView: <Home user={this.props.user}
+                            defaultProfilePhotoURL={this.props.defaultProfilePhotoURL}
+                            />,
+                        nameView: "Home"
+                    });
+                break;
+
+                case "Feed":
+                this.setState({
+                    activeView: <div><h2>Feed test</h2></div>,
+                    nameView: "Feed"
+                });
+                break;
+            
+                default:
+                    break;
             }
         }
-
-        //let activeView = <Home/>;
-        //activeView = <Loading/>;
-        function changerView(newView){
-
-        }
         
-        function getViewName(){
-            return this.state.activeView;
+        getViewName(){
+            return this.state.nameView;
         }
+
+    render() {
+
+        console.log("USERINFO main", this.props.userInfo)
 
         return (
             <Container>
-                <NavBar manageView={() => this.changerView()} getterView={()=> this.getViewName()}/>
+                <NavBar manageView={this.changerView.bind(this)} getterView={this.getViewName.bind(this)}/>
                 { this.state.activeView }
             </Container>    
         )
