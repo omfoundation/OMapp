@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Dropdown, Tab, Responsive, Grid, TabPane, Icon, Accordion } from 'semantic-ui-react';
+import { Menu, Tab, Responsive, Icon, Accordion } from 'semantic-ui-react';
 
 export default class NavBar extends Component {
     constructor(props) {
@@ -11,15 +11,18 @@ export default class NavBar extends Component {
 
     handleItemClick = (e, { name }) => {
         //cambiamos componente
-        this.props.manageView(name);
+        this.props.changeView(name);
         //seteamos nombre
         this.setState({ activeItem: name });
+        console.log("STATE Despues ", this.state);
+
     }
 
-    handleClick(e, titleProps) {
-        const { index } = titleProps
-        const { activeIndex } = this.state
-        const newIndex = activeIndex === index ? -1 : index
+    handleClick = (e, titleProps) => {
+        console.log("ACTIVE INDEX ", this.state);
+        const { index } = titleProps;
+        const { activeIndex } = this.state;
+        const newIndex = activeIndex === index ? -1 : index;
 
         this.setState({ activeIndex: newIndex })
     }
@@ -32,7 +35,7 @@ export default class NavBar extends Component {
     toggleMenu() {
         let menu = document.getElementById('verticalMenu');
 
-        if (menu.style.display == 'block') {
+        if (menu.style.display === 'block') {
             //ACTIVO >> desactivar
             menu.style.display = 'none';
         } else {
@@ -129,12 +132,12 @@ export default class NavBar extends Component {
                         <Menu.Item>
                             <Accordion.Title active={this.state.activeIndex === 0} index={0} onClick={this.handleClick}>
                                 <Icon name='dropdown' />
-                                Home
+                                Social
                             </Accordion.Title>
                             <Accordion.Content active={this.state.activeIndex === 0}>
                                 <Menu.Menu>
-                                    <Menu.Item name="op1" active={this.state.activeItem === 'op1'} onClick={this.handleItemClick}>
-                                        Opcion 1
+                                    <Menu.Item name="Home" active={this.state.activeItem === 'Home'} onClick={this.handleItemClick}>
+                                        Home
                                     </Menu.Item>
                                     <Menu.Item name="op2" active={this.state.activeItem === 'op2'} onClick={this.handleItemClick}>
                                         Opcion 2
@@ -146,20 +149,20 @@ export default class NavBar extends Component {
                             </Accordion.Content>
                         </Menu.Item>
 
-                        <Menu.Item name='browse' active={this.state.activeItem === 'browse'} onClick={this.handleItemClick}>
+                        <Menu.Item>
                             <Accordion.Title active={this.state.activeIndex === 1} index={1} onClick={this.handleClick}>
                                 <Icon name='dropdown' />
                                 Tab 2
                             </Accordion.Title>
                             <Accordion.Content active={this.state.activeIndex === 1}>
                                 <Menu.Menu>
-                                    <Menu.Item name="op4" active={this.state.activeIndex === 'op4'} onClick={this.handleItemClick}>
-                                        Opcion 4
+                                    <Menu.Item name="Feed" active={this.state.activeItem === 'Feed'} onClick={this.handleItemClick}>
+                                        Feed
                                     </Menu.Item>
-                                    <Menu.Item name="op5" active={this.state.activeIndex === 'op5'} onClick={this.handleItemClick}>
+                                    <Menu.Item name="op5" active={this.state.activeItem === 'op5'} onClick={this.handleItemClick}>
                                         Opcion 5
                                     </Menu.Item>
-                                    <Menu.Item name="op6" active={this.state.activeIndex === 'op6'} onClick={this.handleItemClick}>
+                                    <Menu.Item name="op6" active={this.state.activeItem === 'op6'} onClick={this.handleItemClick}>
                                         Opcion 6
                                     </Menu.Item>
                                 </Menu.Menu>

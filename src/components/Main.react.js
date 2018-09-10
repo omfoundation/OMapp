@@ -19,7 +19,7 @@ export default class Main extends React.Component {
     };
     //let activeView = <Home/>;
         //activeView = <Loading/>;
-        changerView(newView){
+        changeView(newView){
             console.log("cambiando vista");
             switch (newView) {
                 case "Home":
@@ -32,10 +32,10 @@ export default class Main extends React.Component {
                 break;
 
                 case "Feed":
-                this.setState({
-                    activeView: <div><h2>Feed test</h2></div>,
-                    nameView: "Feed"
-                });
+                    this.setState({
+                        activeView: <div><h2>Feed test</h2></div>,
+                        nameView: "Feed"
+                    });
                 break;
             
                 default:
@@ -53,7 +53,7 @@ export default class Main extends React.Component {
 
         return (
             <Container>
-                <NavBar manageView={this.changerView.bind(this)} getterView={this.getViewName.bind(this)}/>
+                <NavBar changeView={this.changeView.bind(this)} getterView={this.getViewName.bind(this)}/>
                 { this.state.activeView }
             </Container>    
         )
