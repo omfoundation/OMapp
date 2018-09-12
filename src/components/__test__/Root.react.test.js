@@ -1,3 +1,4 @@
+/*
 import Root from '../Root.react'
 
 import React from 'react'
@@ -13,7 +14,7 @@ Enzyme.configure({adapter:new Adapter()})
 
 describe('signupWithGoogleHandler()', ()=> {
     it('Dumb test', () => {})
-/*
+
    auth.signInWithPopup = null;
 
     db.collection = null;
@@ -128,5 +129,7 @@ describe('signupWithGoogleHandler()', ()=> {
     it('+++ contains output', () => {
         expect(wrapper.find('input[placeholder="Output"]').prop('value')).toEqual(output)
     });
-    */
+   
 })
+
+ */

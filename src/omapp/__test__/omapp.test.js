@@ -37,4 +37,12 @@ describe('Tests ligados al registro de usuarios mediante Google', () =>{
             return expect(response).toBe(true)
         })           
     })
+
+    test('La funcion omapp.isUserRegisteredByEmail comprueba que un usuario este registrado segun email',
+        ()=>{
+            return omapp.isUserRegisteredByEmail('usuarioNoRegistrado@gmail.com')
+            .then( (response) => {
+                return expect(response).toBe(true)
+            })    
+        })
 })

@@ -40,3 +40,20 @@ export function getUserInfoFromGoogle(){
         })
     })
 }
+
+/*NEW */
+export function isUserRegisteredByEmail(email){
+    return new Promise((resolve) => {
+        db.collection('users').where('email','==',email)
+        .then((doc) => { 
+            console.log('DOC RECIVE',doc)
+            if(doc.exists){
+                resolve(true)
+            }
+            else{
+                resolve(false)
+            }
+        })
+        .catch(error => console.log(error))
+    })
+}

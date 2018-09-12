@@ -22,7 +22,44 @@ mockUsers['mock@gmail.com'] = {
     profilePhotoURL: 'http://lucarobertonotes.altervista.org/wp-content/uploads/2017/04/firebase-authentication-logo1.png'
 }
 
+/*NEW DATABASE USER */
+const mockUserDB = [
+    {
+        email: 'usuarioNoRegistrado@gmail.com',
+        name: 'Usuaro N. Registrado',
+        emailVerified: true,
+        profilePhotoURL: 'http://lucarobertonotes.altervista.org/wp-content/uploads/2017/04/firebase-authentication-logo1.png'
+    },
+    {
+        email: 'usuarioRegistrado@gmail.com',
+        name: 'Usuaro Registrado',
+        profilePhotoURL: 'http://lucarobertonotes.altervista.org/wp-content/uploads/2017/04/firebase-authentication-logo1.png'
+    },
+    {
+        email: 'mock@gmail.com',
+        name: 'Mr Le Cat',
+        profilePhotoURL: 'http://lucarobertonotes.altervista.org/wp-content/uploads/2017/04/firebase-authentication-logo1.png'
+    }
+]
+
 mockAuth.signInWithPopup = function(provider){
+
+    const mockUser = mockUsers['mock@gmail.com']
+
+    const result = {
+        user: {
+            email: mockUser.email,
+            name: mockUser.name,
+            emailVerified: true,
+            photoURL: mockUser.profilePhotoURL
+        }
+    }
+
+    return new Promise((resolve) => resolve(result))
+}
+
+/*NEW BUSCADOR*/
+mockAuth.signInWithPopupNew = function(provider){
 
     const mockUser = mockUsers['mock@gmail.com']
 
@@ -72,6 +109,7 @@ mockDb.collection =  function(){
                     resolve(doc)
                 })
             },
+
             set(doc){
                 db[doc.username] = doc
                 return {
@@ -79,6 +117,20 @@ mockDb.collection =  function(){
                         callback()
                     }
                 }
+            }
+        }
+    },
+
+    where: function(field,compareOperation,value){
+        for(let i = 0; i < mockUserDB.length; i++){
+
+            if(mockUserDB[i][field] == value){
+                let doc = mockUserDB[i];
+                doc.exists = true;
+                
+                return new Promise((resolve) => {
+                    resolve(doc)
+                })
             }
         }
     }
