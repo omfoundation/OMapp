@@ -39,6 +39,10 @@ export default class Main extends React.Component {
                 break;
             
                 default:
+                    this.setState({
+                        activeView: <div><h2>{newView} View test</h2></div>,
+                        nameView: newView
+                    });
                     break;
             }
         }
@@ -52,10 +56,10 @@ export default class Main extends React.Component {
         console.log("USERINFO main", this.props.userInfo)
 
         return (
-            <Container>
+            <div>
                 <NavBar changeView={this.changeView.bind(this)} getterView={this.getViewName.bind(this)}/>
                 { this.state.activeView }
-            </Container>    
+            </div>    
         )
     }
 }

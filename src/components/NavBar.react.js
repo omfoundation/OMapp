@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Menu, Tab, Responsive, Icon, Accordion } from 'semantic-ui-react';
+import { Menu, Dropdown, Tab, Responsive, Grid, TabPane, Icon, Accordion, Segment } from 'semantic-ui-react';
 
 export default class NavBar extends Component {
     constructor(props) {
         super(props);
         /*Pasar por prop screen activa de loginStatus*/
         this.state = { activeItem: this.props.getterView()
-                        , activeIndex: 0 };
+                        , activeIndex: 1 };
     }
 
     handleItemClick = (e, { name }) => {
@@ -55,7 +55,7 @@ export default class NavBar extends Component {
         };
         const navMenu = {
             padding: 0,
-            width: "100%",
+            minWidth: "100%",
             marginLeft: 0,
             marginRigth: 0,
             marginBottom: 0
@@ -65,7 +65,7 @@ export default class NavBar extends Component {
             padding: 0,
             marginLeft: 0,
             marginRigth: 0,
-            width: "100%"
+            minWidth: "100%"
         };
 
         const panes = [
@@ -80,9 +80,6 @@ export default class NavBar extends Component {
                             </Menu.Item>
                             <Menu.Item name="op2" active={this.state.activeItem === 'op2'} onClick={this.handleItemClick}>
                                 Opcion 2
-                            </Menu.Item>
-                            <Menu.Item name="op3" active={this.state.activeItem === 'op3'} onClick={this.handleItemClick}>
-                                Opcion 3
                             </Menu.Item>
                         </Menu>
                     </Tab.Pane>
@@ -111,12 +108,12 @@ export default class NavBar extends Component {
         return (
             //<Menu stackable>
             <div>
-                <Responsive minWidth={Responsive.onlyTablet.minWidth}>
+                <Responsive minWidth={Responsive.onlyTablet.minWidth} >
                     <Tab menu={{ attached: 'top', fixed: true }} panes={panes} style={tabStyle} />
                 </Responsive>
 
-                <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
-                    <Menu borderless fixed style={navMenu} fluid>
+                <Responsive maxWidth={Responsive.onlyMobile.maxWidth} >
+                    <Menu borderless fixed  fluid style={navMenu}>
                         <Menu.Item>
                             <img src="favicon.ico" /> OMapp: 
                         </Menu.Item>
@@ -141,9 +138,6 @@ export default class NavBar extends Component {
                                     </Menu.Item>
                                     <Menu.Item name="op2" active={this.state.activeItem === 'op2'} onClick={this.handleItemClick}>
                                         Opcion 2
-                                    </Menu.Item>
-                                    <Menu.Item name="op3" active={this.state.activeItem === 'op3'} onClick={this.handleItemClick}>
-                                        Opcion 3
                                     </Menu.Item>
                                 </Menu.Menu>
                             </Accordion.Content>
