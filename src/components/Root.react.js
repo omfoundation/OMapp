@@ -33,11 +33,11 @@ export class Root extends Component {
     render() {
 
         let { view, userInfo } = this.props
-
+        const { dispatch } = this.props
         /**** Para forzar la entrada directa a Home ***/
-        //view = Views.Home;
+        view = Views.Home;
         /**********************************************/ 
-        
+
         /**** Objeto contenedor de la información del usuario ***/
         //userInfo = {}
         /**********************************************/ 
@@ -57,6 +57,7 @@ export class Root extends Component {
             return <Main
                     defaultProfilePhotoURL={ this.defaultProfilePhotoURL }
                     userInfo={ userInfo }
+                    dispatch={dispatch}
                 />
         }
         return (

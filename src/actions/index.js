@@ -7,6 +7,15 @@ export const SHOW_LOADING_STATE = 'SHOW_LOADING_STATE'
 export const SIGN_UP_USER = 'SIGN_UP_USER'
 export const LOG_OUT_START = 'LOG_OUT_START'
 
+export const SHOW_SCREEN_TEST = 'SHOW_SCREEN_TEST'
+
+export function showScreenTest(nameScreen){
+    return{
+        type: SHOW_SCREEN_TEST,
+        screen: nameScreen
+    }
+}
+
 function signUpUserWitnGoogle() {
       return {
           type: SIGN_UP_USER_WITH_GOOGLE

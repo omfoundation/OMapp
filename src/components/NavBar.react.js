@@ -13,8 +13,8 @@ export default class NavBar extends Component {
         //cambiamos componente
         this.props.changeView(name);
         //seteamos nombre
-        this.setState({ activeItem: name });
-        console.log("STATE Despues ", this.state);
+        //this.setState({ activeItem: name });
+        //console.log("STATE Despues ", this.state);
 
     }
 
@@ -102,7 +102,6 @@ export default class NavBar extends Component {
             },
             { menuItem: 'Salir' }
         ]
-
 
 
         return (
