@@ -35,11 +35,11 @@ export class Root extends Component {
         let { view, userInfo } = this.props
 
         /**** Para forzar la entrada directa a Home ***/
-        view = Views.Home;
+        //view = Views.Home;
         /**********************************************/ 
         
         /**** Objeto contenedor de la información del usuario ***/
-        userInfo = {}
+        //userInfo = {}
         /**********************************************/ 
         
         if (view === Views.Loading){
