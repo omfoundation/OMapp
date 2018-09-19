@@ -1,17 +1,16 @@
-import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+
 import { connect } from 'react-redux'
 
-import { requestUserInfoFromGoogle, signUpUser } from '../actions'
-
-import Main from './Main.react'
 import Access from "./Access.react";
-import SignUp from "./Signup.react";
 import Loading from "./Loading.react";
+import Main from './Main.react'
+import SignUp from "./Signup.react";
 
 import Views from '../views'
 
-import * as omapp from '../omapp/omapp'
+import { requestUserInfoFromGoogle, signUpUser } from '../actions'
 
 export class Root extends Component {
 
@@ -35,7 +34,7 @@ export class Root extends Component {
         let { view, userInfo } = this.props
         const { dispatch } = this.props
         /**** Para forzar la entrada directa a Home ***/
-        view = Views.Home;
+        //view = Views.Home;
         /**********************************************/ 
 
         /**** Objeto contenedor de la información del usuario ***/
