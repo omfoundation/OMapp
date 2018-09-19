@@ -1,4 +1,4 @@
-import registerServiceWorker from './registerServiceWorker'
+//import registerServiceWorker from 'registerServiceWorker'
 import React from 'react'
 import ReactDOM from 'react-dom'
 
@@ -10,4 +10,4 @@ import App from './App.react'
 ReactDOM.render(<App />, document.getElementById('app')
 )
 
-registerServiceWorker()
+//registerServiceWorker()
