@@ -8,6 +8,7 @@
   "dependencies": {
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "browser-history": "^1.0.1",
+    "connected-react-router": "^4.4.1",
     "enzyme": "^3.5.0",
     "enzyme-adapter-react-16": "^1.3.0",
     "firebase": "^5.4.1",

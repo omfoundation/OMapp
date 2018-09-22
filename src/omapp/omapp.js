@@ -57,3 +57,11 @@ export function isUserRegisteredByEmail(email){
         .catch(error => console.log(error))
     })
 }
+
+export function isAuthUser(){
+    let user = new User()
+    user.setEmail('something')
+    user.setUsername('something')
+
+    return user.isAuth()
+}

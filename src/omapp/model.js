@@ -50,6 +50,14 @@ class User {
                 "profilePhotoURL": this.profilePhotoURL
             }
     }
+
+    isAuth(){
+        //!!!MEJORAR
+        if((this.email != null) && (this.username != null)){
+            return true
+        }
+        return false
+    }
 }
 
 export {User}

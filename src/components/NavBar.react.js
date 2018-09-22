@@ -5,8 +5,7 @@ export default class NavBar extends Component {
     constructor(props) {
         super(props);
         /*Pasar por prop screen activa de loginStatus*/
-        this.state = { activeItem: this.props.getterView()
-                        , activeIndex: 1 };
+        this.state = { activeIndex: 1 };
     }
 
     handleItemClick = (e, { name }) => {
