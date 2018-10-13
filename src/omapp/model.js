@@ -52,7 +52,7 @@ class User {
     }
 
     isAuth(){
-        //!!!MEJORAR
+        //TODO: MEJORAR - Implementar utilizando la modulo de authentificacion
         if((this.email != null) && (this.username != null)){
             return true
         }
