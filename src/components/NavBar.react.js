@@ -67,6 +67,50 @@ export default class NavBar extends Component {
             minWidth: "100%"
         };
 
+        const menuData = [
+            {
+                menuItem: 'Social',
+                options: [
+                    {
+                        name: 'Home',
+                        caption: 'Home'
+                    },
+                    {
+                        name: 'op2',
+                        caption: 'Opcion 2'
+                    }
+                ]
+            },
+            {
+                menuItem: 'Tab 2',
+                options: [
+                    {
+                        name: 'feed',
+                        caption: 'Feed'
+                    },
+                    {
+                        name: 'op5',
+                        caption: 'Opcion 5'
+                    },
+                    {
+                        name: 'op6',
+                        caption: 'Opcion 6'
+                    }
+                ]
+            },
+            {
+                menuItem: 'Salir'
+            }
+        ]
+
+        const panesDynamic = [
+            { menuItem: <Menu.Item header as="h4"><img src="favicon.ico" /> OMapp</Menu.Item> },
+
+
+        ]
+
+        // Templating in React to build interface from object
+
         const panes = [
             { menuItem: <Menu.Item header as="h4"><img src="favicon.ico" /> OMapp</Menu.Item> },
             {
@@ -74,10 +118,10 @@ export default class NavBar extends Component {
                 render: () =>
                     <Tab.Pane style={tabStyle}>
                         <Menu secondary>
-                            <Menu.Item name="Home" active={this.state.activeItem === 'Home'} onClick={this.handleItemClick}>
+                            <Menu.Item name='Home' active={this.state.activeItem === 'Home'} onClick={this.handleItemClick}>
                                 Home
                             </Menu.Item>
-                            <Menu.Item name="op2" active={this.state.activeItem === 'op2'} onClick={this.handleItemClick}>
+                            <Menu.Item name='op2' active={this.state.activeItem === 'op2'} onClick={this.handleItemClick}>
                                 Opcion 2
                             </Menu.Item>
                         </Menu>
