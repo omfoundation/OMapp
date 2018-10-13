@@ -44,7 +44,6 @@ export class Root extends Component {
         dispatch(push(`/${newView}`));
     }
 
-
     render() {
 
         let { view, userInfo, pathname, search, hash } = this.props
@@ -83,14 +82,14 @@ export class Root extends Component {
 
         return(
             <div>
-                <NavBar changeView={this.changeView.bind(this)} />
+                { userInfo.userAuthenticated  && <NavBar changeView={this.changeView.bind(this)} /> }
                 <div>
                 <ConnectedRouter history={this.props.history}>
                     <Switch>
-                        <Route exact path="/" render={() => (<Access signupWithGoogleHandler={ () => this.signupWithGoogleHandler() } />)} />
-                        <PrivateRoute path="/Home" component={Home} user={this.props.user} defaultProfilePhotoURL={this.props.defaultProfilePhotoURL}  />
-                        <PrivateRoute path="/Feed" component={() => (<div><h2>Feed test</h2></div>)} />
-                        <Route path="/SignUp" render={() => (<SignUp userInfo={ userInfo } signupUserHandler={ () => this.signupUser() }/>)} />
+                        <Route exact path='/' render={() => ( userInfo.userAuthenticated === true ?  <Main /> : <Access signupWithGoogleHandler={ () => this.signupWithGoogleHandler() } />)} />
+                        <PrivateRoute path="/home" component={Home} user={this.props.user} defaultProfilePhotoURL={this.props.defaultProfilePhotoURL}  />
+                        <PrivateRoute path="/feed" component={() => (<div><h2>Feed test</h2></div>)} />
+                        <Route path="/signup" render={() => (<SignUp userInfo={ userInfo } signupUserHandler={ () => this.signupUser() }/>)} />
                         <PrivateRoute path="/" component={() => (<div>
                             <h2>View test</h2>
                             <p>
@@ -112,6 +111,8 @@ export class Root extends Component {
 }
 
 function mapStateToProps(state) {
+
+    console.log('userInfo que entra: ', state.userInfo)
 
     const { root } = state
     const { view, userInfo } = root

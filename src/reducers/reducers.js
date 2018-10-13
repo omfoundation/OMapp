@@ -49,7 +49,7 @@ function root(previousState, action){
             })
             return newState;
         default:
-            return {view: Views.Access}    
+            return {view: Views.Access, userInfo: { userAuthenticated: false } }    
     }
 }
 
