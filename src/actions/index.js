@@ -1,5 +1,5 @@
 import * as omapp from '../omapp/omapp'
-import {push } from 'connected-react-router'
+import { push } from 'connected-react-router'
 
 export const SIGN_UP_USER_WITH_GOOGLE = 'SIGN_UP_USER_WITH_GOOGLE'
 export const SHOW_SIGN_UP_VIEW = 'SHOW_SIGN_UP_VIEW'
@@ -7,6 +7,7 @@ export const SHOW_HOME_VIEW = 'SHOW_HOME_VIEW'
 export const SHOW_LOADING_STATE = 'SHOW_LOADING_STATE'
 export const SIGN_UP_USER = 'SIGN_UP_USER'
 export const LOG_OUT_START = 'LOG_OUT_START'
+export const SAVE_USER_INFO = 'SAVE_USER_INFO'
 
 export const SHOW_SCREEN_TEST = 'SHOW_SCREEN_TEST'
 
@@ -44,6 +45,14 @@ function showHomeView(userInfo) {
         }
 }
 
+function saveUserInfo(userInfo) {
+    return {
+        type: 
+            SAVE_USER_INFO,
+            userInfo: userInfo
+        }
+}
+
 function showLoadingState() {
     return {
         type: 
@@ -75,7 +84,12 @@ export function requestUserInfoFromGoogle() {
         dispatch(showLoadingState())
         dispatch(signUpUserWitnGoogle())
         return  omapp.getUserInfoFromGoogle()
-                .then(userInfo => dispatch(push('/signup')))
+                .then(userInfo => {
+                    if(userInfo !== undefined || userInfo !== null) {
+                        dispatch(signUpUserWitnGoogle());
+                        dispatch(push('/signup'));
+                    }
+                })
     }
     
    //return showSignUpView()

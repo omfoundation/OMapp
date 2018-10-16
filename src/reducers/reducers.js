@@ -15,7 +15,11 @@ function root(previousState, action){
     let newState = {}
     switch (action.type) {
         case SIGN_UP_USER_WITH_GOOGLE:
-            return previousState
+            newState = Object.assign({}, previousState,
+                { 
+                    signupMethod: 'google'
+                })
+                return newState
 
         case SHOW_SIGN_UP_VIEW:
             newState = Object.assign({}, previousState,

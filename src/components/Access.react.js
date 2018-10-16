@@ -6,6 +6,7 @@ import { Image, Modal, Form, Card } from 'semantic-ui-react'
 export default class Access extends Component {
 
     render() {
+
         return (
             <Grid verticalAlign='middle'>
                 <Grid.Row centered>

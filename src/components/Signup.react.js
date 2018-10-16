@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { User } from '../omapp/model'
+import PropTypes from 'prop-types';
+import { User } from '../omapp/model';
 
 import { Form, Grid, Card, Button, List, Icon } from 'semantic-ui-react';
 
@@ -91,6 +92,9 @@ export default class SignUp extends Component {
     }
 
     render() {
+
+        let { signupMethod } = this.props
+
         return (
             <div>
                 <br />
@@ -98,7 +102,7 @@ export default class SignUp extends Component {
                 <Grid verticalAlign='middle'>
                     <Grid.Row centered>
                         <Grid.Column computer={11} mobile={14} tablet={12}>
-                            {this.props.signupMethod !== 'google.com' &&
+                            {signupMethod !== 'google' &&
                                 //Si la forma de login es diferente a google para registrar
                                 //Mostrar esto
                                 <div>
@@ -183,4 +187,18 @@ export default class SignUp extends Component {
         )
 
     }
+}
+
+function mapStateToProps(state) {
+
+    const { root } = state
+    const { signupMethod } = root
+    
+    return {
+        signupMethod
+    }
+}
+
+SignUp.propTypes = {
+    signupMethod: PropTypes.text
 }
