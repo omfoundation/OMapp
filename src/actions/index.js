@@ -70,17 +70,17 @@ export function signUpUser(userInfo){
 }
 
 export function requestUserInfoFromGoogle() {
-    /*
+    
     return dispatch => {
         dispatch(showLoadingState())
         dispatch(signUpUserWitnGoogle())
         return  omapp.getUserInfoFromGoogle()
-                .then(userInfo => dispatch(showSignUpView(userInfo)))
+                .then(userInfo => dispatch(push('/signup')))
     }
-    */
+    
    //return showSignUpView()
 
-   return dispatch => {
-       dispatch(push('/SignUp'));
-    }
+   //return dispatch => {
+     //  dispatch(push('/SignUp'));
+   // }
 }
